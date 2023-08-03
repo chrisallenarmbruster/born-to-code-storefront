@@ -6,6 +6,7 @@ module.exports = app;
 
 app.post('/', async (req, res, next) => {
   try {
+    //Wonder if we can consolidate these down somehow
     const user = await User.findByToken(req.headers.authorization);
     const cart = await user.getCart();
     req.body.shipToCity && (cart.shipToCity = req.body.shipToCity);
