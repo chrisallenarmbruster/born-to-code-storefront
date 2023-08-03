@@ -1,20 +1,21 @@
 import React from 'react';
 import { logout } from '../store';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-const Cart = ()=> {
-  const { cart } = useSelector(state => state);
-  const dispatch = useDispatch();
+const Cart = (props) => {
+  console.log('my props', props);
+  const cart = props.cart;
   return (
     <div>
       <h1>Cart</h1>
-      <pre>
-        {
-          JSON.stringify(cart, null, 2)
-        }
-      </pre>
+      <pre>{JSON.stringify(cart, null, 2)}</pre>
     </div>
   );
 };
 
-export default Cart;
+const mapStateToProps = (state) => {
+  return { cart: state.cart };
+};
+
+export default connect(mapStateToProps)(Cart);
