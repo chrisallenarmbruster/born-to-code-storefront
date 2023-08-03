@@ -1,8 +1,7 @@
-import React, { Component } from 'react';
-import Link from 'react-router-dom';
+import React from 'react';
 
-export const Navbar = () => {
-  return (
-    <div>Navbar</div>
-  )
-}
+const Navbar = () => {
+  return <div>Navbar</div>;
+};
+
+export default Navbar;
