@@ -35,6 +35,9 @@ const App = connect(
           !!auth.id  && (
             <div>
               <nav>
+                {/* I feel like the nav section can be built up into a separate Navbar component */}
+                {/* When I worked on a similar project in the past, I had a cart component / cart info in the Navbar, just something to think about */}
+                {/* I started a sample one */}
                 <Link to='/'>Home</Link>
                 <Link to='/cart'>Cart</Link>
               </nav>
