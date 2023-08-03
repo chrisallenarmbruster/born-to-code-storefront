@@ -3,11 +3,16 @@ const User = require('./User');
 const Product = require('./Product');
 const Order = require('./Order');
 const LineItem = require('./LineItem');
+const Review = require('./Review');
 
 Order.belongsTo(User);
 LineItem.belongsTo(Order);
 Order.hasMany(LineItem);
 LineItem.belongsTo(Product);
+Review.belongsTo(User);
+Review.belongsTo(Product);
+User.hasMany(Review);
+Product.hasMany(Review);
 
 const syncAndSeed = async () => {
   await conn.sync({ force: true });
@@ -18,7 +23,8 @@ const syncAndSeed = async () => {
       description: 'Awesome foo hat',
       color: 'Black',
       price: 10.0,
-      imageUrl1: '/images/Hats/May_the_Source_Be_With_You_Black_Baseball_Hat.png',
+      imageUrl1:
+        '/images/Hats/May_the_Source_Be_With_You_Black_Baseball_Hat.png',
     }),
     Product.create({
       name: 'May the Source Be With You',
@@ -26,7 +32,8 @@ const syncAndSeed = async () => {
       description: 'Awesome foo hat',
       color: 'Black',
       price: 10.0,
-      imageUrl1: '/images/Hats/May_the_Source_Be_With_You_Grey_Baseball_Hat.png',
+      imageUrl1:
+        '/images/Hats/May_the_Source_Be_With_You_Grey_Baseball_Hat.png',
     }),
     Product.create({
       name: 'Eat Sleep Code Repeat',
@@ -180,7 +187,7 @@ const syncAndSeed = async () => {
       price: 15.0,
       imageUrl1: '/images/Hats/Born_to_Code_Grey_Hat.png',
     }),
-  ])
+  ]);
   const [moe, lucy, larry, foo, bar, bazz, ethyl] = await Promise.all([
     User.create({ username: 'moe', password: '123' }),
     User.create({ username: 'lucy', password: '123' }),
@@ -219,6 +226,9 @@ const syncAndSeed = async () => {
   const cart = await ethyl.getCart();
   await ethyl.addToCart({ product: bazz, quantity: 3 });
   await ethyl.addToCart({ product: foo, quantity: 2 });
+  await Review.create({ rating: 5, userId: ethyl.id, productId: foo.id });
+  await Review.create({ rating: 4, userId: ethyl.id, productId: bar.id });
+  await Review.create({ rating: 3, userId: ethyl.id, productId: bazz.id });
   return {
     users: {
       moe,
@@ -237,4 +247,5 @@ module.exports = {
   syncAndSeed,
   User,
   Product,
+  Review,
 };

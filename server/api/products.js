@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express.Router();
-const { Product, User } = require('../db');
+const { Product, User, Review } = require('../db');
 
 module.exports = app;
 
@@ -22,7 +22,11 @@ const requireAdmin = async (req, res, next) => {
 
 app.get('/', async (req, res, next) => {
   try {
-    res.send(await Product.findAll());
+    res.send(
+      await Product.findAll({
+        include: [{ model: Review, attributes: ['rating'] }],
+      })
+    );
   } catch (ex) {
     next(ex);
   }
@@ -30,7 +34,11 @@ app.get('/', async (req, res, next) => {
 
 app.get('/:id', async (req, res, next) => {
   try {
-    res.send(await Product.findByPk(req.params.id));
+    res.send(
+      await Product.findByPk(req.params.id, {
+        include: [{ model: Review, attributes: ['rating'] }],
+      })
+    );
   } catch (ex) {
     next(ex);
   }
