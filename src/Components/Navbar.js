@@ -9,17 +9,18 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 const NavBar = () => {
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
-      <Container fluid>
+      <Container>
         <Navbar.Brand href="/">Born to Code</Navbar.Brand>
-        <Navbar.Toggle aria-controls="navbarScroll" />
-        <Navbar.Collapse id="navbarScroll">
-          <Nav className="me-auto my-2 my-lg-0" style={{ maxHeight: '100px'}} navbarScroll>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="me-auto">
             <Nav.Link href="/">Home</Nav.Link>
             <Nav.Link href="/cart">Cart</Nav.Link>
-            <NavDropdown title="Products" id="navbarScrollingDropdown">
-              <NavDropdown.item href="">Hats</NavDropdown.item>
-              <NavDropdown.item href="">Mugs</NavDropdown.item>
-              <NavDropdown.item href="">Shirts</NavDropdown.item>
+            <Nav.Link href="/products">Products</Nav.Link>
+            <NavDropdown title="Products" id="basic-nav-dropdown">
+              <NavDropdown.item href="/products/hats">Hats</NavDropdown.item>
+              <NavDropdown.item href="/products/mugs">Mugs</NavDropdown.item>
+              <NavDropdown.item href="/products/shirts">Shirts</NavDropdown.item>
               <NavDropdown.Divider />
               <NavDropdown.Item href="">
                 All products
@@ -31,6 +32,7 @@ const NavBar = () => {
             <Form.Control type="search" placeholder="Search" className="me-2" aria-label="Search" />
             <Button variant="outline-success">Search</Button>
           </Form>
+          {/* Could put something here indicating the signed in user */}
         </Navbar.Collapse>
       </Container>
     </Navbar>
