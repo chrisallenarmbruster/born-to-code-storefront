@@ -44,6 +44,7 @@ app.post('/cart', async (req, res, next) => {
 });
 
 app.put('/cart', async (req, res, next) => {
+  console.log('inside put route', req.body);
   try {
     const user = await User.findByToken(req.headers.authorization);
     res.send(await user.removeFromCart(req.body));
