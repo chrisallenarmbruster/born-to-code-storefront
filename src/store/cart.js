@@ -12,10 +12,11 @@ export const fetchCart = () => {
   };
 };
 
-export const deleteFromCart = () => {
+export const deleteFromCart = (obj) => {
+  console.log('THUNK| inside delete from cart', obj);
   return async (dispatch) => {
     const token = window.localStorage.getItem('token');
-    const response = await axios.put('/api/orders/cart/', {
+    const response = await axios.put('/api/orders/cart/', obj, {
       headers: {
         authorization: token,
       },
