@@ -17,12 +17,10 @@ import { deleteFromCart } from '../store/cart';
 
 const Cart = (props) => {
   const { cart } = props;
-  console.log('my cart props', props);
   const lineItems = cart.lineItems;
 
-  async function handleSubmit(product, quantitiyToRemove) {
-    console.log('inside handle submit', product, quantitiyToRemove);
-    await props.deleteFromCart({ product, quantitiyToRemove });
+  async function handleSubmit(cart, product, quantitiyToRemove) {
+    await props.deleteFromCart({ cart, product, quantitiyToRemove });
   }
 
   if (!lineItems) {
@@ -75,7 +73,9 @@ const Cart = (props) => {
                             <Button
                               variant="secondary"
                               size="sm"
-                              onClick={() => handleSubmit(item.product, 1)}
+                              onClick={() =>
+                                handleSubmit(cart, item.product, 1)
+                              }
                             >
                               Remove
                             </Button>
