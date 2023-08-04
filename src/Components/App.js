@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Home from './Home';
 import Login from './Login';
 import Cart from './Cart';
-import Navbar from './Navbar';
+import NavBar from './Navbar';
 import ProductAll from './ProductAll';
 import ProductSingle from './ProductSingle';
 import ProductLanding from './ProductLanding';
@@ -24,7 +24,7 @@ class App extends Component {
     const auth = this.props.auth;
     return (
       <div>
-        <Navbar />
+        <NavBar />
         {auth.id ? <Home /> : <Login />}
         {!!auth.id && (
           <div>
