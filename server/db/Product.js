@@ -20,7 +20,7 @@ const Product = conn.define('product', {
     },
   },
   category: {
-    type: ENUM('Mugs', 'T-shirts', 'Hats'),
+    type: ENUM('Mug', 'T-Shirt', 'Hat'),
     allowNull: false,
     required: true,
     validate: { notEmpty: true },
