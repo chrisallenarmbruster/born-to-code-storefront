@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Home from './Home';
 import Login from './Login';
 import Cart from './Cart';
-import Navbar from './Navbar';
+import NavBar from './Navbar';
 import ProductAll from './ProductAll';
 import ProductSingle from './ProductSingle';
 import ProductLanding from './ProductLanding';
@@ -24,16 +24,16 @@ class App extends Component {
     const auth = this.props.auth;
     return (
       <div>
-        <Navbar />
+        <NavBar />
         {auth.id ? <Home /> : <Login />}
         {!!auth.id && (
           <div>
-            <nav>
+            {/* <nav>
               <Link to="/">Home</Link>
               <Link to="/cart">Cart</Link>
               <Link to="/products">Products</Link>
               {auth.id ? <Link to={`/users/${auth.id}`}>Profile</Link> : ''}
-            </nav>
+            </nav> */}
             <Routes>
               <Route path="/cart" element={<Cart />} />
               <Route path="/" element={<ProductLanding />} />
