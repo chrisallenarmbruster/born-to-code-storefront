@@ -188,10 +188,10 @@ const syncAndSeed = async () => {
       imageUrl1: '/images/Hats/Born_to_Code_Grey_Hat.png',
     }),
   ]);
-  const [moe, lucy, larry, foo, bar, bazz, ethyl] = await Promise.all([
-    User.create({ username: 'moe', password: '123' }),
-    User.create({ username: 'lucy', password: '123' }),
-    User.create({ username: 'larry', password: '123' }),
+  const [joel, chris, michael, foo, bar, bazz, ethyl, tim] = await Promise.all([
+    User.create({ username: 'joel', password: '123', isAdmin: true }),
+    User.create({ username: 'chris', password: '123', isAdmin: true }),
+    User.create({ username: 'michael', password: '123', isAdmin: true }),
     Product.create({
       name: 'Born to Code Mug',
       category: 'Mugs',
@@ -221,6 +221,7 @@ const syncAndSeed = async () => {
       imageUrl1: '/images/Hats/Born_to_Code_Black_Hat.png',
     }),
     User.create({ username: 'ethyl', password: '123', isAdmin: true }),
+    User.create({username: 'tim', password: '123'}),
   ]);
 
   const cart = await ethyl.getCart();
@@ -231,9 +232,10 @@ const syncAndSeed = async () => {
   await Review.create({ rating: 3, userId: ethyl.id, productId: bazz.id });
   return {
     users: {
-      moe,
-      lucy,
-      larry,
+      joel,
+      chris,
+      michael,
+      tim
     },
     products: {
       foo,
