@@ -14,13 +14,13 @@ const NavBar = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="/">Home</Nav.Link>
-            <Nav.Link href="/cart">Cart</Nav.Link>
-            <Nav.Link href="/products">Products</Nav.Link>
+            <Nav.Link href="#/">Home</Nav.Link>
+            <Nav.Link href="#/cart">Cart</Nav.Link>
+            <Nav.Link href="#/products">Products</Nav.Link>
             <NavDropdown title="Products" id="basic-nav-dropdown">
-              <NavDropdown.item href="/products/hats">Hats</NavDropdown.item>
-              <NavDropdown.item href="/products/mugs">Mugs</NavDropdown.item>
-              <NavDropdown.item href="/products/shirts">Shirts</NavDropdown.item>
+              <NavDropdown.item href="#/products/hats">Hats</NavDropdown.item>
+              <NavDropdown.item href="#/products/mugs">Mugs</NavDropdown.item>
+              <NavDropdown.item href="#/products/shirts">Shirts</NavDropdown.item>
               <NavDropdown.Divider />
               <NavDropdown.Item href="">
                 All products
