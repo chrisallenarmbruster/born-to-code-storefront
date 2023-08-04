@@ -248,4 +248,5 @@ module.exports = {
   User,
   Product,
   Review,
+  Order,
 };
