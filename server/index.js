@@ -1,6 +1,6 @@
+require('dotenv').config();
 const app = require('./app');
 const { syncAndSeed } = require('./db');
-require('dotenv').config();
 
 const init = async () => {
   try {
