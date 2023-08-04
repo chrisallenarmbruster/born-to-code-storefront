@@ -28,12 +28,12 @@ class App extends Component {
         {auth.id ? <Home /> : <Login />}
         {!!auth.id && (
           <div>
-            <nav>
+            {/* <nav>
               <Link to="/">Home</Link>
               <Link to="/cart">Cart</Link>
               <Link to="/products">Products</Link>
               {auth.id ? <Link to={`/users/${auth.id}`}>Profile</Link> : ''}
-            </nav>
+            </nav> */}
             <Routes>
               <Route path="/cart" element={<Cart />} />
               <Route path="/" element={<ProductLanding />} />

@@ -17,6 +17,7 @@ const NavBar = () => {
             <Nav.Link href="#/">Home</Nav.Link>
             <Nav.Link href="#/cart">Cart</Nav.Link>
             <Nav.Link href="#/products">Products</Nav.Link>
+            <Nav.Link href="#/users/:id">Profile</Nav.Link>
             <NavDropdown title="Products" id="basic-nav-dropdown">
               <NavDropdown.item href="#/products/hats">Hats</NavDropdown.item>
               <NavDropdown.item href="#/products/mugs">Mugs</NavDropdown.item>
