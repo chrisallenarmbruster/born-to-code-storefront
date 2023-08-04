@@ -13,11 +13,17 @@ import {
   ButtonToolbar,
 } from 'react-bootstrap';
 
+import { deleteFromCart } from '../store/cart';
+
 const Cart = (props) => {
   const { cart } = props;
   console.log('my cart props', props);
   const lineItems = cart.lineItems;
-  // use a ternary operator to check if the items have loaded before diplaying them on the page
+
+  async function handleSubmit(item) {
+    await props.deleteFromCart(item);
+  }
+
   if (!lineItems) {
     return <div>Loading...</div>;
   } else {
@@ -68,9 +74,7 @@ const Cart = (props) => {
                             <Button
                               variant="secondary"
                               size="sm"
-                              onClick={() =>
-                                cart.deleteFromCart(item.product.id)
-                              }
+                              onClick={() => handleSubmit(item)}
                             >
                               Remove
                             </Button>
@@ -88,9 +92,17 @@ const Cart = (props) => {
     );
   }
 };
-
 const mapStateToProps = (state) => {
-  return { cart: state.cart };
+  return {
+    cart: state.cart,
+  };
 };
 
-export default connect(mapStateToProps)(Cart);
+// define mapDispatchToProps
+const mapDispatchToProps = (dispatch, { history }) => {
+  return {
+    deleteFromCart: (item) => dispatch(deleteFromCart(item, history)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Cart);
