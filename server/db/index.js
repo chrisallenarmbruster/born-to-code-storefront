@@ -188,7 +188,7 @@ const syncAndSeed = async () => {
       imageUrl1: '/images/Hats/Born_to_Code_Grey_Hat.png',
     }),
   ]);
-  const [joel, chris, michael, foo, bar, bazz, ethyl] = await Promise.all([
+  const [joel, chris, michael, foo, bar, bazz, ethyl, tim] = await Promise.all([
     User.create({ username: 'joel', password: '123', isAdmin: true }),
     User.create({ username: 'chris', password: '123', isAdmin: true }),
     User.create({ username: 'michael', password: '123', isAdmin: true }),
@@ -221,6 +221,7 @@ const syncAndSeed = async () => {
       imageUrl1: '/images/Hats/Born_to_Code_Black_Hat.png',
     }),
     User.create({ username: 'ethyl', password: '123', isAdmin: true }),
+    User.create({username: 'tim', password: '123'}),
   ]);
 
   const cart = await ethyl.getCart();
@@ -234,6 +235,7 @@ const syncAndSeed = async () => {
       joel,
       chris,
       michael,
+      tim
     },
     products: {
       foo,
