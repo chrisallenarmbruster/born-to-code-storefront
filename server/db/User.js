@@ -110,14 +110,13 @@ User.prototype.addToCart = async function ({ product, quantity }) {
   return this.getCart();
 };
 
-User.prototype.removeFromCart = async function ({ product, quantityToRemove }) {
-  console.log('inside rehmove from cart', { product, quantityToRemove });
+User.prototype.removeFromCart = async function ({ product }) {
   const cart = await this.getCart();
   const lineItem = cart.lineItems.find((lineItem) => {
     return lineItem.productId === product.id;
   });
-  lineItem.quantity = lineItem.quantity - quantityToRemove;
   if (lineItem.quantity > 0) {
+    lineItem.quantity -= 1;
     await lineItem.save();
   } else {
     await lineItem.destroy();
