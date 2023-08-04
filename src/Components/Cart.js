@@ -7,7 +7,7 @@ const Cart = (props) => {
   console.log('my props', props);
   const cart = props.cart;
   return (
-    <div>
+    <div className="container">
       <h1>Cart</h1>
       <pre>{JSON.stringify(cart, null, 2)}</pre>
     </div>

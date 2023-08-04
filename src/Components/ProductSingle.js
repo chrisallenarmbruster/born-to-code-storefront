@@ -1,7 +1,11 @@
 import React from 'react';
 
 const ProductSingle = () => {
-  return <div>Single Product Detail Placeholder</div>;
+  return (
+    <div className="container">
+      <h1>Single Product Detail Placeholder</h1>
+    </div>
+  );
 };
 
 export default ProductSingle;
