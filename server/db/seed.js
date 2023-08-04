@@ -33,152 +33,152 @@ Array.prototype.random = function () {
 
 productData = [
   {
-    name: 'May the Source Be With You',
-    category: 'Hats',
+    name: 'May the Source Be With You Hat',
+    category: 'Hat',
     description: faker.lorem.paragraphs({ min: 1, max: 2 }),
     color: 'Black',
     price: 10.0,
     imageUrl1: '/images/Hats/May_the_Source_Be_With_You_Black_Baseball_Hat.png',
   },
   {
-    name: 'May the Source Be With You',
-    category: 'Hats',
+    name: 'May the Source Be With You Hat',
+    category: 'Hat',
     description: faker.lorem.paragraphs({ min: 1, max: 2 }),
-    color: 'Black',
+    color: 'Grey',
     price: 10.0,
     imageUrl1: '/images/Hats/May_the_Source_Be_With_You_Grey_Baseball_Hat.png',
   },
   {
-    name: 'Eat Sleep Code Repeat',
-    category: 'Hats',
+    name: 'Eat Sleep Code Repeat Hat',
+    category: 'Hat',
     description: faker.lorem.paragraphs({ min: 1, max: 2 }),
     color: 'Grey',
     price: 10.0,
     imageUrl1: '/images/Hats/Eat_Sleep_Code_Repeat_Grey_Baseball_Hat.png',
   },
   {
-    name: 'Eat Sleep Code Repeat',
-    category: 'Hats',
+    name: 'Eat Sleep Code Repeat Hat',
+    category: 'Hat',
     description: faker.lorem.paragraphs({ min: 1, max: 2 }),
     color: 'Black',
     price: 10.0,
     imageUrl1: '/images/Hats/Eat_Sleep_Code_Repeat_Black_Baseball_Hat.png',
   },
   {
-    name: 'Code Bugs',
-    category: 'Hats',
+    name: 'Code Bugs Hat',
+    category: 'Hat',
     description: faker.lorem.paragraphs({ min: 1, max: 2 }),
     color: 'Grey',
     price: 10.0,
     imageUrl1: '/images/Hats/Code_Bugs_Grey_Baseball_Hat.png',
   },
   {
-    name: 'Code Bugs',
-    category: 'Hats',
+    name: 'Code Bugs Hat',
+    category: 'Hat',
     description: faker.lorem.paragraphs({ min: 1, max: 2 }),
     color: 'Black',
     price: 10.0,
     imageUrl1: '/images/Hats/Code_Bugs_Black_Baseball_Hat.png',
   },
   {
-    name: 'Give Me a Br',
-    category: 'Mugs',
+    name: 'Give Me a </br> Mug',
+    category: 'Mug',
     description: faker.lorem.paragraphs({ min: 1, max: 2 }),
     color: 'Black',
     price: 10.0,
     imageUrl1: '/images/Mugs/Give_Me_a_Br_Black_Mug.png',
   },
   {
-    name: 'Give Me a Br',
-    category: 'Mugs',
+    name: 'Give Me a </br> Mug',
+    category: 'Mug',
     description: faker.lorem.paragraphs({ min: 1, max: 2 }),
     color: 'White',
     price: 10.0,
     imageUrl1: '/images/Mugs/Give_Me_a_Br_ White_Camper_Mug.png',
   },
   {
-    name: 'Eat Sleep Code Repeat',
-    category: 'Mugs',
+    name: 'Eat Sleep Code Repeat Mug',
+    category: 'Mug',
     description: faker.lorem.paragraphs({ min: 1, max: 2 }),
     color: 'White',
     price: 10.0,
     imageUrl1: '/images/Mugs/Eat_Sleep_Code_Repeat_White_Camper_Mug.png',
   },
   {
-    name: 'Eat Sleep Code Repeat',
-    category: 'Mugs',
+    name: 'Eat Sleep Code Repeat Mug',
+    category: 'Mug',
     description: faker.lorem.paragraphs({ min: 1, max: 2 }),
     color: 'Black',
     price: 10.0,
     imageUrl1: '/images/Mugs/Eat_Sleep_Code_Repeat_Black_Mug.png',
   },
   {
-    name: 'Code Bugs',
-    category: 'Mugs',
+    name: 'Code Bugs Mug',
+    category: 'Mug',
     description: faker.lorem.paragraphs({ min: 1, max: 2 }),
     color: 'White',
     price: 10.0,
     imageUrl1: '/images/Mugs/Code_Bugs_White_Camper_Mug.png',
   },
   {
-    name: 'Code Bugs',
-    category: 'Mugs',
+    name: 'Code Bugs Mug',
+    category: 'Mug',
     description: faker.lorem.paragraphs({ min: 1, max: 2 }),
     color: 'Black',
     price: 10.0,
     imageUrl1: '/images/Mugs/Code_Bugs_Black_Mug.png',
   },
   {
-    name: 'This is My Coding Shirt',
-    category: 'T-shirts',
+    name: 'This is My Coding Shirt T-Shirt',
+    category: 'T-Shirt',
     description: faker.lorem.paragraphs({ min: 1, max: 2 }),
     color: 'White',
     price: 20.0,
     imageUrl1: '/images/T-shirts/This_is_My_Coding_Shirt_Purple_T-Shirt.png',
   },
   {
-    name: 'This is My Coding Shirt',
-    category: 'T-shirts',
+    name: 'This is My Coding Shirt T-Shirt',
+    category: 'T-Shirt',
     description: faker.lorem.paragraphs({ min: 1, max: 2 }),
     color: 'Black',
     price: 20.0,
     imageUrl1: '/images/T-shirts/This_is_My_Coding_Shirt_Black_T-Shirt.png',
   },
   {
-    name: 'Eat Sleep Code',
-    category: 'T-shirts',
+    name: 'Eat Sleep Code T-Shirt',
+    category: 'T-Shirt',
     description: faker.lorem.paragraphs({ min: 1, max: 2 }),
     color: 'White',
     price: 20.0,
     imageUrl1: '/images/T-shirts/Eat_Sleep_Code_Repeat_White_T-Shirt.png',
   },
   {
-    name: 'Eat Sleep Code',
-    category: 'T-shirts',
+    name: 'Eat Sleep Code T-Shirt',
+    category: 'T-Shirt',
     description: faker.lorem.paragraphs({ min: 1, max: 2 }),
     color: 'Black',
     price: 20.0,
     imageUrl1: '/images/T-shirts/Eat_Sleep_Code_Repeat_Black_T-Shirt.png',
   },
   {
-    name: 'Bugs',
-    category: 'T-shirts',
+    name: 'Bugs T-Shirt',
+    category: 'T-Shirt',
     description: faker.lorem.paragraphs({ min: 1, max: 2 }),
     color: 'Green',
     price: 20.0,
     imageUrl1: '/images/T-shirts/Bugs_Green_T-Shirt.png',
   },
   {
-    name: 'Bugs',
-    category: 'T-shirts',
+    name: 'Bugs T-Shirt',
+    category: 'T-Shirt',
     description: faker.lorem.paragraphs({ min: 1, max: 2 }),
     color: 'Black',
     price: 20.0,
     imageUrl1: '/images/T-shirts/Bugs_Black_T-Shirt.png',
   },
   {
-    name: 'Born to Code T-shirt',
-    category: 'T-shirts',
+    name: 'Born to Code T-Shirt',
+    category: 'T-Shirt',
     description: faker.lorem.paragraphs({ min: 1, max: 2 }),
     color: 'Purple',
     price: 20.0,
@@ -186,7 +186,7 @@ productData = [
   },
   {
     name: 'Born to Code Mug',
-    category: 'Mugs',
+    category: 'Mug',
     description: faker.lorem.paragraphs({ min: 1, max: 2 }),
     color: 'White',
     price: 10.0,
@@ -194,23 +194,23 @@ productData = [
   },
   {
     name: 'Born to Code Baseball Hat',
-    category: 'Hats',
+    category: 'Hat',
     description: faker.lorem.paragraphs({ min: 1, max: 2 }),
     color: 'Grey',
     price: 15.0,
-    imageUrl1: '/images/Hats/Born_to_Code_Grey_Hat.png',
+    imageUrl1: '/images/Hats/Born_to_Code_Grey_Baseball_Hat.png',
   },
   {
     name: 'Born to Code Mug',
-    category: 'Mugs',
+    category: 'Mug',
     description: faker.lorem.paragraphs({ min: 1, max: 2 }),
     color: 'Black',
     price: 10.0,
     imageUrl1: '/images/Mugs/Born_to_Code_Black_Mug.png',
   },
   {
-    name: 'Born to Code T-shirt',
-    category: 'T-shirts',
+    name: 'Born to Code T-Shirt',
+    category: 'T-Shirt',
     description: faker.lorem.paragraphs({ min: 1, max: 2 }),
     color: 'Black',
     price: 20.0,
@@ -220,13 +220,13 @@ productData = [
   },
   {
     name: 'Born to Code Baseball Hat',
-    category: 'Hats',
+    category: 'Hat',
     description: faker.lorem.paragraphs({ min: 1, max: 2 }),
     color: 'Black',
     price: 15.0,
     sizeOptions: 'One Size',
     gender: 'Unisex',
-    imageUrl1: '/images/Hats/Born_to_Code_Black_Hat.png',
+    imageUrl1: '/images/Hats/Born_to_Code_Black_Baseball_Hat.png',
   },
 ];
 
@@ -275,10 +275,33 @@ const syncAndSeed = async () => {
     User.create({ username: 'tim', password: '123' }),
   ]);
 
-  //create cart for special user
-  const cart = await ethyl.getCart();
+  //create cart for ethyl
+  let cart = await ethyl.getCart();
   await ethyl.addToCart({ product: products[0], quantity: 3 });
   await ethyl.addToCart({ product: products[1], quantity: 2 });
+
+  //create cart for chris
+  cart = await chris.getCart();
+  await chris.addToCart({
+    product: products.random(),
+    quantity: Math.floor(Math.random() * 10) + 1,
+  });
+  await chris.addToCart({
+    product: products.random(),
+    quantity: Math.floor(Math.random() * 10) + 1,
+  });
+  await chris.addToCart({
+    product: products.random(),
+    quantity: Math.floor(Math.random() * 10) + 1,
+  });
+  await chris.addToCart({
+    product: products.random(),
+    quantity: Math.floor(Math.random() * 10) + 1,
+  });
+  await chris.addToCart({
+    product: products.random(),
+    quantity: Math.floor(Math.random() * 10) + 1,
+  });
 };
 
 module.exports = syncAndSeed;
