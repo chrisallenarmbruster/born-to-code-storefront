@@ -20,8 +20,9 @@ const Cart = (props) => {
   console.log('my cart props', props);
   const lineItems = cart.lineItems;
 
-  async function handleSubmit(item) {
-    await props.deleteFromCart(item);
+  async function handleSubmit(product, quantitiyToRemove) {
+    console.log('inside handle submit', product, quantitiyToRemove);
+    await props.deleteFromCart({ product, quantitiyToRemove });
   }
 
   if (!lineItems) {
@@ -74,7 +75,7 @@ const Cart = (props) => {
                             <Button
                               variant="secondary"
                               size="sm"
-                              onClick={() => handleSubmit(item)}
+                              onClick={() => handleSubmit(item.product, 1)}
                             >
                               Remove
                             </Button>

@@ -111,6 +111,7 @@ User.prototype.addToCart = async function ({ product, quantity }) {
 };
 
 User.prototype.removeFromCart = async function ({ product, quantityToRemove }) {
+  console.log('inside rehmove from cart', { product, quantityToRemove });
   const cart = await this.getCart();
   const lineItem = cart.lineItems.find((lineItem) => {
     return lineItem.productId === product.id;
