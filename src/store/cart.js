@@ -12,11 +12,25 @@ export const fetchCart = () => {
   };
 };
 
+export const deleteFromCart = () => {
+  return async (dispatch) => {
+    const token = window.localStorage.getItem('token');
+    const response = await axios.put('/api/orders/cart/', {
+      headers: {
+        authorization: token,
+      },
+    });
+    dispatch({ type: 'DELETE_FROM_CART', cart: response.data });
+  };
+};
+
 const initialState = { lineItems: [] };
 
 const cartReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'SET_CART':
+      return action.cart;
+    case 'DELETE_FROM_CART':
       return action.cart;
     default:
       return state;
