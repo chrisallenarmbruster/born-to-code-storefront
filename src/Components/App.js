@@ -9,7 +9,6 @@ import User from './User';
 import { loginWithToken, fetchCart } from '../store';
 import { Link, Routes, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
-
 class App extends Component {
   componentDidMount() {
     this.props.loginWithToken();

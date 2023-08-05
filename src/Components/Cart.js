@@ -41,7 +41,7 @@ const Cart = (props) => {
     return (
       <>
         <div className="d-flex justify-content-center">
-          <h1>Your bag total is ${subtotal.toFixed(2)}</h1>
+          <h1>Your cart total is ${subtotal.toFixed(2)}</h1>
         </div>
         {lineItems.map((item) => {
           return (
@@ -95,6 +95,72 @@ const Cart = (props) => {
             </Card>
           );
         })}
+        <Card style={{ height: '8rem' }}>
+          <Card.Body>
+            <Container fluid>
+              <Row>
+                <Col sm={2}></Col>
+                <Col sm={7}>Subtotal</Col>
+                <Col sm={1}></Col>
+                <Col sm={2}>${subtotal.toFixed(2)}</Col>
+              </Row>
+              <Row>
+                <Col sm={2}></Col>
+                <Col sm={7}>Shipping</Col>
+                <Col sm={1}></Col>
+                <Col sm={2}>Free</Col>
+              </Row>
+              <Row>
+                <Col sm={2}></Col>
+                <Col sm={7}>Estimated tax for: 80439</Col>
+                <Col sm={1}></Col>
+                <Col sm={2}>$1.00</Col>
+              </Row>
+            </Container>
+          </Card.Body>
+        </Card>
+        <Row>
+          <Col sm={2}></Col>
+          <Col sm={10}>
+            <Card style={{ height: '8rem', border: 0 }}>
+              <Card.Body>
+                <Container fluid>
+                  <Row>
+                    <Col></Col>
+                    <Col></Col>
+                    <Col>
+                      <Row>
+                        <Col>
+                          <h2>Total</h2>
+                        </Col>
+                        <Col>
+                          <h2>${(subtotal + 1).toFixed(2)}</h2>
+                        </Col>
+                      </Row>
+                    </Col>
+                    <Col sm={1}></Col>
+                  </Row>
+                  <Row>
+                    <Col></Col>
+                    <Col></Col>
+                    <Col sm={4}>
+                      <div className="d-grid gap-2">
+                        <Button
+                          variant="primary"
+                          size="lg"
+                          onClick={() => handleSubmit(cart, item.product, 1)}
+                        >
+                          Check Out
+                        </Button>
+                      </div>
+                    </Col>
+                    <Col sm={1}></Col>
+                  </Row>
+                </Container>
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
       </>
     );
   }
