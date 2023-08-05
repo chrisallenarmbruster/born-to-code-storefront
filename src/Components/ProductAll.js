@@ -29,10 +29,14 @@ export class ProductAll extends Component {
             {this.props.products.map((product) => (
               <Col key={product.id} className="g-5">
                 <Card key={product.id} className="h-100 shadow">
-                  <Card.Img variant="top" src={product.imageUrl1} />
+                  <Card.Img
+                    className="p-5"
+                    variant="top"
+                    src={product.imageUrl1}
+                  />
                   <Card.Body>
-                    <Card.Title>
-                      {product.name} {product.color ? `(${product.color})` : ''}
+                    <Card.Title className="text-center">
+                      {product.name}
                     </Card.Title>
                   </Card.Body>
                   <Card.Footer className="d-flex justify-content-between align-items-center">
