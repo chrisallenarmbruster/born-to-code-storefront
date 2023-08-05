@@ -30,63 +30,56 @@ const Cart = (props) => {
       <>
         {lineItems.map((item) => {
           return (
-            <>
-              <Card style={{ height: '15rem' }} key={item.product.id}>
-                <Card.Body>
-                  <Card.Title>{item.product.name}</Card.Title>
-                  <Container>
-                    <Row>
-                      <Col>
-                        <Image
-                          style={{ height: '5rem' }}
-                          src={item.product.imageUrl1}
-                          alt={item.product.name}
-                          thumbnail
-                        ></Image>
-                      </Col>
-                      <Col>
-                        <Card.Text>{item.product.description}</Card.Text>
-                        <Card.Text>Price: {item.product.price}</Card.Text>
-                        <Card.Text>Quantity: {item.quantity}</Card.Text>
-                        <Card.Text>
-                          SubTotal:{' '}
-                          {(item.quantity * item.product.price).toFixed(2)}
-                        </Card.Text>
-                      </Col>
-                    </Row>
-                    <Row>
-                      <Col></Col>
-                      <Col>
-                        <ButtonToolbar aria-label="Toolbar with button groups">
-                          <ButtonGroup aria-label="Basic example">
-                            <Button variant="secondary" size="sm">
-                              +
-                            </Button>
-                            <Button variant="secondary" size="sm">
-                              -
-                            </Button>
-                          </ButtonGroup>
-                          <ButtonGroup
-                            className="me-2"
-                            aria-label="Second group"
+            <Card style={{ height: '15rem' }} key={item.product.id}>
+              <Card.Body>
+                <Card.Title>{item.product.name}</Card.Title>
+                <Container>
+                  <Row>
+                    <Col>
+                      <Image
+                        style={{ height: '5rem' }}
+                        src={item.product.imageUrl1}
+                        alt={item.product.name}
+                        thumbnail
+                      ></Image>
+                    </Col>
+                    <Col>
+                      <Card.Text>{item.product.description}</Card.Text>
+                      <Card.Text>Price: {item.product.price}</Card.Text>
+                      <Card.Text>Quantity: {item.quantity}</Card.Text>
+                      <Card.Text>
+                        SubTotal:{' '}
+                        {(item.quantity * item.product.price).toFixed(2)}
+                      </Card.Text>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col></Col>
+                    <Col>
+                      <ButtonToolbar aria-label="Toolbar with button groups">
+                        <ButtonGroup aria-label="Basic example">
+                          <Button variant="secondary" size="sm">
+                            +
+                          </Button>
+                          <Button variant="secondary" size="sm">
+                            -
+                          </Button>
+                        </ButtonGroup>
+                        <ButtonGroup className="me-2" aria-label="Second group">
+                          <Button
+                            variant="secondary"
+                            size="sm"
+                            onClick={() => handleSubmit(cart, item.product, 1)}
                           >
-                            <Button
-                              variant="secondary"
-                              size="sm"
-                              onClick={() =>
-                                handleSubmit(cart, item.product, 1)
-                              }
-                            >
-                              Remove
-                            </Button>
-                          </ButtonGroup>
-                        </ButtonToolbar>
-                      </Col>
-                    </Row>
-                  </Container>
-                </Card.Body>
-              </Card>
-            </>
+                            Remove
+                          </Button>
+                        </ButtonGroup>
+                      </ButtonToolbar>
+                    </Col>
+                  </Row>
+                </Container>
+              </Card.Body>
+            </Card>
           );
         })}
       </>
