@@ -16,8 +16,9 @@ export class AddToCart extends Component {
     console.log('inside handleAddToCart', product, quantity);
     await this.props.addToCart({ product, quantity });
   }
-  render() {
+  render(props) {
     const { handleAddToCart } = this;
+    const { product } = this.props;
     return (
       <Button onClick={(evt) => handleAddToCart(evt, product, 1)}>
         <i className="bi bi-cart-plus"></i>
@@ -27,7 +28,7 @@ export class AddToCart extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  products: state.productAll.products,
+  products: state.allProducts.data,
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -8,6 +8,7 @@ import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
 import { Link } from 'react-router-dom';
 import Spinner from 'react-bootstrap/Spinner';
+import AddToCart from './AddToCart';
 
 export class ProductAll extends Component {
   componentDidMount() {
@@ -36,11 +37,14 @@ export class ProductAll extends Component {
                   </Card.Body>
                   <Card.Footer className="d-flex justify-content-between align-items-center">
                     <span className="fw-bold">{`$${product.price}`}</span>{' '}
-                    <Link to={`/products/${product.id}`}>
-                      <Button title="Details" variant="primary">
-                        <i className="bi bi-list-ul"></i>
-                      </Button>
-                    </Link>
+                    <span>
+                      <AddToCart product={product} />
+                      <Link to={`/products/${product.id}`} className="ms-1">
+                        <Button title="Details" variant="primary">
+                          <i className="bi bi-list-ul"></i>
+                        </Button>
+                      </Link>
+                    </span>
                   </Card.Footer>
                 </Card>
               </Col>
