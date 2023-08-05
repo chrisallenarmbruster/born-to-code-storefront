@@ -23,6 +23,7 @@ export const setProducts = () => {
       dispatch(_setProductsLoading());
       const data = (await axios.get('/api/products')).data;
       dispatch(_setProducts(data));
+      // await sleep(2000);
       dispatch(_clearProductsLoading());
     } catch (error) {
       console.log(error);

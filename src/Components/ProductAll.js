@@ -7,6 +7,7 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
 import { Link } from 'react-router-dom';
+import Spinner from 'react-bootstrap/Spinner';
 
 export class ProductAll extends Component {
   componentDidMount() {
@@ -17,7 +18,11 @@ export class ProductAll extends Component {
     return (
       <Container>
         {this.props.isLoading ? (
-          <h1>Loading...</h1>
+          <div className="d-flex justify-content-center mt-5">
+            <Spinner animation="grow" role="status">
+              <span className="visually-hidden">Loading...</span>
+            </Spinner>
+          </div>
         ) : (
           <Row xs={1} md={2} lg={3} className="g-5">
             {this.props.products.map((product) => (

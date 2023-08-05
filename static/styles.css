@@ -1,17 +1,17 @@
-body {
+/* body {
   font-family: verdana;
-}
+} */
 
 /* form {
   display: flex;
   flex-direction: column;
 } */
 
-form > * {
+/* form > * {
   margin: 1rem;
-}
+} */
 
-nav {
+/* nav {
   display: flex;
   justify-content: space-around;
-}
+} */
