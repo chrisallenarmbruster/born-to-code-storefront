@@ -11,9 +11,11 @@ import {
   Col,
   Image,
   ButtonToolbar,
+  Form,
 } from 'react-bootstrap';
 
 import { deleteFromCart } from '../store/cart';
+import { updateQuantity } from '../store/cart';
 
 const Cart = (props) => {
   const { cart } = props;
@@ -23,19 +25,31 @@ const Cart = (props) => {
     await props.deleteFromCart({ cart, product, quantitiyToRemove });
   }
 
+  const handleQuantityChange = (event) => {
+    const newQuantity = Number(event.target.value);
+    dispatch(updateQuantity({ itemId, quantity: newQuantity }));
+  };
+  let subtotal = 0;
+  lineItems.forEach((element) => {
+    subtotal =
+      subtotal + Number(element.quantity) * Number(element.product.price);
+  });
+
   if (!lineItems) {
     return <div>Loading...</div>;
   } else {
     return (
       <>
+        <div className="d-flex justify-content-center">
+          <h1>Your bag total is ${subtotal.toFixed(2)}</h1>
+        </div>
         {lineItems.map((item) => {
           return (
-            <Card style={{ height: '15rem' }} key={item.product.id}>
+            <Card style={{ height: '12rem' }} key={item.product.id}>
               <Card.Body>
-                <Card.Title>{item.product.name}</Card.Title>
-                <Container>
+                <Container fluid>
                   <Row>
-                    <Col>
+                    <Col sm={2}>
                       <Image
                         style={{ height: '5rem' }}
                         src={item.product.imageUrl1}
@@ -43,28 +57,27 @@ const Cart = (props) => {
                         thumbnail
                       ></Image>
                     </Col>
-                    <Col>
+                    <Col sm={7}>
+                      <Card.Title>{item.product.name}</Card.Title>
                       <Card.Text>{item.product.description}</Card.Text>
-                      <Card.Text>Price: {item.product.price}</Card.Text>
-                      <Card.Text>Quantity: {item.quantity}</Card.Text>
-                      <Card.Text>
-                        SubTotal:{' '}
-                        {(item.quantity * item.product.price).toFixed(2)}
-                      </Card.Text>
                     </Col>
-                  </Row>
-                  <Row>
-                    <Col></Col>
-                    <Col>
+                    <Col xs={1}>
+                      <Form.Group controlId="exampleForm.SelectCustom">
+                        <Form.Control
+                          as="select"
+                          custom
+                          onChange={handleQuantityChange}
+                        >
+                          <option value={item.quantity}>{item.quantity}</option>
+                          <option value={1}>1</option>
+                          <option value={2}>2</option>
+                          <option value={3}>3</option>
+                        </Form.Control>
+                      </Form.Group>
+                    </Col>
+                    <Col sm={2}>
+                      ${(item.quantity * item.product.price).toFixed(2)}
                       <ButtonToolbar aria-label="Toolbar with button groups">
-                        <ButtonGroup aria-label="Basic example">
-                          <Button variant="secondary" size="sm">
-                            +
-                          </Button>
-                          <Button variant="secondary" size="sm">
-                            -
-                          </Button>
-                        </ButtonGroup>
                         <ButtonGroup className="me-2" aria-label="Second group">
                           <Button
                             variant="secondary"

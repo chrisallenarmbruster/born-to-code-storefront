@@ -8,6 +8,14 @@ const _deleteFromCart = (product, cart) => {
   };
 };
 
+const _updateQuantity = (product, cart) => {
+  return {
+    type: 'UPDATE_QUANTITY',
+    product,
+    cart,
+  };
+};
+
 export const fetchCart = () => {
   return async (dispatch) => {
     const token = window.localStorage.getItem('token');
@@ -33,6 +41,18 @@ export const deleteFromCart = (obj) => {
   };
 };
 
+export const updateQuantity = (obj) => {
+  return async (dispatch) => {
+    const token = window.localStorage.getItem('token');
+    const { data: updated } = await axios.put('/api/orders/cart/', obj, {
+      headers: {
+        authorization: token,
+      },
+    });
+    dispatch(_updateQuantity(updated, obj.cart));
+  };
+};
+
 const initialState = { lineItems: [] };
 
 const cartReducer = (state = initialState, action) => {
@@ -51,6 +71,16 @@ const cartReducer = (state = initialState, action) => {
         return items;
       }, []);
       return { ...state, lineItems: newLineItems };
+    case 'UPDATE_QUANTITY':
+      const updatedLineItems = state.lineItems.reduce((items, item) => {
+        if (item.id === action.product.id) {
+          items.push({ ...item, quantity: action.product.quantity });
+        } else {
+          items.push(item);
+        }
+        return items;
+      }, []);
+      return { ...state, lineItems: updatedLineItems };
     default:
       return state;
   }
