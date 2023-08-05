@@ -8,22 +8,30 @@ export const logout = () => {
 export const loginWithToken = () => {
   return async (dispatch) => {
     const token = window.localStorage.getItem('token');
-    if (token) {
-      const response = await axios.get('/api/auth', {
-        headers: {
-          authorization: token,
-        },
-      });
-      dispatch({ type: 'SET_AUTH', auth: response.data });
+    try {
+      if (token) {
+        const response = await axios.get('/api/auth', {
+          headers: {
+            authorization: token,
+          },
+        });
+        dispatch({ type: 'SET_AUTH', auth: response.data });
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 };
 
 export const attemptLogin = (credentials) => {
   return async (dispatch) => {
-    const response = await axios.post('/api/auth', credentials);
-    window.localStorage.setItem('token', response.data);
-    dispatch(loginWithToken());
+    try {
+      const response = await axios.post('/api/auth', credentials);
+      window.localStorage.setItem('token', response.data);
+      dispatch(loginWithToken());
+    } catch (error) {
+      console.log(error);
+    }
   };
 };
 

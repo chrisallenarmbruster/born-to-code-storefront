@@ -32,6 +32,31 @@ const Product = conn.define('product', {
     unique: false,
     validate: { notEmpty: true },
   },
+  descriptionPlus: {
+    type: STRING(1000),
+    allowNull: true,
+    required: false,
+  },
+  spec1: {
+    type: STRING(1000),
+    allowNull: true,
+    required: false,
+  },
+  spec2: {
+    type: STRING(1000),
+    allowNull: true,
+    required: false,
+  },
+  spec3: {
+    type: STRING(1000),
+    allowNull: true,
+    required: false,
+  },
+  spec4: {
+    type: STRING(1000),
+    allowNull: true,
+    required: false,
+  },
   sizeOptions: {
     type: STRING,
     allowNull: true,

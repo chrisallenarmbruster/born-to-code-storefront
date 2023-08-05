@@ -28,9 +28,11 @@ export const setSingleProduct = (id) => {
       dispatch(_setSingleProductLoading());
       const data = (await axios.get(`/api/products/${id}`)).data;
       dispatch(_setSingleProduct(data));
+      // await sleep(3000);
       dispatch(_clearSingleProductLoading());
     } catch (error) {
       console.log(error);
+      dispatch(clearSingleProduct());
       dispatch(_clearSingleProductLoading());
     }
   };
