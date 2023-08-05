@@ -17,7 +17,7 @@ export class ProductAll extends Component {
 
   render() {
     return (
-      <Container>
+      <Container className="mt-4">
         {this.props.isLoading ? (
           <div className="d-flex justify-content-center mt-5">
             <Spinner animation="grow" role="status">
@@ -36,9 +36,11 @@ export class ProductAll extends Component {
                     </Card.Title>
                   </Card.Body>
                   <Card.Footer className="d-flex justify-content-between align-items-center">
-                    <span className="fw-bold">{`$${product.price}`}</span>{' '}
+                    <span className="fw-bold h4">{`$${product.price}`}</span>{' '}
                     <span>
-                      <AddToCart product={product} />
+                      <span title="Add to Cart">
+                        <AddToCart product={product} />
+                      </span>
                       <Link to={`/products/${product.id}`} className="ms-1">
                         <Button title="Details" variant="primary">
                           <i className="bi bi-list-ul"></i>
