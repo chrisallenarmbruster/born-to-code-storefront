@@ -34,4 +34,4 @@ const mapDispatchToProps = (dispatch) => ({
   addToCart: (product) => dispatch(addToCart(product)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProductAll);
+export default connect(mapStateToProps, mapDispatchToProps)(AddToCart);
