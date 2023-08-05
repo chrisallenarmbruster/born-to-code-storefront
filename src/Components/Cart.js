@@ -24,9 +24,14 @@ const Cart = (props) => {
     await props.updateQuantity({ cart, product, quantity });
   }
 
-  const handleQuantityChange = (event) => {
+  const handleQuantityChange = async (event, cart, product, oldQuantity) => {
+    console.log('inside handleQuantityChange', event, oldQuantity);
     const newQuantity = Number(event.target.value);
-    dispatch(updateQuantity({ itemId, quantity: newQuantity }));
+    await props.updateQuantity({
+      cart,
+      product,
+      quantity: newQuantity - oldQuantity,
+    });
   };
   let subtotal = 0;
   lineItems.forEach((element) => {
@@ -65,7 +70,14 @@ const Cart = (props) => {
                         <Form.Control
                           as="select"
                           custom
-                          onChange={handleQuantityChange}
+                          onChange={(e) =>
+                            handleQuantityChange(
+                              e,
+                              cart,
+                              item.product,
+                              item.quantity
+                            )
+                          }
                         >
                           <option value={item.quantity}>{item.quantity}</option>
                           <option value={1}>1</option>
