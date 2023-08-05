@@ -9,6 +9,15 @@ const _updateQuantity = (cart, product, quantity) => {
   };
 };
 
+const _addToCart = (cart, product, quantity) => {
+  return {
+    type: 'ADD_TO_CART',
+    cart,
+    product,
+    quantity,
+  };
+};
+
 export const fetchCart = () => {
   return async (dispatch) => {
     const token = window.localStorage.getItem('token');
@@ -18,6 +27,29 @@ export const fetchCart = () => {
       },
     });
     dispatch({ type: 'SET_CART', cart: response.data });
+  };
+};
+
+export const addToCart = (obj) => {
+  console.log(
+    'inside addToCart product : ',
+    obj.product,
+    'quantity : ',
+    obj.quantity
+  );
+  let { product, quantity } = obj;
+  return async (dispatch) => {
+    const token = window.localStorage.getItem('token');
+    const { data: updated } = await axios.post(
+      '/api/orders/cart',
+      { product, quantity },
+      {
+        headers: {
+          authorization: token,
+        },
+      }
+    );
+    dispatch(_addToCart(updated, product, quantity));
   };
 };
 
