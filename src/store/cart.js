@@ -9,6 +9,15 @@ const _updateQuantity = (cart, product, quantity) => {
   };
 };
 
+const _addToCart = (cart, product, quantity) => {
+  return {
+    type: 'ADD_TO_CART',
+    cart,
+    product,
+    quantity,
+  };
+};
+
 export const fetchCart = () => {
   return async (dispatch) => {
     const token = window.localStorage.getItem('token');
@@ -18,6 +27,30 @@ export const fetchCart = () => {
       },
     });
     dispatch({ type: 'SET_CART', cart: response.data });
+  };
+};
+
+export const addToCart = (obj) => {
+  console.log(
+    'inside addToCart product : ',
+    obj.product,
+    'quantity : ',
+    obj.quantity
+  );
+  let { product, quantity } = obj;
+  return async (dispatch) => {
+    const token = window.localStorage.getItem('token');
+    const { data: updated } = await axios.post(
+      '/api/orders/cart',
+      { product, quantity },
+      {
+        headers: {
+          authorization: token,
+        },
+      }
+    );
+    console.log('updated inside addto cart', updated);
+    dispatch(_addToCart(updated, product, quantity));
   };
 };
 
@@ -46,6 +79,8 @@ const cartReducer = (state = initialState, action) => {
     case 'SET_CART':
       return action.cart;
     case 'UPDATE_QUANTITY':
+      return action.cart;
+    case 'ADD_TO_CART':
       return action.cart;
 
     default:

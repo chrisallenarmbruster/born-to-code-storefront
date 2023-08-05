@@ -93,6 +93,7 @@ User.prototype.getCart = async function () {
 };
 
 User.prototype.addToCart = async function ({ product, quantity }) {
+  console.log('inside User.js addToCart', product, quantity);
   const cart = await this.getCart();
   let lineItem = cart.lineItems.find((lineItem) => {
     return lineItem.productId === product.id;
