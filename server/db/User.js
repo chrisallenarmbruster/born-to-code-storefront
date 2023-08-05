@@ -110,17 +110,27 @@ User.prototype.addToCart = async function ({ product, quantity }) {
   return this.getCart();
 };
 
+User.prototype.updateQuantity = async function ({ product, quantity }) {
+  console.log('inside User.js updateQuantity', product, quantity);
+  const cart = await this.getCart();
+  const lineItem = cart.lineItems.find((lineItem) => {
+    return lineItem.productId === product.id;
+  });
+  lineItem.quantity = lineItem.quantity + quantity;
+  if (lineItem.quantity <= 0) {
+    await lineItem.destroy();
+  } else {
+    await lineItem.save();
+  }
+  return this.getCart();
+};
+
 User.prototype.removeFromCart = async function ({ product }) {
   const cart = await this.getCart();
   const lineItem = cart.lineItems.find((lineItem) => {
     return lineItem.productId === product.id;
   });
-  if (lineItem.quantity > 0) {
-    lineItem.quantity -= 1;
-    await lineItem.save();
-  } else {
-    await lineItem.destroy();
-  }
+  await lineItem.destroy();
   return this.getCart();
 };
 

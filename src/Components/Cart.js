@@ -14,15 +14,14 @@ import {
   Form,
 } from 'react-bootstrap';
 
-import { deleteFromCart } from '../store/cart';
 import { updateQuantity } from '../store/cart';
 
 const Cart = (props) => {
   const { cart } = props;
   const lineItems = cart.lineItems;
 
-  async function handleSubmit(cart, product, quantitiyToRemove) {
-    await props.deleteFromCart({ cart, product, quantitiyToRemove });
+  async function handleRemove(cart, product, quantity) {
+    await props.updateQuantity({ cart, product, quantity });
   }
 
   const handleQuantityChange = (event) => {
@@ -82,7 +81,9 @@ const Cart = (props) => {
                           <Button
                             variant="secondary"
                             size="sm"
-                            onClick={() => handleSubmit(cart, item.product, 1)}
+                            onClick={() =>
+                              handleRemove(cart, item.product, -item.quantity)
+                            }
                           >
                             Remove
                           </Button>
@@ -148,7 +149,7 @@ const Cart = (props) => {
                         <Button
                           variant="primary"
                           size="lg"
-                          onClick={() => handleSubmit(cart, item.product, 1)}
+                          onClick={() => handleRemove(cart, item.product, 1)}
                         >
                           Check Out
                         </Button>
@@ -174,7 +175,7 @@ const mapStateToProps = (state) => {
 // define mapDispatchToProps
 const mapDispatchToProps = (dispatch, { history }) => {
   return {
-    deleteFromCart: (item) => dispatch(deleteFromCart(item, history)),
+    updateQuantity: (item) => dispatch(updateQuantity(item, history)),
   };
 };
 
