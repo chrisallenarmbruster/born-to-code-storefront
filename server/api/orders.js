@@ -45,8 +45,11 @@ app.post('/cart', async (req, res, next) => {
 
 app.put('/cart', async (req, res, next) => {
   try {
+    console.log('inside put route', req.body);
+
     const user = await User.findByToken(req.headers.authorization);
-    res.send(await user.removeFromCart(req.body));
+    console.log('api route ', req.body);
+    res.send(await user.updateQuantity(req.body));
   } catch (ex) {
     next(ex);
   }
