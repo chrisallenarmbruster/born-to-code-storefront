@@ -14,11 +14,14 @@ import {
   Form,
 } from 'react-bootstrap';
 
-import { updateQuantity } from '../store/cart';
+import { updateQuantity, fetchCart } from '../store/cart';
+import { useEffect } from 'react';
 
 const Cart = (props) => {
   const { cart } = props;
   const lineItems = cart.lineItems;
+
+  console.log('inside Cart', props);
 
   async function handleRemove(cart, product, quantity) {
     await props.updateQuantity({ cart, product, quantity });
@@ -49,16 +52,20 @@ const Cart = (props) => {
         </div>
         {lineItems.map((item) => {
           return (
-            <Card style={{ height: '12rem' }} key={item.product.id}>
-              <Card.Body>
-                <Container fluid>
+            <Container>
+              <Card
+                style={{ height: '12rem', border: 0 }}
+                key={item.product.id}
+              >
+                <Card.Body className="square border-top">
                   <Row>
                     <Col sm={2}>
                       <Image
-                        style={{ height: '5rem' }}
+                        style={{ height: '5rem', border: 0 }}
                         src={item.product.imageUrl1}
                         alt={item.product.name}
-                        thumbnail
+                        class="shadow-lg p-3 mb-5 bg-white rounded"
+                        thumbnail={true}
                       ></Image>
                     </Col>
                     <Col sm={7}>
@@ -103,14 +110,14 @@ const Cart = (props) => {
                       </ButtonToolbar>
                     </Col>
                   </Row>
-                </Container>
-              </Card.Body>
-            </Card>
+                </Card.Body>
+              </Card>
+            </Container>
           );
         })}
-        <Card style={{ height: '8rem' }}>
-          <Card.Body>
-            <Container fluid>
+        <Container>
+          <Card style={{ height: '8rem', border: 0 }}>
+            <Card.Body className="square border-top">
               <Row>
                 <Col sm={2}></Col>
                 <Col sm={7}>Subtotal</Col>
@@ -129,15 +136,13 @@ const Cart = (props) => {
                 <Col sm={1}></Col>
                 <Col sm={2}>$1.00</Col>
               </Row>
-            </Container>
-          </Card.Body>
-        </Card>
-        <Row>
-          <Col sm={2}></Col>
-          <Col sm={10}>
-            <Card style={{ height: '8rem', border: 0 }}>
-              <Card.Body>
-                <Container fluid>
+            </Card.Body>
+          </Card>
+          <Row>
+            <Col sm={2}></Col>
+            <Col sm={10}>
+              <Card style={{ height: '8rem', border: 0 }}>
+                <Card.Body className="square border-top">
                   <Row>
                     <Col></Col>
                     <Col></Col>
@@ -169,11 +174,11 @@ const Cart = (props) => {
                     </Col>
                     <Col sm={1}></Col>
                   </Row>
-                </Container>
-              </Card.Body>
-            </Card>
-          </Col>
-        </Row>
+                </Card.Body>
+              </Card>
+            </Col>
+          </Row>
+        </Container>
       </>
     );
   }
@@ -188,6 +193,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch, { history }) => {
   return {
     updateQuantity: (item) => dispatch(updateQuantity(item, history)),
+    fetchCart: () => dispatch(fetchCart()),
   };
 };
 

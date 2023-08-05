@@ -49,6 +49,7 @@ export const addToCart = (obj) => {
         },
       }
     );
+    console.log('updated inside addto cart', updated);
     dispatch(_addToCart(updated, product, quantity));
   };
 };
@@ -78,6 +79,8 @@ const cartReducer = (state = initialState, action) => {
     case 'SET_CART':
       return action.cart;
     case 'UPDATE_QUANTITY':
+      return action.cart;
+    case 'ADD_TO_CART':
       return action.cart;
 
     default:
