@@ -5,6 +5,8 @@ import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
+import Button from 'react-bootstrap/Button';
+import { Link } from 'react-router-dom';
 
 export class ProductAll extends Component {
   componentDidMount() {
@@ -19,16 +21,22 @@ export class ProductAll extends Component {
         ) : (
           <Row xs={1} md={2} lg={3} className="g-5">
             {this.props.products.map((product) => (
-              <Col className="g-5">
+              <Col key={product.id} className="g-5">
                 <Card key={product.id} className="h-100 shadow">
                   <Card.Img variant="top" src={product.imageUrl1} />
                   <Card.Body>
                     <Card.Title>
                       {product.name} {product.color ? `(${product.color})` : ''}
                     </Card.Title>
-                    <Card.Text>{product.description}</Card.Text>
-                    <Card.Text>{product.price}</Card.Text>
                   </Card.Body>
+                  <Card.Footer className="d-flex justify-content-between align-items-center">
+                    <span className="fw-bold">{`$${product.price}`}</span>{' '}
+                    <Link to={`/products/${product.id}`}>
+                      <Button title="Details" variant="primary">
+                        <i className="bi bi-list-ul"></i>
+                      </Button>
+                    </Link>
+                  </Card.Footer>
                 </Card>
               </Col>
             ))}

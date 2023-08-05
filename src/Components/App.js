@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Home from './Home';
 import Login from './Login';
 import Cart from './Cart';
 import NavBar from './Navbar';
@@ -21,28 +20,20 @@ class App extends Component {
     }
   }
   render() {
-    const auth = this.props.auth;
     return (
       <div>
         <NavBar />
-        {auth.id ? <Home /> : <Login />}
-        {!!auth.id && (
-          <div>
-            {/* <nav>
-              <Link to="/">Home</Link>
-              <Link to="/cart">Cart</Link>
-              <Link to="/products">Products</Link>
-              {auth.id ? <Link to={`/users/${auth.id}`}>Profile</Link> : ''}
-            </nav> */}
-            <Routes>
-              <Route path="/cart" element={<Cart />} />
-              <Route path="/" element={<ProductLanding />} />
-              <Route path="/products" element={<ProductAll />} />
-              <Route path="/products/:id" element={<ProductSingle />} />
-              <Route path="/users/:id" element={<User />} />
-            </Routes>
-          </div>
-        )}
+        <div>
+          <Routes>
+            <Route path="/" element={<ProductLanding />} />
+            <Route path="/home" element={<ProductLanding />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/products" element={<ProductAll />} />
+            <Route path="/products/:id" element={<ProductSingle />} />
+            <Route path="/users/:id" element={<User />} />
+          </Routes>
+        </div>
       </div>
     );
   }
