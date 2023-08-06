@@ -1,18 +1,31 @@
-import React from 'react';
-import Button from 'react-bootstrap/Button';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import Button from 'react-bootstrap/Button';
+import CarouselWrapper from './CarouselWrapper';
 
-const ProductLanding = () => {
-  return (
-    <div className="container">
-      <h1>Future Product Landing Page</h1>
-      <div>
-        <Link to="/products">
-          <Button variant="primary">Go to Products</Button>
-        </Link>
-      </div>
-    </div>
-  );
-};
+export class ProductLanding extends Component {
+  render() {
+    console.log('carouseldata: ', this.carouselData);
+    return (
+      <React.Fragment>
+        <div className="container-fluid p-0 m-0">
+          <CarouselWrapper />
+        </div>
+        <div className="container my-5 h3 text-center">
+          Placeholder for featured items
+        </div>
+        <hr />
+        <div className="container my-5 h3 text-center">
+          Placeholder for testimonials
+        </div>
+        <hr />
+        <div className="container my-5 h3 text-center">
+          Placeholder for our story
+        </div>
+        <hr />
+      </React.Fragment>
+    );
+  }
+}
 
 export default ProductLanding;

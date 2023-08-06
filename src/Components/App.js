@@ -21,22 +21,21 @@ class App extends Component {
   }
   render() {
     return (
-  
-        <div>
-          <NavBar />
-          <div>
-            <Routes>
-              <Route path="/" element={<ProductLanding />} />
-              <Route path="/home" element={<ProductLanding />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/cart" element={<Cart />} />
-              <Route path="/products" element={<ProductAll />} />
-              <Route path="/products/:id" element={<ProductSingle />} />
-              <Route path="/users/:id" element={<User />} />
-            </Routes>
-          </div>
-        </div>
 
+      <React.Fragment>
+        <NavBar />
+        <React.Fragment>
+          <Routes>
+            <Route path="/" element={<ProductLanding />} />
+            <Route path="/home" element={<ProductLanding />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/products" element={<ProductAll />} />
+            <Route path="/products/:id" element={<ProductSingle />} />
+            <Route path="/users/:id" element={<User />} />
+          </Routes>
+        </React.Fragment>
+      </React.Fragment>
     );
   }
 }
