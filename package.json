@@ -23,7 +23,9 @@
     "jsonwebtoken": "^8.5.1",
     "pg": "^8.8.0",
     "react-bootstrap": "^2.8.0",
+    "react-square-web-payments-sdk": "^3.2.1",
     "sequelize": "^6.25.3",
+    "square": "^29.0.0",
     "volleyball": "^1.5.1"
   },
   "devDependencies": {

@@ -9,6 +9,7 @@ import User from './User';
 import { loginWithToken, fetchCart } from '../store';
 import { Link, Routes, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { PaymentForm } from 'react-square-web-payments-sdk';
 class App extends Component {
   componentDidMount() {
     this.props.loginWithToken();
@@ -20,20 +21,22 @@ class App extends Component {
   }
   render() {
     return (
-      <div>
-        <NavBar />
+  
         <div>
-          <Routes>
-            <Route path="/" element={<ProductLanding />} />
-            <Route path="/home" element={<ProductLanding />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/cart" element={<Cart />} />
-            <Route path="/products" element={<ProductAll />} />
-            <Route path="/products/:id" element={<ProductSingle />} />
-            <Route path="/users/:id" element={<User />} />
-          </Routes>
+          <NavBar />
+          <div>
+            <Routes>
+              <Route path="/" element={<ProductLanding />} />
+              <Route path="/home" element={<ProductLanding />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/cart" element={<Cart />} />
+              <Route path="/products" element={<ProductAll />} />
+              <Route path="/products/:id" element={<ProductSingle />} />
+              <Route path="/users/:id" element={<User />} />
+            </Routes>
+          </div>
         </div>
-      </div>
+
     );
   }
 }
