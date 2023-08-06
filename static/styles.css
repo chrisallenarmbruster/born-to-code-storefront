@@ -6,6 +6,16 @@ body {
   font-family: Inter;
 }
 
+.my-modal {
+  width: 90vw; /* Occupy the 90% of the screen width */
+  max-width: 90vw;
+  margin: auto;
+}
+
+.modal-height {
+  height: 96%;
+}
+
 .carousel-container {
   position: absolute;
   bottom: 0;
