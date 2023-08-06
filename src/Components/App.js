@@ -20,9 +20,9 @@ class App extends Component {
   }
   render() {
     return (
-      <div>
+      <React.Fragment>
         <NavBar />
-        <div>
+        <React.Fragment>
           <Routes>
             <Route path="/" element={<ProductLanding />} />
             <Route path="/home" element={<ProductLanding />} />
@@ -32,8 +32,8 @@ class App extends Component {
             <Route path="/products/:id" element={<ProductSingle />} />
             <Route path="/users/:id" element={<User />} />
           </Routes>
-        </div>
-      </div>
+        </React.Fragment>
+      </React.Fragment>
     );
   }
 }
