@@ -56,3 +56,9 @@ body {
     position: relative;
   }
 }
+
+.my-custom-class {
+  background-color: #ffffff;
+  color: rgb(202, 12, 12);
+  width: 100%;
+}

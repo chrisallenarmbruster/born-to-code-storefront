@@ -16,8 +16,13 @@ import MyPaymentForm from './Payment';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { updateQuantity, fetchCart } from '../store/cart';
-import { CreditCard, PaymentForm } from 'react-square-web-payments-sdk';
-
+import {
+  GooglePay,
+  GooglePayProps,
+  ApplePay,
+  ApplePayProps,
+  PaymentForm,
+} from 'react-square-web-payments-sdk';
 function CheckOut(props) {
   const { cart } = props;
   const lineItems = cart.lineItems;
@@ -35,6 +40,9 @@ function CheckOut(props) {
 
   return (
     <PaymentForm
+      formProps={{
+        className: 'my-custom-class',
+      }}
       /**
        * Identifies the calling form with a verified application ID generated from
        * the Square Application Dashboard.
@@ -65,6 +73,53 @@ function CheckOut(props) {
         },
         currencyCode: 'GBP',
         intent: 'CHARGE',
+      })}
+      createPaymentRequest={() => ({
+        countryCode: 'US',
+        currencyCode: 'USD',
+        lineItems: [
+          {
+            amount: '22.15',
+            label: 'Item to be purchased',
+            id: 'SKU-12345',
+            imageUrl: 'https://url-cdn.com/123ABC',
+            pending: true,
+            productUrl: 'https://my-company.com/product-123ABC',
+          },
+        ],
+        taxLineItems: [
+          {
+            label: 'State Tax',
+            amount: '8.95',
+            pending: true,
+          },
+        ],
+        discounts: [
+          {
+            label: 'Holiday Discount',
+            amount: '5.00',
+            pending: true,
+          },
+        ],
+        requestBillingContact: false,
+        requestShippingContact: false,
+        shippingOptions: [
+          {
+            label: 'Next Day',
+            amount: '15.69',
+            id: '1',
+          },
+          {
+            label: 'Three Day',
+            amount: '2.00',
+            id: '2',
+          },
+        ],
+        // pending is only required if it's true.
+        total: {
+          amount: '41.79',
+          label: 'Total',
+        },
       })}
       /**
        * Identifies the location of the merchant that is taking the payment.
@@ -215,12 +270,19 @@ function CheckOut(props) {
                       </Form>
                     </Col>
                   </Row>
+                  <Row>
+                    <MyPaymentForm />
+                  </Row>
                 </Card.Body>
               </Card>
             </Container>
           </Modal.Body>
           <Modal.Footer>
-            <MyPaymentForm />
+            {/* <ApplePay ApplePayProps={ApplePayProps} /> */}
+            {/* 
+            <Row>
+              <GooglePay GooglePayProps={GooglePayProps} />
+            </Row> */}
           </Modal.Footer>
         </Modal>
       </>
