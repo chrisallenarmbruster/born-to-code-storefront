@@ -9,7 +9,7 @@ import User from './User';
 import { loginWithToken, fetchCart } from '../store';
 import { Link, Routes, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { PaymentForm } from 'react-square-web-payments-sdk';
+
 class App extends Component {
   componentDidMount() {
     this.props.loginWithToken();

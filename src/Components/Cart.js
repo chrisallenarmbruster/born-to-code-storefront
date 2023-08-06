@@ -51,9 +51,9 @@ const Cart = (props) => {
         <div className="d-flex justify-content-center">
           <h1>Your cart total is ${subtotal.toFixed(2)}</h1>
         </div>
-        {lineItems.map((item) => {
+        {lineItems.map((item, index) => {
           return (
-            <Container>
+            <Container key={index}>
               <Card
                 style={{ height: '12rem', border: 0 }}
                 key={item.product.id}
@@ -65,7 +65,6 @@ const Cart = (props) => {
                         style={{ height: '5rem', border: 0 }}
                         src={item.product.imageUrl1}
                         alt={item.product.name}
-                        class="shadow-lg p-3 mb-5 bg-white rounded"
                         thumbnail={true}
                       ></Image>
                     </Col>
@@ -77,7 +76,6 @@ const Cart = (props) => {
                       <Form.Group controlId="exampleForm.SelectCustom">
                         <Form.Control
                           as="select"
-                          custom
                           onChange={(e) =>
                             handleQuantityChange(
                               e,
