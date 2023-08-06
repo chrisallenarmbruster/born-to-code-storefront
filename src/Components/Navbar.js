@@ -20,11 +20,11 @@ const NavBar = () => {
             <Nav.Link href="#/products">Products</Nav.Link>
             <Nav.Link href="#/users/:id">Profile</Nav.Link>
             <NavDropdown title="Products" id="basic-nav-dropdown">
-              <NavDropdown.item href="#/products/hats">Hats</NavDropdown.item>
-              <NavDropdown.item href="#/products/mugs">Mugs</NavDropdown.item>
-              <NavDropdown.item href="#/products/shirts">
+              <NavDropdown.Item href="#/products/hats">Hats</NavDropdown.Item>
+              <NavDropdown.Item href="#/products/mugs">Mugs</NavDropdown.Item>
+              <NavDropdown.Item href="#/products/shirts">
                 Shirts
-              </NavDropdown.item>
+              </NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item href="">
                 All products
