@@ -11,6 +11,7 @@ import {
   Image,
   ButtonToolbar,
   Form,
+  CloseButton,
 } from 'react-bootstrap';
 import MyPaymentForm from './Payment';
 import { Link } from 'react-router-dom';
@@ -33,6 +34,12 @@ function CheckOut(props) {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  let subtotal = 0;
+  lineItems.forEach((element) => {
+    subtotal =
+      subtotal + Number(element.quantity) * Number(element.product.price);
+  });
 
   async function handleRemove(cart, product, quantity) {
     await props.updateQuantity({ cart, product, quantity });
@@ -149,39 +156,71 @@ function CheckOut(props) {
                     style={{ height: '3rem', border: 0 }}
                     key={item.product.id}
                   >
-                    <Card.Body border={0} className="square border-bottom">
+                    <Card.Body
+                      border={0}
+                      className="square border-bottom"
+                      aria-label="Form"
+                    >
                       <Row>
                         <Col sm={6}>
-                          <Card.Text style={{ fontSize: 12 }}>
+                          <Card.Text
+                            style={{ fontSize: 12 }}
+                            aria-label="Product"
+                          >
                             {item.product.name}
                           </Card.Text>
                         </Col>
                         <Col sm={2}>
-                          <Card.Text style={{ fontSize: 12 }}>
+                          <Card.Text
+                            style={{ fontSize: 12 }}
+                            aria-label="Quantity"
+                          >
                             Quantity: {item.quantity}
                           </Card.Text>
                         </Col>
                         <Col sm={2}>
-                          <Card.Text style={{ fontSize: 12 }}>
+                          <Card.Text
+                            style={{ fontSize: 12 }}
+                            aria-label="Price"
+                          >
                             Price: ${item.product.price}
                           </Card.Text>
                         </Col>
                         <Col sm={2}>
-                          <Button
-                            variant="secondary"
-                            size="sm"
+                          <CloseButton
+                            aria-label="Remove"
                             onClick={() =>
-                              handleRemove(cart, item.product, item.quantity)
+                              handleRemove(cart, item.product, -item.quantity)
                             }
-                          >
-                            Remove
-                          </Button>
+                          ></CloseButton>
                         </Col>
                       </Row>
                     </Card.Body>
                   </Card>
                 );
               })}
+              <Card style={{ height: '8rem', border: 0 }}>
+                <Card.Body className="square border-top">
+                  <Row>
+                    <Col sm={2}></Col>
+                    <Col sm={7}>Subtotal</Col>
+                    <Col sm={1}></Col>
+                    <Col sm={2}>${subtotal.toFixed(2)}</Col>
+                  </Row>
+                  <Row>
+                    <Col sm={2}></Col>
+                    <Col sm={7}>Shipping</Col>
+                    <Col sm={1}></Col>
+                    <Col sm={2}>Free</Col>
+                  </Row>
+                  <Row>
+                    <Col sm={2}></Col>
+                    <Col sm={7}>Estimated tax for: 80439</Col>
+                    <Col sm={1}></Col>
+                    <Col sm={2}>$1.00</Col>
+                  </Row>
+                </Card.Body>
+              </Card>
               <Card style={{ height: '3rem', border: 0 }}>
                 <Card.Body border={0} className="square border-bottom">
                   <Row>Where should we send your order?</Row>
