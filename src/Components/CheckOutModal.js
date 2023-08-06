@@ -40,9 +40,6 @@ function CheckOut(props) {
 
   return (
     <PaymentForm
-      formProps={{
-        className: 'my-custom-class',
-      }}
       /**
        * Identifies the calling form with a verified application ID generated from
        * the Square Application Dashboard.
