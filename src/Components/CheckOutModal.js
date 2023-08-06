@@ -60,13 +60,19 @@ function CheckOut(props) {
                   <Card.Body border={0} className="square border-bottom">
                     <Row>
                       <Col sm={6}>
-                        <Card.Text>{item.product.name}</Card.Text>
+                        <Card.Text style={{ fontSize: 12 }}>
+                          {item.product.name}
+                        </Card.Text>
                       </Col>
                       <Col sm={2}>
-                        <Card.Text>Quantity: {item.quantity}</Card.Text>
+                        <Card.Text style={{ fontSize: 12 }}>
+                          Quantity: {item.quantity}
+                        </Card.Text>
                       </Col>
                       <Col sm={2}>
-                        <Card.Text>Price: ${item.product.price}</Card.Text>
+                        <Card.Text style={{ fontSize: 12 }}>
+                          Price: ${item.product.price}
+                        </Card.Text>
                       </Col>
                       <Col sm={2}>
                         <Button
