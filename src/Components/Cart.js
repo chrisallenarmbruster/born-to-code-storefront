@@ -67,10 +67,9 @@ const Cart = (props) => {
                       <Card.Text>{item.product.description}</Card.Text>
                     </Col>
                     <Col xs={1}>
-                      <Form.Group controlId="exampleForm.SelectCustom">
+                      <Form.Group controlId="">
                         <Form.Control
                           as="select"
-                          custom
                           onChange={(e) =>
                             handleQuantityChange(
                               e,
