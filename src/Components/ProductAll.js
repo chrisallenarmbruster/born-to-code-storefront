@@ -110,16 +110,36 @@ export class ProductAll extends Component {
                 defaultActiveKey={`/#/products?category=${this.state.category}`}
               >
                 <Nav.Item>
-                  <Nav.Link href="/#/products?category=all">Shop All</Nav.Link>
+                  <Nav.Link
+                    href="/#/products?category=all"
+                    active={this.state.category === 'all'}
+                  >
+                    Shop All
+                  </Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
-                  <Nav.Link href="/#/products?category=hats">Hats</Nav.Link>
+                  <Nav.Link
+                    href="/#/products?category=hats"
+                    active={this.state.category === 'hats'}
+                  >
+                    Hats
+                  </Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
-                  <Nav.Link href="/#/products?category=shirts">Shirts</Nav.Link>
+                  <Nav.Link
+                    href="/#/products?category=shirts"
+                    active={this.state.category === 'shirts'}
+                  >
+                    Shirts
+                  </Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
-                  <Nav.Link href="/#/products?category=mugs">Mugs</Nav.Link>
+                  <Nav.Link
+                    href="/#/products?category=mugs"
+                    active={this.state.category === 'mugs'}
+                  >
+                    Mugs
+                  </Nav.Link>
                 </Nav.Item>
               </Nav>
             </div>
