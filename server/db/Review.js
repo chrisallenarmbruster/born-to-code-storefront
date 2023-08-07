@@ -12,4 +12,33 @@ const Review = conn.define('review', {
   },
 });
 
+async function updateProductRating(productId) {
+  const Product = require('./Product');
+  const product = await Product.findByPk(productId);
+  const reviews = await product.getReviews();
+  // const ratings = reviews.map((review) => review.rating);
+  if (reviews.length === 0) {
+    await product.update({ rating: null, reviewCount: 0 });
+  } else {
+    const averageRating =
+      reviews.reduce((acc, curr) => acc + curr.rating, 0) / reviews.length;
+    await product.update({
+      rating: averageRating,
+      reviewCount: reviews.length,
+    });
+  }
+}
+
+Review.addHook('afterCreate', async (review) => {
+  await updateProductRating(review.productId);
+});
+
+Review.addHook('afterUpdate', async (review) => {
+  await updateProductRating(review.productId);
+});
+
+Review.addHook('afterDestroy', async (review) => {
+  await updateProductRating(review.productId);
+});
+
 module.exports = Review;

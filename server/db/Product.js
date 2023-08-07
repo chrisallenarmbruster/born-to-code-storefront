@@ -1,6 +1,7 @@
 // const { ENUM } = require('sequelize');
 const conn = require('./conn');
-const { UUID, UUIDV4, STRING, ENUM, DECIMAL, BOOLEAN } = conn.Sequelize;
+const { UUID, UUIDV4, STRING, ENUM, DECIMAL, BOOLEAN, INTEGER } =
+  conn.Sequelize;
 
 const Product = conn.define('product', {
   id: {
@@ -102,6 +103,10 @@ const Product = conn.define('product', {
   },
   rating: {
     type: DECIMAL(2, 1),
+  },
+  reviewCount: {
+    type: INTEGER,
+    defaultValue: 0,
   },
   isFeatured: {
     type: BOOLEAN,
