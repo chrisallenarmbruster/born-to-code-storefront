@@ -16,6 +16,11 @@ body {
   height: 96%;
 }
 
+.unformatted-footer {
+  background-color: #fff;
+  border-top: 0px;
+}
+
 .carousel-container {
   position: absolute;
   bottom: 0;

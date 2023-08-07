@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { setProducts } from '../store/productAll';
-import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
-import Button from 'react-bootstrap/Button';
-import { Link } from 'react-router-dom';
 import Spinner from 'react-bootstrap/Spinner';
-import AddToCart from './AddToCart';
+import ProductCatalogItemCard from './ProductCatalogItemCard';
 
 export class ProductAll extends Component {
   componentDidMount() {
@@ -28,31 +25,7 @@ export class ProductAll extends Component {
           <Row xs={1} md={2} lg={3} className="g-5">
             {this.props.products.map((product) => (
               <Col key={product.id} className="g-5">
-                <Card key={product.id} className="h-100 shadow">
-                  <Card.Img
-                    className="p-5"
-                    variant="top"
-                    src={product.imageUrl1}
-                  />
-                  <Card.Body>
-                    <Card.Title className="text-center">
-                      {product.name}
-                    </Card.Title>
-                  </Card.Body>
-                  <Card.Footer className="d-flex justify-content-between align-items-center">
-                    <span className="fw-bold h4">{`$${product.price}`}</span>{' '}
-                    <span>
-                      <span title="Add to Cart">
-                        <AddToCart product={product} />
-                      </span>
-                      <Link to={`/products/${product.id}`} className="ms-1">
-                        <Button title="Details" variant="primary">
-                          <i className="bi bi-list-ul"></i>
-                        </Button>
-                      </Link>
-                    </span>
-                  </Card.Footer>
-                </Card>
+                <ProductCatalogItemCard product={product} />
               </Col>
             ))}
           </Row>
