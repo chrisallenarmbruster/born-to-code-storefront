@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { attemptLogin, logout } from '../store';
 import { connect } from 'react-redux';
+import Button from 'react-bootstrap/Button'
 class Login extends Component {
   constructor() {
     super();
@@ -43,20 +44,46 @@ class Login extends Component {
         ) : (
           <div>
             <h2>Login</h2>
+            <Button variant="primary">Login</Button>
+            <Button variant="secondary">Register</Button>
+            <p>Sign in with Username and Password</p>
             <form onSubmit={login}>
               <input
-                placeholder="username"
+                placeholder="Username"
                 value={credentials.username}
                 name="username"
                 onChange={onChange}
               />
               <input
                 placeholder="password"
-                name="password"
+                name="Password"
                 value={credentials.password}
                 onChange={onChange}
               />
               <button>Login</button>
+            </form>
+            
+            <p>Sign up with Username and Password</p>
+            <form onSubmit={"signUp function here"}>
+              <input
+                placeholder="Username"
+                value={""}
+                name="username"
+                onChange={onChange}
+              />
+              <input
+                placeholder="Password"
+                name="Password"
+                value={""}
+                onChange={onChange}
+              />
+              <input
+                placeholder="Repeat Password"
+                name="Repeat Password"
+                value={""}
+                onChange={onChange}
+              />
+              <button>Sign Up</button>
             </form>
           </div>
         )}
