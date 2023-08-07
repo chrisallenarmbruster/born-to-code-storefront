@@ -5,10 +5,13 @@ import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
+
 //if auth id on state, logout button, otherwise login button
 //search bar links to products page
 //search equals to products
-//classname for sticky navbar
+
+//Remove first products link from navbar, redundant now
+
 const NavBar = () => {
   return (
     <Navbar expand="lg" bg="dark" variant="dark" sticky="top">
