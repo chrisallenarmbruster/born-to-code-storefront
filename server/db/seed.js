@@ -34,7 +34,7 @@ Array.prototype.random = function () {
 productData = [
   {
     name: 'May the Source Be With You Hat',
-    category: 'Hat',
+    category: 'hats',
     description: faker.lorem.paragraphs(1),
     descriptionPlus: faker.lorem.paragraphs(1),
     spec1: faker.lorem.lines(1),
@@ -47,7 +47,7 @@ productData = [
   },
   {
     name: 'May the Source Be With You Hat',
-    category: 'Hat',
+    category: 'hats',
     description: faker.lorem.paragraphs(1),
     descriptionPlus: faker.lorem.paragraphs(1),
     spec1: faker.lorem.lines(1),
@@ -60,7 +60,7 @@ productData = [
   },
   {
     name: 'Eat Sleep Code Repeat Hat',
-    category: 'Hat',
+    category: 'hats',
     description: faker.lorem.paragraphs(1),
     descriptionPlus: faker.lorem.paragraphs(1),
     spec1: faker.lorem.lines(1),
@@ -73,7 +73,7 @@ productData = [
   },
   {
     name: 'Eat Sleep Code Repeat Hat',
-    category: 'Hat',
+    category: 'hats',
     description: faker.lorem.paragraphs(1),
     descriptionPlus: faker.lorem.paragraphs(1),
     spec1: faker.lorem.lines(1),
@@ -86,7 +86,7 @@ productData = [
   },
   {
     name: 'Code Bugs Hat',
-    category: 'Hat',
+    category: 'hats',
     description: faker.lorem.paragraphs(1),
     descriptionPlus: faker.lorem.paragraphs(1),
     spec1: faker.lorem.lines(1),
@@ -99,7 +99,7 @@ productData = [
   },
   {
     name: 'Code Bugs Hat',
-    category: 'Hat',
+    category: 'hats',
     description: faker.lorem.paragraphs(1),
     descriptionPlus: faker.lorem.paragraphs(1),
     spec1: faker.lorem.lines(1),
@@ -112,7 +112,7 @@ productData = [
   },
   {
     name: 'Give Me a </br> Mug',
-    category: 'Mug',
+    category: 'mugs',
     description: faker.lorem.paragraphs(1),
     descriptionPlus: faker.lorem.paragraphs(1),
     spec1: faker.lorem.lines(1),
@@ -125,7 +125,7 @@ productData = [
   },
   {
     name: 'Give Me a </br> Mug',
-    category: 'Mug',
+    category: 'mugs',
     description: faker.lorem.paragraphs(1),
     descriptionPlus: faker.lorem.paragraphs(1),
     spec1: faker.lorem.lines(1),
@@ -138,7 +138,7 @@ productData = [
   },
   {
     name: 'Eat Sleep Code Repeat Mug',
-    category: 'Mug',
+    category: 'mugs',
     description: faker.lorem.paragraphs(1),
     descriptionPlus: faker.lorem.paragraphs(1),
     spec1: faker.lorem.lines(1),
@@ -151,7 +151,7 @@ productData = [
   },
   {
     name: 'Eat Sleep Code Repeat Mug',
-    category: 'Mug',
+    category: 'mugs',
     description: faker.lorem.paragraphs(1),
     descriptionPlus: faker.lorem.paragraphs(1),
     spec1: faker.lorem.lines(1),
@@ -164,7 +164,7 @@ productData = [
   },
   {
     name: 'Code Bugs Mug',
-    category: 'Mug',
+    category: 'mugs',
     description: faker.lorem.paragraphs(1),
     descriptionPlus: faker.lorem.paragraphs(1),
     spec1: faker.lorem.lines(1),
@@ -177,7 +177,7 @@ productData = [
   },
   {
     name: 'Code Bugs Mug',
-    category: 'Mug',
+    category: 'mugs',
     description: faker.lorem.paragraphs(1),
     descriptionPlus: faker.lorem.paragraphs(1),
     spec1: faker.lorem.lines(1),
@@ -190,7 +190,7 @@ productData = [
   },
   {
     name: 'This is My Coding Shirt T-Shirt',
-    category: 'T-Shirt',
+    category: 'shirts',
     description: faker.lorem.paragraphs(1),
     descriptionPlus: faker.lorem.paragraphs(1),
     spec1: faker.lorem.lines(1),
@@ -204,7 +204,7 @@ productData = [
   },
   {
     name: 'This is My Coding Shirt T-Shirt',
-    category: 'T-Shirt',
+    category: 'shirts',
     description: faker.lorem.paragraphs(1),
     descriptionPlus: faker.lorem.paragraphs(1),
     spec1: faker.lorem.lines(1),
@@ -218,7 +218,7 @@ productData = [
   },
   {
     name: 'Eat Sleep Code T-Shirt',
-    category: 'T-Shirt',
+    category: 'shirts',
     description: faker.lorem.paragraphs(1),
     descriptionPlus: faker.lorem.paragraphs(1),
     spec1: faker.lorem.lines(1),
@@ -232,7 +232,7 @@ productData = [
   },
   {
     name: 'Eat Sleep Code T-Shirt',
-    category: 'T-Shirt',
+    category: 'shirts',
     description: faker.lorem.paragraphs(1),
     descriptionPlus: faker.lorem.paragraphs(1),
     spec1: faker.lorem.lines(1),
@@ -246,7 +246,7 @@ productData = [
   },
   {
     name: 'Bugs T-Shirt',
-    category: 'T-Shirt',
+    category: 'shirts',
     description: faker.lorem.paragraphs(1),
     descriptionPlus: faker.lorem.paragraphs(1),
     spec1: faker.lorem.lines(1),
@@ -260,7 +260,7 @@ productData = [
   },
   {
     name: 'Bugs T-Shirt',
-    category: 'T-Shirt',
+    category: 'shirts',
     description: faker.lorem.paragraphs(1),
     descriptionPlus: faker.lorem.paragraphs(1),
     spec1: faker.lorem.lines(1),
@@ -274,7 +274,7 @@ productData = [
   },
   {
     name: 'Born to Code T-Shirt',
-    category: 'T-Shirt',
+    category: 'shirts',
     description: faker.lorem.paragraphs(1),
     descriptionPlus: faker.lorem.paragraphs(1),
     spec1: faker.lorem.lines(1),
@@ -288,7 +288,7 @@ productData = [
   },
   {
     name: 'Born to Code Mug',
-    category: 'Mug',
+    category: 'mugs',
     description: faker.lorem.paragraphs(1),
     descriptionPlus: faker.lorem.paragraphs(1),
     spec1: faker.lorem.lines(1),
@@ -301,7 +301,7 @@ productData = [
   },
   {
     name: 'Born to Code Baseball Hat',
-    category: 'Hat',
+    category: 'hats',
     description: faker.lorem.paragraphs(1),
     descriptionPlus: faker.lorem.paragraphs(1),
     spec1: faker.lorem.lines(1),
@@ -314,7 +314,7 @@ productData = [
   },
   {
     name: 'Born to Code Mug',
-    category: 'Mug',
+    category: 'mugs',
     description: faker.lorem.paragraphs(1),
     descriptionPlus: faker.lorem.paragraphs(1),
     spec1: faker.lorem.lines(1),
@@ -327,7 +327,7 @@ productData = [
   },
   {
     name: 'Born to Code T-Shirt',
-    category: 'T-Shirt',
+    category: 'shirts',
     description: faker.lorem.paragraphs(1),
     descriptionPlus: faker.lorem.paragraphs(1),
     spec1: faker.lorem.lines(1),
@@ -342,7 +342,7 @@ productData = [
   },
   {
     name: 'Born to Code Baseball Hat',
-    category: 'Hat',
+    category: 'hats',
     description: faker.lorem.paragraphs(1),
     descriptionPlus: faker.lorem.paragraphs(1),
     spec1: faker.lorem.lines(1),
