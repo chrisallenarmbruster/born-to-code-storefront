@@ -5,10 +5,13 @@ import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-
+//if auth id on state, logout button, otherwise login button
+//search bar links to products page
+//search equals to products
+//classname for sticky navbar
 const NavBar = () => {
   return (
-    <Navbar expand="lg" className="bg-body-tertiary">
+    <Navbar expand="lg" bg="dark" variant="dark" sticky="top">
       <Container>
         <Navbar.Brand href="/">Born to Code</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -20,16 +23,11 @@ const NavBar = () => {
             <Nav.Link href="#/products">Products</Nav.Link>
             <Nav.Link href="#/users/:id">Profile</Nav.Link>
             <NavDropdown title="Products" id="basic-nav-dropdown">
-              <NavDropdown.Item href="#/products/hats">Hats</NavDropdown.Item>
-              <NavDropdown.Item href="#/products/mugs">Mugs</NavDropdown.Item>
-              <NavDropdown.Item href="#/products/shirts">
-                Shirts
-              </NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="">
-                All products
-                {/* I feel that having a page for each category, and then an all products page makes sense */}
-              </NavDropdown.Item>
+              <NavDropdown.Item href="#/products?category=hats">Hats</NavDropdown.Item>
+              <NavDropdown.Item href="#/products?category=mugs">Mugs</NavDropdown.Item>
+              <NavDropdown.Item href="#/products?category=shirts">Shirts</NavDropdown.Item>
+              <NavDropdown.Divider />          
+              <NavDropdown.Item href="#/products">Products</NavDropdown.Item>        
             </NavDropdown>
           </Nav>
           <Form className="d-flex">
