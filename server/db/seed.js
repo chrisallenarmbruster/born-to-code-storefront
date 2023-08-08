@@ -83,6 +83,7 @@ productData = [
     color: 'Black',
     price: 10.0,
     imageUrl1: '/images/Hats/Eat_Sleep_Code_Repeat_Black_Baseball_Hat.png',
+    isFeatured: true,
   },
   {
     name: 'Code Bugs Hat',
@@ -135,6 +136,7 @@ productData = [
     color: 'White',
     price: 10.0,
     imageUrl1: '/images/Mugs/Give_Me_a_Br_ White_Camper_Mug.png',
+    isFeatured: true,
   },
   {
     name: 'Eat Sleep Code Repeat Mug',
@@ -257,6 +259,7 @@ productData = [
     color: 'Green',
     price: 20.0,
     imageUrl1: '/images/T-shirts/Bugs_Green_T-Shirt.png',
+    isFeatured: true,
   },
   {
     name: 'Bugs T-Shirt',
@@ -285,6 +288,7 @@ productData = [
     color: 'Purple',
     price: 20.0,
     imageUrl1: '/images/T-shirts/Born_to_Code_Purple_T-Shirt.png',
+    isFeatured: true,
   },
   {
     name: 'Born to Code Mug',
@@ -353,6 +357,7 @@ productData = [
     price: 15.0,
     gender: 'Unisex',
     imageUrl1: '/images/Hats/Born_to_Code_Black_Baseball_Hat.png',
+    isFeatured: true,
   },
 ];
 
