@@ -53,6 +53,10 @@ body {
   color: white;
 }
 
+.custom-card {
+  background: inherit !important;
+}
+
 @media screen and (min-width: 576px) {
   .carousel-item {
     height: 32rem;
