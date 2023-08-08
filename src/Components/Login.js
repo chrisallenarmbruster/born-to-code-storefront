@@ -103,10 +103,10 @@ class Login extends Component {
             <Form.Label htmlFor="SignUp">Sign up with Username and Password</Form.Label>
             <Form onSubmit={registerSubmit}>
               <FloatingLabel controlId="floatingUsername" label="Email">
-                <Form.Control type="email" placeholder="Email" name="username" value={credentials.username} onChange={onChange}/>
+                <Form.Control type="email" placeholder="Email" name="username" value={""} onChange={onChange}/>
               </FloatingLabel>
               <FloatingLabel controlId="floatingPassword" label="Password">
-                <Form.Control type="password" placeholder="Password" name="password" value={credentials.password} onChange={onChange}/>
+                <Form.Control type="password" placeholder="Password" name="password" value={""} onChange={onChange}/>
               </FloatingLabel>
 
               {/* <FloatingLabel controlId="floatingRepeatPassword" label="Repeat Password">
