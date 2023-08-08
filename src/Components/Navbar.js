@@ -5,6 +5,7 @@ import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
+import Search from './Search';
 //if auth id on state, logout button, otherwise login button
 //search bar links to products page
 //search equals to products
@@ -23,24 +24,20 @@ const NavBar = () => {
             <Nav.Link href="#/products">Products</Nav.Link>
             <Nav.Link href="#/users/:id">Profile</Nav.Link>
             <NavDropdown title="Products" id="basic-nav-dropdown">
-              <NavDropdown.Item href="#/products?category=hats">Hats</NavDropdown.Item>
-              <NavDropdown.Item href="#/products?category=mugs">Mugs</NavDropdown.Item>
-              <NavDropdown.Item href="#/products?category=shirts">Shirts</NavDropdown.Item>
-              <NavDropdown.Divider />          
-              <NavDropdown.Item href="#/products">Products</NavDropdown.Item>        
+              <NavDropdown.Item href="#/products?category=hats">
+                Hats
+              </NavDropdown.Item>
+              <NavDropdown.Item href="#/products?category=mugs">
+                Mugs
+              </NavDropdown.Item>
+              <NavDropdown.Item href="#/products?category=shirts">
+                Shirts
+              </NavDropdown.Item>
+              <NavDropdown.Divider />
+              <NavDropdown.Item href="#/products">Products</NavDropdown.Item>
             </NavDropdown>
           </Nav>
-          <Form className="d-flex">
-            <Form.Control
-              type="search"
-              placeholder="Search"
-              className="me-2 d-inline"
-              aria-label="Search"
-            />
-            <Button type="button" variant="outline-success">
-              Search
-            </Button>
-          </Form>
+          <Search />
           {/* Could put something here indicating the signed in user */}
         </Navbar.Collapse>
       </Container>
