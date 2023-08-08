@@ -8,6 +8,8 @@ import Form from 'react-bootstrap/Form';
 //user should be able to register with an email
 //username should be an email address
 
+//leaving toggle for later, need to get the register form working first
+
 class Login extends Component {
   constructor() {
     super();
@@ -51,10 +53,22 @@ class Login extends Component {
   //   console.log(this.state.view);
   // }
 
+  registerSubmit(data) {
+    fetch("/signup", {
+      method: "post",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json",
+      }
+    })
+  } 
+
   render() {
     const { credentials } = this.state;
     const { onChange } = this;
     const { login } = this;
+    const { registerSubmit } = this;
+    
     return (
       <div className="container">
         {this.props.auth.id ? (
@@ -69,8 +83,8 @@ class Login extends Component {
         ) : (
           <div>
             <h2>Login</h2>
-            <Button variant="primary" >Login</Button>
-            <Button variant="secondary" >Register</Button>
+            <Button variant="primary">Login</Button>
+            <Button variant="secondary">Register</Button>
             <br />
 
             <Form.Label htmlFor="SignIn">Sign in with Email and Password</Form.Label>
@@ -87,16 +101,17 @@ class Login extends Component {
             </Form>
             
             <Form.Label htmlFor="SignUp">Sign up with Username and Password</Form.Label>
-            <Form>
+            <Form onSubmit={registerSubmit}>
               <FloatingLabel controlId="floatingUsername" label="Email">
-                <Form.Control type="email" placeholder="Email" name="email" value={""} onChange={onChange}/>
+                <Form.Control type="email" placeholder="Email" name="username" value={credentials.username} onChange={onChange}/>
               </FloatingLabel>
               <FloatingLabel controlId="floatingPassword" label="Password">
-                <Form.Control type="password" placeholder="Password" name="password" value={""} onChange={onChange}/>
+                <Form.Control type="password" placeholder="Password" name="password" value={credentials.password} onChange={onChange}/>
               </FloatingLabel>
-              <FloatingLabel controlId="floatingRepeatPassword" label="Repeat Password">
+
+              {/* <FloatingLabel controlId="floatingRepeatPassword" label="Repeat Password">
                 <Form.Control type="password" placeholder="Repeat Password" name="repeat_password" value={""} onChange={onChange}/>
-              </FloatingLabel>
+              </FloatingLabel> */}
              
               <Button>Sign Up</Button>
             </Form>
