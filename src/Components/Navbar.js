@@ -12,6 +12,9 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 
 //Remove first products link from navbar, redundant now
 
+//ternary operator for login link to turn to logout
+//chris mentioned a thunk
+
 const NavBar = () => {
   return (
     <Navbar expand="lg" bg="dark" variant="dark" sticky="top">

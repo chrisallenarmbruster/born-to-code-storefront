@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import { attemptLogin, logout } from '../store';
 import { connect } from 'react-redux';
 import Button from 'react-bootstrap/Button'
+
+//user should be able to register with an email
+//username should be an email address
+
 class Login extends Component {
   constructor() {
     super();
