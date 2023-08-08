@@ -16,9 +16,12 @@ class Login extends Component {
         username: '',
         password: '',
       },
+      // view: 'login',
     };
     this.onChange = this.onChange.bind(this);
     this.login = this.login.bind(this);
+    // this.changeToLoginView = this.changeToLoginView.bind(this);
+    // this.changeToRegisterView = this.changeToRegisterView.bind(this);
   }
   onChange(ev) {
     this.setState({
@@ -28,10 +31,26 @@ class Login extends Component {
       },
     });
   }
+  
   login(ev) {
     ev.preventDefault();
     this.props.attemptLogin(this.state.credentials);
   }
+
+  // changeToLoginView() {
+  //   this.setState({
+  //     view: "login"
+  //   })
+  //   console.log(this.state.view);
+  // }
+
+  // changeToRegisterView() {
+  //   this.setState({
+  //     view: "register"
+  //   })
+  //   console.log(this.state.view);
+  // }
+
   render() {
     const { credentials } = this.state;
     const { onChange } = this;
@@ -50,8 +69,9 @@ class Login extends Component {
         ) : (
           <div>
             <h2>Login</h2>
-            <Button variant="primary">Login</Button>
-            <Button variant="secondary">Register</Button>
+            <Button variant="primary" >Login</Button>
+            <Button variant="secondary" >Register</Button>
+            <br />
 
             <Form.Label htmlFor="SignIn">Sign in with Email and Password</Form.Label>
             <Form onSubmit={login}>
