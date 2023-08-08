@@ -60,7 +60,7 @@ class Login extends Component {
               />
               <input
                 placeholder="password"
-                name="Password"
+                name="password"
                 value={credentials.password}
                 onChange={onChange}
               />
@@ -68,7 +68,7 @@ class Login extends Component {
             </form>
             
             <p>Sign up with Username and Password</p>
-            <form onSubmit={"signUp function here"}>
+            <form>
               <input
                 placeholder="Username"
                 value={""}

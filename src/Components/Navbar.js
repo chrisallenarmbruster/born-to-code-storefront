@@ -10,8 +10,6 @@ import Search from './Search';
 //search bar links to products page
 //search equals to products
 
-//Remove first products link from navbar, redundant now
-
 //ternary operator for login link to turn to logout
 //chris mentioned a thunk
 
@@ -26,7 +24,6 @@ const NavBar = () => {
             <Nav.Link href="#/home">Home</Nav.Link>
             <Nav.Link href="#/login">Login</Nav.Link>
             <Nav.Link href="#/cart">Cart</Nav.Link>
-            <Nav.Link href="#/products">Products</Nav.Link>
             <Nav.Link href="#/users/:id">Profile</Nav.Link>
             <NavDropdown title="Products" id="basic-nav-dropdown">
               <NavDropdown.Item href="#/products?category=hats">
