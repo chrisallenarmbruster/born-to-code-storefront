@@ -18,39 +18,22 @@ export class ProductAll extends Component {
       category: 'all',
       currentPage: 1,
       recordsPerPage: 6,
+      search: '',
     };
   }
 
   componentDidMount() {
     this.props.setProducts();
-    let category = queryToStr.parse(
-      this.props.router.location.search
-    )?.category;
-    if (category) {
-      if (['all', 'shirts', 'hats', 'mugs'].includes(category)) {
-        this.setState({
-          ...this.state,
-          category: queryToStr.parse(this.props.router.location.search)
-            .category,
-        });
-      } else {
-        this.setState({
-          ...this.state,
-          category: 'all',
-        });
-      }
-    } else {
+
+    let search = queryToStr.parse(this.props.router.location.search)?.search;
+    if (search) {
       this.setState({
         ...this.state,
+        search: search,
         category: 'all',
       });
-    }
-  }
-
-  componentDidUpdate(prevProps) {
-    if (
-      prevProps.router.location.search !== this.props.router.location.search
-    ) {
+      this.props.router.navigate(`/products?search=${search}`);
+    } else {
       let category = queryToStr.parse(
         this.props.router.location.search
       )?.category;
@@ -59,26 +42,76 @@ export class ProductAll extends Component {
           this.setState({
             ...this.state,
             category: category,
-            currentPage: 1,
+            search: '',
           });
         } else {
           this.setState({
             ...this.state,
             category: 'all',
+            search: '',
           });
         }
       } else {
         this.setState({
           ...this.state,
           category: 'all',
-          currentPage: 1,
+          search: '',
         });
+      }
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    if (
+      prevProps.router.location.search !== this.props.router.location.search
+    ) {
+      let search = queryToStr.parse(this.props.router.location.search)?.search;
+      if (search) {
+        this.setState({
+          ...this.state,
+          search: search,
+          currentPage: 1,
+          category: 'all',
+        });
+        this.props.router.navigate(`/products?search=${search}`);
+      } else {
+        let category = queryToStr.parse(
+          this.props.router.location.search
+        )?.category;
+        if (category) {
+          if (['all', 'shirts', 'hats', 'mugs'].includes(category)) {
+            this.setState({
+              ...this.state,
+              category: category,
+              currentPage: 1,
+              search: '',
+            });
+          } else {
+            this.setState({
+              ...this.state,
+              category: 'all',
+              search: '',
+            });
+          }
+        } else {
+          this.setState({
+            ...this.state,
+            category: 'all',
+            currentPage: 1,
+            search: '',
+          });
+        }
       }
     }
   }
 
   render() {
     let filteredProducts = this.props.products.filter((product) => {
+      if (this.state.search.length > 0) {
+        return product.name
+          .toLowerCase()
+          .includes(this.state.search.toLowerCase());
+      }
       if (this.state.category === 'all') {
         return true;
       } else {
@@ -86,6 +119,7 @@ export class ProductAll extends Component {
       }
     });
 
+    const hasData = filteredProducts.length > 0;
     const indexOfLastRecord =
       this.state.currentPage * this.state.recordsPerPage;
     const indexOfFirstRecord = indexOfLastRecord - this.state.recordsPerPage;
@@ -104,15 +138,12 @@ export class ProductAll extends Component {
           </div>
         ) : (
           <React.Fragment>
-            <div className="d-flex text-center justify-content-center flex-wrap mt-5 mb-5">
-              <Nav
-                variant="pills"
-                defaultActiveKey={`/#/products?category=${this.state.category}`}
-              >
+            <div className="d-flex text-center justify-content-center flex-wrap mb-1 mt-5">
+              <Nav variant="pills">
                 <Nav.Item>
                   <Nav.Link
                     href="/#/products?category=all"
-                    active={this.state.category === 'all'}
+                    active={this.state.category === 'all' && !this.state.search}
                   >
                     Shop All
                   </Nav.Link>
@@ -143,27 +174,50 @@ export class ProductAll extends Component {
                 </Nav.Item>
               </Nav>
             </div>
-            <Row xs={1} md={2} lg={3} className="g-5">
-              {currentRecords.map((product) => (
-                <Col key={product.id} className="g-5">
-                  <ProductCatalogItemCard product={product} />
-                </Col>
-              ))}
-            </Row>
-            <React.Fragment>
-              {filteredProducts.length > this.state.recordsPerPage ? (
-                <div className="pagination justify-content-center flex-wrap mt-5 mb-3">
-                  <Pagination
-                    recordsPerPage={this.state.recordsPerPage}
-                    totalRecords={filteredProducts.length}
-                    paginate={(pageNumber) =>
-                      this.setState({ ...this.state, currentPage: pageNumber })
-                    }
-                    currentPage={this.state.currentPage}
-                  />
-                </div>
+            <div className="d-flex justify-content-center flex-wrap mt-3 mb-0">
+              {this.state.search.length > 0 ? (
+                <h1 className="h4 mt-0">
+                  Search Results for{' '}
+                  <span className="fst-italic">{this.state.search}</span>:
+                </h1>
               ) : (
                 ''
+              )}
+            </div>
+            <React.Fragment>
+              {hasData ? (
+                <div className="mt-5">
+                  <Row xs={1} md={2} lg={3} className="g-5">
+                    {currentRecords.map((product) => (
+                      <Col key={product.id} className="g-5">
+                        <ProductCatalogItemCard product={product} />
+                      </Col>
+                    ))}
+                  </Row>
+                  <React.Fragment>
+                    {filteredProducts.length > this.state.recordsPerPage ? (
+                      <div className="pagination justify-content-center flex-wrap mt-5 mb-3">
+                        <Pagination
+                          recordsPerPage={this.state.recordsPerPage}
+                          totalRecords={filteredProducts.length}
+                          paginate={(pageNumber) =>
+                            this.setState({
+                              ...this.state,
+                              currentPage: pageNumber,
+                            })
+                          }
+                          currentPage={this.state.currentPage}
+                        />
+                      </div>
+                    ) : (
+                      ''
+                    )}
+                  </React.Fragment>
+                </div>
+              ) : (
+                <div className="d-flex justify-content-center mt-3">
+                  <h1 className="h4 mt-0">No items found.</h1>
+                </div>
               )}
             </React.Fragment>
           </React.Fragment>
