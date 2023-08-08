@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import CarouselWrapper from './CarouselWrapper';
+import ProductFeaturedItems from './ProductFeaturedItems';
 
 export class ProductLanding extends Component {
   render() {
@@ -11,10 +12,8 @@ export class ProductLanding extends Component {
         <div className="container-fluid p-0 m-0">
           <CarouselWrapper />
         </div>
-        <div className="container my-5 h3 text-center">
-          Placeholder for featured items
-        </div>
-        <hr />
+        <ProductFeaturedItems />
+
         <div className="container my-5 h3 text-center">
           Placeholder for testimonials
         </div>
