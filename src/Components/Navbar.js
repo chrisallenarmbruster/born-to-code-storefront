@@ -8,12 +8,6 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import Search from './Search';
 import { connect } from 'react-redux';
 import { logout } from '../store';
-//if auth id on state, logout button, otherwise login button
-//search bar links to products page
-//search equals to products
-
-//ternary operator for login link to turn to logout
-//chris mentioned a thunk
 
 const NavBar = (props) => {
   const { auth } = props;
@@ -47,7 +41,7 @@ const NavBar = (props) => {
                 Shirts
               </NavDropdown.Item>
               <NavDropdown.Divider />
-              <NavDropdown.Item href="#/products">Products</NavDropdown.Item>
+              <NavDropdown.Item href="#/products">All Products</NavDropdown.Item>
             </NavDropdown>
           </Nav>
           <Search />
