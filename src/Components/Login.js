@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { attemptLogin, logout } from '../store';
+import { attemptLogin, logout, attemptRegistration } from '../store';
 import { connect } from 'react-redux';
 import Button from 'react-bootstrap/Button'
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
@@ -18,10 +18,17 @@ class Login extends Component {
         username: '',
         password: '',
       },
+      newUser: {
+        username: '',
+        password: '',
+      },
       // view: 'login',
     };
     this.onChange = this.onChange.bind(this);
     this.login = this.login.bind(this);
+
+    this.onChangeRegister = this.onChangeRegister.bind(this);
+
     // this.changeToLoginView = this.changeToLoginView.bind(this);
     // this.changeToRegisterView = this.changeToRegisterView.bind(this);
   }
@@ -39,6 +46,20 @@ class Login extends Component {
     this.props.attemptLogin(this.state.credentials);
   }
 
+  register(ev) {
+    ev.preventDefault();
+    this.props.attemptRegister(this.state.newUser);
+  }
+
+  onChangeRegister(ev) {
+    this.setState({
+      newUser: {
+        ...this.state.newUser,
+        [ev.target.name]: ev.target.value,
+      },
+    });
+  }
+
   // changeToLoginView() {
   //   this.setState({
   //     view: "login"
@@ -54,19 +75,23 @@ class Login extends Component {
   // }
 
   registerSubmit(data) {
-    fetch("/signup", {
-      method: "post",
-      body: JSON.stringify(data),
-      headers: {
-        "Content-Type": "application/json",
-      }
-    })
+    // fetch("/signup", {
+    //   method: "post",
+    //   body: JSON.stringify(data),
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   }
+    // })
+    console.log("register submit")
   } 
 
   render() {
     const { credentials } = this.state;
     const { onChange } = this;
     const { login } = this;
+    const { register } = this;
+    const { newUser } = this.state;
+
     const { registerSubmit } = this;
     
     return (
@@ -101,19 +126,19 @@ class Login extends Component {
             </Form>
             
             <Form.Label htmlFor="SignUp">Sign up with Username and Password</Form.Label>
-            <Form onSubmit={registerSubmit}>
+            <Form onSubmit={register}>
               <FloatingLabel controlId="floatingUsername" label="Email">
-                <Form.Control type="email" placeholder="Email" name="username" value={""} onChange={onChange}/>
+                <Form.Control type="email" placeholder="Email" name="username" value={newUser.username} onChange={this.onChangeRegister}/>
               </FloatingLabel>
               <FloatingLabel controlId="floatingPassword" label="Password">
-                <Form.Control type="password" placeholder="Password" name="password" value={""} onChange={onChange}/>
+                <Form.Control type="password" placeholder="Password" name="password" value={newUser.password} onChange={this.onChangeRegister}/>
               </FloatingLabel>
 
               {/* <FloatingLabel controlId="floatingRepeatPassword" label="Repeat Password">
                 <Form.Control type="password" placeholder="Repeat Password" name="repeat_password" value={""} onChange={onChange}/>
               </FloatingLabel> */}
              
-              <Button>Sign Up</Button>
+              <Button type="submit">Sign Up</Button>
             </Form>
           </div>
         )}
@@ -130,6 +155,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     attemptLogin: (credentials) => dispatch(attemptLogin(credentials)),
     logout: () => dispatch(logout()),
+    attemptRegistration: (user) => dispatch(attemptRegistration(user)),
   };
 };
 
