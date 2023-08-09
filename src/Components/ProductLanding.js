@@ -1,6 +1,4 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import Button from 'react-bootstrap/Button';
+import React, { Component, Fragment } from 'react';
 import CarouselWrapper from './CarouselWrapper';
 import ProductFeaturedItems from './ProductFeaturedItems';
 import ProductTestimonials from './ProductTestimonials';
@@ -13,7 +11,7 @@ export class ProductLanding extends Component {
   render() {
     console.log('carouseldata: ', this.carouselData);
     return (
-      <React.Fragment>
+      <Fragment>
         <div className="container-fluid p-0 m-0">
           <CarouselWrapper />
         </div>
@@ -50,10 +48,13 @@ export class ProductLanding extends Component {
                 <h1 className="text-center display-4 fw-bold my-5">
                   Paying It Forward
                 </h1>
-                <p className="text-center fst-italic display-6">
-                  A portion of the proceeds from every sale goes to support our
-                  STEM Education Foundation and community learning programs for
-                  jump-starting tomorrow's coders.
+                <p className="text-left fst-italic display-6">
+                  A portion of the proceeds from every sale supports our STEM
+                  Education Foundation.{' '}
+                </p>
+                <p className="text-left fst-italic display-6">
+                  We have created community learning programs for jump-starting
+                  tomorrow's coders.
                 </p>
               </Col>
               <Col className="g-5 d-flex justify-content-center">
@@ -64,7 +65,7 @@ export class ProductLanding extends Component {
             </Row>
           </Container>
         </Container>
-      </React.Fragment>
+      </Fragment>
     );
   }
 }
