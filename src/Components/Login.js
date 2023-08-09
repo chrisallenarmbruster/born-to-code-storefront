@@ -22,16 +22,14 @@ class Login extends Component {
         username: '',
         password: '',
       },
-      // view: 'login',
     };
     this.onChange = this.onChange.bind(this);
     this.login = this.login.bind(this);
+    this.register = this.register.bind(this);
 
     this.onChangeRegister = this.onChangeRegister.bind(this);
-
-    // this.changeToLoginView = this.changeToLoginView.bind(this);
-    // this.changeToRegisterView = this.changeToRegisterView.bind(this);
   }
+  
   onChange(ev) {
     this.setState({
       credentials: {
@@ -48,7 +46,13 @@ class Login extends Component {
 
   register(ev) {
     ev.preventDefault();
-    this.props.attemptRegister(this.state.newUser);
+    this.props.attemptRegistration(this.state.newUser);
+    this.setState({ 
+      newUser: {
+        username: '',
+        password: '',
+      },
+    })
   }
 
   onChangeRegister(ev) {
@@ -60,39 +64,11 @@ class Login extends Component {
     });
   }
 
-  // changeToLoginView() {
-  //   this.setState({
-  //     view: "login"
-  //   })
-  //   console.log(this.state.view);
-  // }
-
-  // changeToRegisterView() {
-  //   this.setState({
-  //     view: "register"
-  //   })
-  //   console.log(this.state.view);
-  // }
-
-  registerSubmit(data) {
-    // fetch("/signup", {
-    //   method: "post",
-    //   body: JSON.stringify(data),
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   }
-    // })
-    console.log("register submit")
-  } 
-
   render() {
     const { credentials } = this.state;
     const { onChange } = this;
     const { login } = this;
-    const { register } = this;
     const { newUser } = this.state;
-
-    const { registerSubmit } = this;
     
     return (
       <div className="container">
@@ -126,7 +102,7 @@ class Login extends Component {
             </Form>
             
             <Form.Label htmlFor="SignUp">Sign up with Username and Password</Form.Label>
-            <Form onSubmit={register}>
+            <Form onSubmit={(e) => this.register(e)}>
               <FloatingLabel controlId="floatingUsername" label="Email">
                 <Form.Control type="email" placeholder="Email" name="username" value={newUser.username} onChange={this.onChangeRegister}/>
               </FloatingLabel>
@@ -138,7 +114,7 @@ class Login extends Component {
                 <Form.Control type="password" placeholder="Repeat Password" name="repeat_password" value={""} onChange={onChange}/>
               </FloatingLabel> */}
              
-              <Button type="submit">Sign Up</Button>
+              <Button onClick={(e) => this.register(e)} type="submit">Sign Up</Button>
             </Form>
           </div>
         )}
