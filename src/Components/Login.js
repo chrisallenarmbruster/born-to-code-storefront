@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { attemptLogin, logout } from '../store';
+import { attemptLogin, logout, attemptRegistration } from '../store';
 import { connect } from 'react-redux';
 import Button from 'react-bootstrap/Button'
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
@@ -18,13 +18,21 @@ class Login extends Component {
         username: '',
         password: '',
       },
-      // view: 'login',
+      newUser: {
+        username: '',
+        password: '',
+      },
+      login: true,
+      register: false,
     };
     this.onChange = this.onChange.bind(this);
     this.login = this.login.bind(this);
-    // this.changeToLoginView = this.changeToLoginView.bind(this);
-    // this.changeToRegisterView = this.changeToRegisterView.bind(this);
+    this.register = this.register.bind(this);
+    this.onChangeRegister = this.onChangeRegister.bind(this);
+    this.toggleLogin = this.toggleLogin.bind(this);
+    this.toggleRegister = this.toggleRegister.bind(this);
   }
+
   onChange(ev) {
     this.setState({
       credentials: {
@@ -39,35 +47,49 @@ class Login extends Component {
     this.props.attemptLogin(this.state.credentials);
   }
 
-  // changeToLoginView() {
-  //   this.setState({
-  //     view: "login"
-  //   })
-  //   console.log(this.state.view);
-  // }
-
-  // changeToRegisterView() {
-  //   this.setState({
-  //     view: "register"
-  //   })
-  //   console.log(this.state.view);
-  // }
-
-  registerSubmit(data) {
-    fetch("/signup", {
-      method: "post",
-      body: JSON.stringify(data),
-      headers: {
-        "Content-Type": "application/json",
-      }
+  register(ev) {
+    ev.preventDefault();
+    this.props.attemptRegistration(this.state.newUser);
+    this.setState({ 
+      newUser: {
+        username: '',
+        password: '',
+      },
     })
-  } 
+  }
+
+  onChangeRegister(ev) {
+    this.setState({
+      newUser: {
+        ...this.state.newUser,
+        [ev.target.name]: ev.target.value,
+      },
+    });
+  }
+
+  toggleLogin() {
+    console.log('toggleLogin called');
+    this.setState({
+      login: true,
+      register: false,
+    });
+    console.log('toggleLogin called ' + 'login: ' + this.state.login + ' register: ' + this.state.register);
+  }
+
+  toggleRegister() {
+    console.log('toggleRegister called');
+    this.setState({
+      login: false,
+      register: true,
+    });
+    console.log('toggleRegister called ' + 'login: ' + this.state.login + ' register: ' + this.state.register);
+  }
 
   render() {
     const { credentials } = this.state;
     const { onChange } = this;
     const { login } = this;
-    const { registerSubmit } = this;
+    const { newUser } = this.state;
     
     return (
       <div className="container">
@@ -82,39 +104,43 @@ class Login extends Component {
           </div>
         ) : (
           <div>
-            <h2>Login</h2>
-            <Button variant="primary">Login</Button>
-            <Button variant="secondary">Register</Button>
+            <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop:'10px'}}>
+              <Button variant="primary" onClick={() => this.toggleLogin()}>Login</Button>
+              <Button variant="secondary" onClick={() => this.toggleRegister()}>Register</Button>
+            </div>
+            
             <br />
 
-            <Form.Label htmlFor="SignIn">Sign in with Email and Password</Form.Label>
-            <Form onSubmit={login}>
-              <FloatingLabel controlId="floatingUsername" label="Email">
-                <Form.Control type="text" placeholder="Email" value={credentials.username} name="username" onChange={onChange}/>
-              </FloatingLabel>
+            {this.state.login ? (<div>
+              <Form.Label htmlFor="SignIn" style={{ display: 'flex',alignItems: 'center', justifyContent: 'center',marginTop:'10px' }}>Sign in with Email and Password</Form.Label>
+              <Form onSubmit={login}>
+                <FloatingLabel controlId="floatingUsername" label="Email">
+                  <Form.Control type="text" placeholder="Email" value={credentials.username} name="username" onChange={onChange}/>
+                  <br />
+                </FloatingLabel>
 
-              <FloatingLabel controlId="floatingPassword" label="Password">
-                <Form.Control type="password" placeholder="Password" value={credentials.password} name="password" onChange={onChange}/>
-              </FloatingLabel>
-              
-              <Button type="submit">Login</Button>
+                <FloatingLabel controlId="floatingPassword" label="Password">
+                  <Form.Control type="password" placeholder="Password" value={credentials.password} name="password" onChange={onChange}/>
+                </FloatingLabel>
+                
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop:'10px' }}><Button type="submit">Login</Button></div>             
             </Form>
-            
-            <Form.Label htmlFor="SignUp">Sign up with Username and Password</Form.Label>
-            <Form onSubmit={registerSubmit}>
-              <FloatingLabel controlId="floatingUsername" label="Email">
-                <Form.Control type="email" placeholder="Email" name="username" value={""} onChange={onChange}/>
-              </FloatingLabel>
-              <FloatingLabel controlId="floatingPassword" label="Password">
-                <Form.Control type="password" placeholder="Password" name="password" value={""} onChange={onChange}/>
-              </FloatingLabel>
-
-              {/* <FloatingLabel controlId="floatingRepeatPassword" label="Repeat Password">
-                <Form.Control type="password" placeholder="Repeat Password" name="repeat_password" value={""} onChange={onChange}/>
-              </FloatingLabel> */}
-             
-              <Button>Sign Up</Button>
-            </Form>
+            </div>) : (
+              <div>
+                <Form.Label htmlFor="SignUp" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center',marginTop:'10px' }}>Sign up with Username and Password</Form.Label>
+                <Form onSubmit={(e) => this.register(e)}>
+                  <FloatingLabel controlId="floatingUsername" label="Email">
+                    <Form.Control type="email" placeholder="Email" name="username" value={newUser.username} onChange={this.onChangeRegister}/>           
+                    <br />
+                  </FloatingLabel>
+                  <FloatingLabel controlId="floatingPassword" label="Password">
+                    <Form.Control type="password" placeholder="Password" name="password" value={newUser.password} onChange={this.onChangeRegister}/>
+                  </FloatingLabel>
+                    
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop:'10px'}}><Button onClick={(e) => this.register(e)} type="submit">Sign Up</Button></div> 
+                </Form>  
+              </div>
+            )}  
           </div>
         )}
       </div>
@@ -130,6 +156,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     attemptLogin: (credentials) => dispatch(attemptLogin(credentials)),
     logout: () => dispatch(logout()),
+    attemptRegistration: (user) => dispatch(attemptRegistration(user)),
   };
 };
 
