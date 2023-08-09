@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { setProducts } from '../store/productAll';
 import Container from 'react-bootstrap/Container';
@@ -137,7 +137,7 @@ export class ProductAll extends Component {
             </Spinner>
           </div>
         ) : (
-          <React.Fragment>
+          <Fragment>
             <div className="d-flex text-center justify-content-center flex-wrap mb-1 mt-5">
               <Nav variant="pills">
                 <Nav.Item>
@@ -184,7 +184,7 @@ export class ProductAll extends Component {
                 ''
               )}
             </div>
-            <React.Fragment>
+            <Fragment>
               {hasData ? (
                 <div className="mt-5">
                   <Row xs={1} md={2} lg={3} className="g-5">
@@ -194,7 +194,7 @@ export class ProductAll extends Component {
                       </Col>
                     ))}
                   </Row>
-                  <React.Fragment>
+                  <Fragment>
                     {filteredProducts.length > this.state.recordsPerPage ? (
                       <div className="pagination justify-content-center flex-wrap mt-5 mb-3">
                         <Pagination
@@ -212,15 +212,15 @@ export class ProductAll extends Component {
                     ) : (
                       ''
                     )}
-                  </React.Fragment>
+                  </Fragment>
                 </div>
               ) : (
                 <div className="d-flex justify-content-center mt-3">
                   <h1 className="h4 mt-0">No items found.</h1>
                 </div>
               )}
-            </React.Fragment>
-          </React.Fragment>
+            </Fragment>
+          </Fragment>
         )}
       </Container>
     );

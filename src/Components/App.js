@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import Login from './Login';
 import Cart from './Cart';
 import NavBar from './Navbar';
@@ -7,7 +7,7 @@ import ProductSingle from './ProductSingle';
 import ProductLanding from './ProductLanding';
 import User from './User';
 import { loginWithToken, fetchCart } from '../store';
-import { Link, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 class App extends Component {
@@ -21,10 +21,9 @@ class App extends Component {
   }
   render() {
     return (
-
-      <React.Fragment>
+      <Fragment>
         <NavBar />
-        <React.Fragment>
+        <Fragment>
           <Routes>
             <Route path="/" element={<ProductLanding />} />
             <Route path="/home" element={<ProductLanding />} />
@@ -34,8 +33,8 @@ class App extends Component {
             <Route path="/products/:id" element={<ProductSingle />} />
             <Route path="/users/:id" element={<User />} />
           </Routes>
-        </React.Fragment>
-      </React.Fragment>
+        </Fragment>
+      </Fragment>
     );
   }
 }

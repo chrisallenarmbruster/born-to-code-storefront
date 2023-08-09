@@ -6,18 +6,27 @@ module.exports = app;
 
 app.post('/', async (req, res, next) => {
   try {
-    //Wonder if we can consolidate these down somehow
     const user = await User.findByToken(req.headers.authorization);
     const cart = await user.getCart();
-    req.body.shipToCity && (cart.shipToCity = req.body.shipToCity);
-    req.body.shipToName && (cart.shipToName = req.body.shipToName);
-    req.body.shipToAddress && (cart.shipToAddress = req.body.shipToAddress);
-    req.body.shipToState && (cart.shipToState = req.body.shipToState);
-    req.body.shipToZip && (cart.shipToZip = req.body.shipToZip);
-    req.body.email && (cart.email = req.body.email);
-    req.body.shipDate && (cart.shipDate = req.body.shipDate);
-    req.body.paymentMethod && (cart.paymentMethod = req.body.paymentMethod);
-    req.body.transactionId && (cart.transactionId = req.body.transactionId);
+
+    const cartPropsToUpdate = [
+      'shipToName',
+      'shipToCity',
+      'shipToAddress',
+      'shipToState',
+      'shipToZip',
+      'email',
+      'shipDate',
+      'paymentMethod',
+      'transactionId',
+    ];
+
+    cartPropsToUpdate.forEach((prop) => {
+      if (req.body[prop]) {
+        cart[prop] = req.body[prop];
+      }
+    });
+
     await cart.save();
     res.send(await user.createOrder());
   } catch (ex) {

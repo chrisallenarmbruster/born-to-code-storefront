@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
@@ -7,7 +7,6 @@ import { setProducts } from '../store/productAll';
 import Spinner from 'react-bootstrap/Spinner';
 import ProductCatalogItemCard from './ProductCatalogItemCard';
 import { Link } from 'react-router-dom';
-import Button from 'react-bootstrap/Button';
 
 export class ProductFeaturedItems extends Component {
   componentDidMount() {
@@ -44,7 +43,7 @@ export class ProductFeaturedItems extends Component {
             </Spinner>
           </div>
         ) : hasData ? (
-          <React.Fragment>
+          <Fragment>
             <div className="h3 text-center mb-0">Featured Coding Gear</div>
             <div className="h6 text-center mt-0 mb-5 ">
               <Link to="/products" className="text-decoration-none">
@@ -58,7 +57,7 @@ export class ProductFeaturedItems extends Component {
                 </Col>
               ))}
             </Row>
-          </React.Fragment>
+          </Fragment>
         ) : (
           ''
         )}

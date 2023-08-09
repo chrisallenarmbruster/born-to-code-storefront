@@ -32,6 +32,17 @@ export const setProducts = () => {
   };
 };
 
+export const resetProducts = () => {
+  return async (dispatch) => {
+    try {
+      const data = (await axios.get('/api/products')).data;
+      dispatch(_setProducts(data));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
 //utility function to test loading state spinner animation
 function sleep(ms) {
   return new Promise((resolve) => {

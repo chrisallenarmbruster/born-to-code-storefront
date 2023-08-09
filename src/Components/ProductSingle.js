@@ -1,6 +1,5 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { clearSingleProduct, setSingleProduct } from '../store/productSingle';
 import { withRouter } from '../utils/withRouter';
 import Container from 'react-bootstrap/Container';
@@ -11,6 +10,7 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import AddToCart from './AddToCart';
 import Button from 'react-bootstrap/Button';
 import ProductReviewStars from './ProductReviewStars';
+import ProductReviewCreate from './ProductReviewCreate';
 
 export class ProductSingle extends Component {
   constructor() {
@@ -43,7 +43,7 @@ export class ProductSingle extends Component {
             </Spinner>
           </div>
         ) : hasData ? (
-          <React.Fragment>
+          <Fragment>
             <Row className="g-5">
               <Col sm={12} md={6}>
                 <img
@@ -102,7 +102,8 @@ export class ProductSingle extends Component {
                 </ListGroup>
               </Col>
             </Row>
-          </React.Fragment>
+            {/* <ProductReviewCreate productId={this.props.product.id} /> */}
+          </Fragment>
         ) : (
           <div>
             No detail found for product id {this.props.router.params.id}
