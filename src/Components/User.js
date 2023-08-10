@@ -29,6 +29,12 @@ const User = (props) => {
             lorem ipsum dolor sit amet, consectetur adipiscing 
             lorem ipsum dolor sit amet
             lorem ipsum dolor sit
+            {auth.email}
+            {auth.Address}
+            {auth.city}
+            {auth.state}
+            {auth.country}
+            {auth.zip}
           </Card.Text>
         </Card.Body>
         <Card.Body>
@@ -55,6 +61,16 @@ const User = (props) => {
                 </Form.Group>
 
                 <Form.Group className="mb-3">
+                  <Form.Label>State</Form.Label>
+                  <Form.Control type="text" placeholder="State" />
+                </Form.Group>
+
+                <Form.Group className="mb-3">
+                  <Form.Label>Country</Form.Label>
+                  <Form.Control type="text" placeholder="Country" />
+                </Form.Group>
+
+                <Form.Group className="mb-3">
                   <Form.Label>Zip Code</Form.Label>
                   <Form.Control type="text" placeholder="Zip Code" />
                 </Form.Group>
@@ -64,7 +80,7 @@ const User = (props) => {
               <Button variant="secondary" onClick={handleClose}>
                 Close
               </Button>
-              <Button variant="primary" onClick={handleClose}>
+              <Button variant="primary" onClick={() => console.log(auth)}>
                 Save Changes
               </Button>
             </Modal.Footer>
