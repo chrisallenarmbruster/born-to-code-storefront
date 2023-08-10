@@ -14,7 +14,7 @@ const initialState = {
   spec4: '',
   sizeOptions: '',
   color: '',
-  imageUrl: '/images/sample_image.png',
+  imageUrl1: '/images/sample_image.png',
   price: 0,
   isFeatured: false,
 };
@@ -43,7 +43,9 @@ export class AdminProductAdd extends Component {
   };
 
   handleCheckboxChange = (event) => {
-    this.setState({ [event.target.name]: event.target.checked });
+    this.setState({
+      form: { ...this.state.form, [event.target.name]: event.target.checked },
+    });
   };
 
   handleSubmit = (event) => {
@@ -80,7 +82,7 @@ export class AdminProductAdd extends Component {
           <Modal.Body>
             {' '}
             <Form>
-              <Form.Group controlId="formBasicName" className="mb-3">
+              <Form.Group controlId="formBasicText" className="mb-3">
                 <Form.Label>Product Name</Form.Label>
                 <Form.Control
                   type="text"
@@ -90,7 +92,7 @@ export class AdminProductAdd extends Component {
                   value={this.state.form.name}
                 />
               </Form.Group>
-              <Form.Group controlId="formBasicName" className="mb-3">
+              <Form.Group controlId="formBasicSelect" className="mb-3">
                 <Form.Label>Category</Form.Label>
                 <Form.Select
                   aria-label="Select product category"
@@ -107,7 +109,7 @@ export class AdminProductAdd extends Component {
                   <option value="mugs">Mugs</option>
                 </Form.Select>
               </Form.Group>
-              <Form.Group controlId="formBasicName" className="mb-3">
+              <Form.Group controlId="formBasicText" className="mb-3">
                 <Form.Label>Description</Form.Label>
                 <Form.Control
                   type="text"
@@ -116,7 +118,84 @@ export class AdminProductAdd extends Component {
                   onChange={this.handleChange}
                 />
               </Form.Group>
-              <Form.Group controlId="formBasicName" className="mb-3">
+
+              <Form.Group controlId="formBasicText" className="mb-3">
+                <Form.Label>Specifications</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter a specification."
+                  name="spec1"
+                  onChange={this.handleChange}
+                  className="mb-1"
+                />
+                <Form.Control
+                  type="text"
+                  placeholder="Enter a specification."
+                  name="spec2"
+                  onChange={this.handleChange}
+                  className="mb-1"
+                />
+                <Form.Control
+                  type="text"
+                  placeholder="Enter a specification."
+                  name="spec3"
+                  onChange={this.handleChange}
+                  className="mb-1"
+                />
+                <Form.Control
+                  type="text"
+                  placeholder="Enter a specification."
+                  name="spec4"
+                  onChange={this.handleChange}
+                />
+              </Form.Group>
+              <Form.Group controlId="formBasicSelect" className="mb-3">
+                <Form.Label>Color</Form.Label>
+                <Form.Select
+                  aria-label="Select color"
+                  name="color"
+                  onChange={this.handleChange}
+                  placeholder="Select option"
+                  value={this.state.form.category}
+                >
+                  <option value="" disabled>
+                    Select color
+                  </option>
+                  <option value="Red">Red</option>
+                  <option value="Blue">Blue</option>
+                  <option value="Green">Green</option>
+                  <option value="Yellow">Yellow</option>
+                  <option value="Orange">Orange</option>
+                  <option value="Purple">Purple</option>
+                  <option value="Black">Black</option>
+                  <option value="White">White</option>
+                  <option value="Grey">Grey</option>
+                  <option value="Pink">Pink</option>
+                  <option value="Brown">Brown</option>
+                  <option value="Multi-Color">Multi-Color</option>
+                </Form.Select>
+              </Form.Group>
+              <Form.Group controlId="formBasicText" className="mb-3">
+                <Form.Label>Available Sizes</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="i.e 'S,M,L,XL'"
+                  name="sizeOptions"
+                  onChange={this.handleChange}
+                />
+              </Form.Group>
+
+              <Form.Group controlId="formBasicText" className="mb-3">
+                <Form.Label>Image URL</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter image URL"
+                  name="imageUrl1"
+                  onChange={this.handleChange}
+                />
+              </Form.Group>
+
+              <Form.Group controlId="formBasicText" className="mb-3">
                 <Form.Label>Price</Form.Label>
                 <Form.Control
                   type="text"
@@ -125,6 +204,13 @@ export class AdminProductAdd extends Component {
                   onChange={this.handleChange}
                 />
               </Form.Group>
+              <Form.Check // prettier-ignore
+                type="switch"
+                id="custom-switch"
+                label="Feature this item."
+                name="isFeatured"
+                onChange={this.handleCheckboxChange}
+              />
             </Form>
           </Modal.Body>
           <Modal.Footer>
