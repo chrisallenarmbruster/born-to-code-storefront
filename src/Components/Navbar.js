@@ -21,9 +21,11 @@ const NavBar = (props) => {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             <Nav.Link href="#/home">Home</Nav.Link>
-            
+
             {auth.id ? (
-              <Nav.Link href="#" onClick={logout}>Logout</Nav.Link>
+              <Nav.Link href="#" onClick={logout}>
+                Logout
+              </Nav.Link>
             ) : (
               <Nav.Link href="#/login">Login</Nav.Link>
             )}
@@ -41,8 +43,11 @@ const NavBar = (props) => {
                 Shirts
               </NavDropdown.Item>
               <NavDropdown.Divider />
-              <NavDropdown.Item href="#/products">All Products</NavDropdown.Item>
+              <NavDropdown.Item href="#/products">
+                All Products
+              </NavDropdown.Item>
             </NavDropdown>
+            {auth.isAdmin && <Nav.Link href="#/admin">Admin</Nav.Link>}
           </Nav>
           <Search />
           {/* Could put something here indicating the signed in user */}
