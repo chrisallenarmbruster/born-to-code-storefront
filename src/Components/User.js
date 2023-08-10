@@ -8,9 +8,13 @@ import Form from 'react-bootstrap/Form';
 
 const User = (props) => {
   const [show, setShow] = useState(false);
+  const [historyShow, setHistoryShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  const handleHistoryClose = () => setHistoryShow(false);
+  const handleHistoryShow = () => setHistoryShow(true);
 
   const { auth } = props;
 
@@ -28,7 +32,7 @@ const User = (props) => {
           </Card.Text>
         </Card.Body>
         <Card.Body>
-          <Card.Link onClick={handleShow}>Edit User Info</Card.Link>
+          <Card.Link onClick={handleHistoryShow}>Edit User Info</Card.Link>
           <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>
               <Modal.Title>Edit {auth.username} Info</Modal.Title>
@@ -65,7 +69,23 @@ const User = (props) => {
               </Button>
             </Modal.Footer>
           </Modal>
-          <Card.Link href="#">See Order History</Card.Link>
+          <Card.Link onClick={handleHistoryShow}>See Order History</Card.Link>
+          <Modal show={historyShow} onHide={handleHistoryClose}>
+            <Modal.Header closeButton>
+              <Modal.Title>{auth.username} Order History</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={handleHistoryClose}>
+                Close
+              </Button>
+              <Button variant="primary" onClick={handleHistoryClose}>
+                Save Changes
+              </Button>
+            </Modal.Footer>
+          </Modal>
         </Card.Body>
       </Card>
       </div>) 
