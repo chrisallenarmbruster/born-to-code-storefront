@@ -55,15 +55,19 @@ export class ProductSingle extends Component {
               <Col sm={12} md={6}>
                 <h1 className="h2">{this.props.product.name}</h1>
                 <hr className="my-0" />
-                <span className="my-1 d-flex align-items-middle">
-                  <span className="me-2 fw-bold">
-                    {this.props.product.rating}
+                {this.props.product.rating ? (
+                  <span className="my-1 d-flex align-items-middle">
+                    <span className="me-2 fw-bold">
+                      {this.props.product.rating}
+                    </span>
+                    <ProductReviewStars rating={this.props.product.rating} />
+                    <span className="ms-2 text-secondary">
+                      ( {this.props.product.reviewCount} ratings)
+                    </span>
                   </span>
-                  <ProductReviewStars rating={this.props.product.rating} />
-                  <span className="ms-2 text-secondary">
-                    ( {this.props.product.reviewCount} ratings)
-                  </span>
-                </span>
+                ) : (
+                  'Item not yet rated.'
+                )}
                 <h2>
                   {`$${this.props.product.price}`}
                   <span title="Add to Cart" className="ms-3">
@@ -97,12 +101,11 @@ export class ProductSingle extends Component {
                 <ListGroup variant="flush">
                   <ListGroup.Item>{this.props.product.spec1}</ListGroup.Item>
                   <ListGroup.Item>{this.props.product.spec2}</ListGroup.Item>
-                  <ListGroup.Item>{this.props.product.spec3}s</ListGroup.Item>
+                  <ListGroup.Item>{this.props.product.spec3}</ListGroup.Item>
                   <ListGroup.Item>{this.props.product.spec4}</ListGroup.Item>
                 </ListGroup>
               </Col>
             </Row>
-            {/* <ProductReviewCreate productId={this.props.product.id} /> */}
           </Fragment>
         ) : (
           <div>
