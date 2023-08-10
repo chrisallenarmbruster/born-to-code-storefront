@@ -50,7 +50,6 @@ export const resetProducts = () => {
 };
 
 export const addProduct = (product, navigate) => {
-  console.log('addProduct thunk', product);
   return async (dispatch) => {
     try {
       const token = window.localStorage.getItem('token');

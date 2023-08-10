@@ -31,7 +31,6 @@ export class Search extends Component {
   }
 
   render() {
-    console.log('search props:', this.props);
     return (
       <Form
         className="d-flex"
