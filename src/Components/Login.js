@@ -5,11 +5,6 @@ import Button from 'react-bootstrap/Button'
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
 
-//user should be able to register with an email
-//username should be an email address
-
-//leaving toggle for later, need to get the register form working first
-
 class Login extends Component {
   constructor() {
     super();
