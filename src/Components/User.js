@@ -32,7 +32,7 @@ const User = (props) => {
           </Card.Text>
         </Card.Body>
         <Card.Body>
-          <Card.Link onClick={handleHistoryShow}>Edit User Info</Card.Link>
+          <Card.Link onClick={handleShow}>Edit User Info</Card.Link>
           <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>
               <Modal.Title>Edit {auth.username} Info</Modal.Title>
