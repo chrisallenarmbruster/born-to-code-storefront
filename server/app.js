@@ -19,6 +19,7 @@ app.use('/api/orders', require('./api/orders'));
 app.use('/api/products', require('./api/products'));
 app.use('/api/users', require('./api/users'));
 app.use('/api/reviews', require('./api/reviews'));
+app.use('/api/pay', require('./api/pay'));
 
 app.use((err, req, res, next) => {
   console.error(err.stack);

@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import React from 'react';
+import React, { Component } from 'react';
 import {
   ButtonGroup,
   Card,
@@ -17,128 +16,148 @@ import MyPaymentForm from './Payment';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { updateQuantity, fetchCart } from '../store/cart';
-import {
-  GooglePay,
-  GooglePayProps,
-  ApplePay,
-  ApplePayProps,
-  PaymentForm,
-} from 'react-square-web-payments-sdk';
-function CheckOut(props) {
-  const { cart } = props;
-  const lineItems = cart.lineItems;
-  console.log('inside checkout', lineItems);
-  console.log('inside checkout', props);
 
-  const [show, setShow] = useState(false);
+export class CheckOut extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      first: '',
+      last: '',
+      address: '',
+      city: '',
+      state: '',
+      zip: '',
+      email: '',
+      phone: '',
+      show: false,
+      validationErrors: {},
+    };
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-
-  let subtotal = 0;
-  lineItems.forEach((element) => {
-    subtotal =
-      subtotal + Number(element.quantity) * Number(element.product.price);
-  });
-
-  async function handleRemove(cart, product, quantity) {
-    await props.updateQuantity({ cart, product, quantity });
+    this.handleChange = this.handleChange.bind(this);
+    this.handleRemove = this.handleRemove.bind(this);
+    this.subTotal = this.subTotal.bind(this);
+    this.handleClose = this.handleClose.bind(this);
+    this.handleShow = this.handleShow.bind(this);
+    this.shouldShowPaymentForm = this.shouldShowPaymentForm.bind(this);
   }
 
-  return (
-    <PaymentForm
-      /**
-       * Identifies the calling form with a verified application ID generated from
-       * the Square Application Dashboard.
-       */
-      applicationId="sandbox-sq0idb-9aiQYyJJerVQ_xS_gMVOmA"
-      /**
-       * Invoked when payment form receives the result of a tokenize generation
-       * request. The result will be a valid credit card or wallet token, or an error.
-       */
-      cardTokenizeResponseReceived={(token, buyer) => {
-        console.info({ token, buyer });
-      }}
-      /**
-       * This function enable the Strong Customer Authentication (SCA) flow
-       *
-       * We strongly recommend use this function to verify the buyer and reduce
-       * the chance of fraudulent transactions.
-       */
-      createVerificationDetails={() => ({
-        amount: '1.00',
-        /* collected from the buyer */
-        billingContact: {
-          addressLines: ['123 Main Street', 'Apartment 1'],
-          familyName: 'Doe',
-          givenName: 'John',
-          countryCode: 'GB',
-          city: 'London',
-        },
-        currencyCode: 'GBP',
-        intent: 'CHARGE',
-      })}
-      createPaymentRequest={() => ({
-        countryCode: 'US',
-        currencyCode: 'USD',
-        lineItems: [
-          {
-            amount: '22.15',
-            label: 'Item to be purchased',
-            id: 'SKU-12345',
-            imageUrl: 'https://url-cdn.com/123ABC',
-            pending: true,
-            productUrl: 'https://my-company.com/product-123ABC',
-          },
-        ],
-        taxLineItems: [
-          {
-            label: 'State Tax',
-            amount: '8.95',
-            pending: true,
-          },
-        ],
-        discounts: [
-          {
-            label: 'Holiday Discount',
-            amount: '5.00',
-            pending: true,
-          },
-        ],
-        requestBillingContact: false,
-        requestShippingContact: false,
-        shippingOptions: [
-          {
-            label: 'Next Day',
-            amount: '15.69',
-            id: '1',
-          },
-          {
-            label: 'Three Day',
-            amount: '2.00',
-            id: '2',
-          },
-        ],
-        // pending is only required if it's true.
-        total: {
-          amount: '41.79',
-          label: 'Total',
-        },
-      })}
-      /**
-       * Identifies the location of the merchant that is taking the payment.
-       * Obtained from the Square Application Dashboard - Locations tab.
-       */
-      locationId="LFJJJ47TKFPE2"
-    >
+  validateField(name, value) {
+    let error;
+    switch (name) {
+      case 'first':
+        error = value.trim() === '' ? 'This field is required' : null;
+        break;
+      case 'last':
+        error = value.trim() === '' ? 'This field is required' : null;
+        break;
+      case 'city':
+        error = value.trim() === '' ? 'This field is required' : null;
+        break;
+      case 'state':
+        error = value.trim() === '' ? 'This field is required' : null;
+        break;
+      case 'address':
+        error = value.trim() === '' ? 'Address is required' : null;
+        break;
+      case 'zip':
+        error = !/^\d{5}$/.test(value) ? 'Enter a valid ZIP code' : null;
+        break;
+      case 'phone':
+        error = !/^\d{10}$/.test(value) ? 'Enter a valid phone number' : null;
+        break;
+      case 'email':
+        error = !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)
+          ? 'Enter a valid email address'
+          : null;
+        break;
+      default:
+        break;
+    }
+    return error;
+  }
+
+  handleChange(event) {
+    const { name, value } = event.target;
+    const error = this.validateField(name, value);
+    this.setState((prevState) => ({
+      ...prevState,
+      [name]: value,
+      validationErrors: { ...prevState.validationErrors, [name]: error },
+    }));
+  }
+
+  handleClose() {
+    this.setState({
+      show: false,
+    });
+  }
+
+  handleShow() {
+    this.setState({
+      show: true,
+    });
+  }
+
+  subTotal(lineItems) {
+    let subtotal = 0;
+    lineItems.forEach((element) => {
+      subtotal =
+        subtotal + Number(element.quantity) * Number(element.product.price);
+    });
+    return subtotal;
+  }
+
+  handleRemove(cart, product, quantity) {
+    this.props.updateQuantity({ cart, product, quantity });
+  }
+
+  shouldShowPaymentForm() {
+    const {
+      validationErrors,
+      first,
+      last,
+      address,
+      city,
+      state,
+      zip,
+      email,
+      phone,
+    } = this.state;
+
+    // Check if any validation error exists
+    const hasErrors = Object.values(validationErrors).some(
+      (error) => error !== null
+    );
+
+    const hasEmptyFields = [
+      first,
+      last,
+      address,
+      city,
+      state,
+      zip,
+      email,
+      phone,
+    ].some((field) => !field.trim());
+
+    return !hasErrors && !hasEmptyFields;
+  }
+
+  render() {
+    console.log(this.state); // This will show you the current state.
+    console.log(this.shouldShowPaymentForm());
+    const { cart } = this.props;
+    const lineItems = cart.lineItems;
+    this.subTotal(lineItems).toFixed(2);
+    return (
       <>
-        <Button variant="primary" onClick={handleShow}>
+        <Button variant="primary" onClick={this.handleShow}>
           Checkout
         </Button>
 
         <Modal
-          show={show}
-          onHide={handleClose}
+          show={this.state.show}
+          onHide={this.handleClose}
           size="lg"
           scrollable={true}
           animation={true}
@@ -205,7 +224,7 @@ function CheckOut(props) {
                     <Col sm={2}></Col>
                     <Col sm={7}>Subtotal</Col>
                     <Col sm={1}></Col>
-                    <Col sm={2}>${subtotal.toFixed(2)}</Col>
+                    <Col sm={2}>${this.subTotal}</Col>
                   </Row>
                   <Row>
                     <Col sm={2}></Col>
@@ -227,23 +246,37 @@ function CheckOut(props) {
                   <Row>
                     <Col sm={6}>
                       <Form>
-                        <Form.Group className="mb-3" controlId="formBasicEmail">
+                        <Form.Group className="mb-3" controlId="formFirstName">
                           <Form.Label>First Name</Form.Label>
                           <Form.Control
+                            name="first"
                             type="name"
                             placeholder="Enter first name"
+                            value={this.state.first}
+                            onChange={this.handleChange}
+                            isInvalid={!!this.state.validationErrors.first}
                           />
+                          <Form.Control.Feedback type="invalid">
+                            {this.state.validationErrors.first}
+                          </Form.Control.Feedback>
                         </Form.Group>
                       </Form>
                     </Col>
                     <Col sm={6}>
                       <Form>
-                        <Form.Group className="mb-3" controlId="formBasicEmail">
+                        <Form.Group className="mb-3" controlId="formLastName">
                           <Form.Label>Last Name</Form.Label>
                           <Form.Control
+                            name="last"
                             type="name"
                             placeholder="Enter last name"
+                            value={this.state.last}
+                            onChange={this.handleChange}
+                            isInvalid={!!this.state.validationErrors.last}
                           />
+                          <Form.Control.Feedback type="invalid">
+                            {this.state.validationErrors.last}
+                          </Form.Control.Feedback>
                         </Form.Group>
                       </Form>
                     </Col>
@@ -251,20 +284,61 @@ function CheckOut(props) {
                   <Row>
                     <Col sm={6}>
                       <Form>
-                        <Form.Group className="mb-3" controlId="formBasicEmail">
-                          <Form.Label>Address</Form.Label>
+                        <Form.Group className="mb-3" controlId="formEmail">
+                          <Form.Label>Email</Form.Label>
                           <Form.Control
-                            type="address"
-                            placeholder="Enter address"
+                            name="email"
+                            type="name"
+                            placeholder="Enter email"
+                            value={this.state.email}
+                            onChange={this.handleChange}
+                            isInvalid={!!this.state.validationErrors.email}
                           />
+                          <Form.Control.Feedback type="invalid">
+                            {this.state.validationErrors.email}
+                          </Form.Control.Feedback>
+                        </Form.Group>
+                      </Form>
+                    </Col>
+                    <Col sm={6}></Col>
+                  </Row>
+                  <Row>
+                    <Col sm={6}>
+                      <Form>
+                        <Form.Group
+                          className="mb-3"
+                          controlId="formAddressName"
+                        >
+                          <Form.Label>Street Address</Form.Label>
+                          <Form.Control
+                            name="address"
+                            type="address"
+                            placeholder="Enter street address"
+                            value={this.state.address}
+                            onChange={this.handleChange}
+                            isInvalid={!!this.state.validationErrors.address}
+                          />
+                          <Form.Control.Feedback type="invalid">
+                            {this.state.validationErrors.address}
+                          </Form.Control.Feedback>
                         </Form.Group>
                       </Form>
                     </Col>
                     <Col sm={6}>
                       <Form>
-                        <Form.Group className="mb-3" controlId="formBasicEmail">
+                        <Form.Group className="mb-3" controlId="formCity">
                           <Form.Label>City</Form.Label>
-                          <Form.Control type="city" placeholder="Enter city" />
+                          <Form.Control
+                            name="city"
+                            type="name"
+                            placeholder="Enter city"
+                            value={this.state.city}
+                            onChange={this.handleChange}
+                            isInvalid={!!this.state.validationErrors.city}
+                          />
+                          <Form.Control.Feedback type="invalid">
+                            {this.state.validationErrors.city}
+                          </Form.Control.Feedback>
                         </Form.Group>
                       </Form>
                     </Col>
@@ -272,23 +346,37 @@ function CheckOut(props) {
                   <Row>
                     <Col sm={6}>
                       <Form>
-                        <Form.Group className="mb-3" controlId="formBasicEmail">
+                        <Form.Group className="mb-3" controlId="formState">
                           <Form.Label>State</Form.Label>
                           <Form.Control
-                            type="State"
+                            name="state"
+                            type="name"
                             placeholder="Enter state"
+                            value={this.state.state}
+                            onChange={this.handleChange}
+                            isInvalid={!!this.state.validationErrors.state}
                           />
+                          <Form.Control.Feedback type="invalid">
+                            {this.state.validationErrors.state}
+                          </Form.Control.Feedback>
                         </Form.Group>
                       </Form>
                     </Col>
                     <Col sm={6}>
                       <Form>
-                        <Form.Group className="mb-3" controlId="formBasicEmail">
+                        <Form.Group className="mb-3" controlId="formZip">
                           <Form.Label>Zip Code</Form.Label>
                           <Form.Control
-                            type="Zip"
+                            name="zip"
+                            type="name"
                             placeholder="Enter zip code"
+                            value={this.state.zip}
+                            onChange={this.handleChange}
+                            isInvalid={!!this.state.validationErrors.zip}
                           />
+                          <Form.Control.Feedback type="invalid">
+                            {this.state.validationErrors.zip}
+                          </Form.Control.Feedback>
                         </Form.Group>
                       </Form>
                     </Col>
@@ -296,34 +384,40 @@ function CheckOut(props) {
                   <Row>
                     <Col sm={6}>
                       <Form>
-                        <Form.Group className="mb-3" controlId="formBasicEmail">
+                        <Form.Group className="mb-3" controlId="formPhone">
                           <Form.Label>Phone Number</Form.Label>
                           <Form.Control
-                            type="Phone"
-                            placeholder="Enter phone number"
+                            name="phone"
+                            type="name"
+                            placeholder="Enter phone numer"
+                            value={this.state.phone}
+                            onChange={this.handleChange}
+                            isInvalid={!!this.state.validationErrors.phone}
                           />
+                          <Form.Control.Feedback type="invalid">
+                            {this.state.validationErrors.phone}
+                          </Form.Control.Feedback>
                         </Form.Group>
                       </Form>
                     </Col>
                   </Row>
                   <Row>
-                    <MyPaymentForm />
+                    {this.shouldShowPaymentForm() ? (
+                      <MyPaymentForm
+                        amount={this.props.amount * 100}
+                        zip={{ zip: this.state.zip }}
+                      />
+                    ) : null}
                   </Row>
                 </Card.Body>
               </Card>
             </Container>
           </Modal.Body>
-          <Modal.Footer>
-            {/* <ApplePay ApplePayProps={ApplePayProps} /> */}
-            {/* 
-            <Row>
-              <GooglePay GooglePayProps={GooglePayProps} />
-            </Row> */}
-          </Modal.Footer>
+          <Modal.Footer></Modal.Footer>
         </Modal>
       </>
-    </PaymentForm>
-  );
+    );
+  }
 }
 
 const mapStateToProps = (state) => {

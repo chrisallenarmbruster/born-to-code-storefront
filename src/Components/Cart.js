@@ -99,6 +99,7 @@ const Cart = (props) => {
                           <Button
                             variant="secondary"
                             size="sm"
+                            aria-label="remove item button"
                             onClick={() =>
                               handleRemove(cart, item.product, -item.quantity)
                             }
@@ -162,7 +163,7 @@ const Cart = (props) => {
                     <Col></Col>
                     <Col sm={4}>
                       <div className="d-grid gap-2">
-                        <CheckOut />
+                        <CheckOut amount={(subtotal + 1).toFixed(2)} />
                       </div>
                     </Col>
                     <Col sm={1}></Col>

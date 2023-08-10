@@ -79,7 +79,7 @@ const cartReducer = (state = initialState, action) => {
     case 'SET_CART':
       return action.cart;
     case 'UPDATE_QUANTITY':
-      return action.cart;
+      return action.cart; //.sort((a, b) => a.id - b.id);
     case 'ADD_TO_CART':
       return action.cart;
 
