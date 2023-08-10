@@ -49,7 +49,7 @@ export const resetProducts = () => {
   };
 };
 
-export const addProduct = (product) => {
+export const addProduct = (product, navigate) => {
   console.log('addProduct thunk', product);
   return async (dispatch) => {
     try {
@@ -63,6 +63,7 @@ export const addProduct = (product) => {
           })
         ).data;
         dispatch(_addProduct(data));
+        navigate(`/products/${data.id}`);
       }
     } catch (error) {
       console.log(error);
