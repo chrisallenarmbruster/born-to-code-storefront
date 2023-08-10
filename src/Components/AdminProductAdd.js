@@ -17,9 +17,11 @@ const AdminProductAdd = ({ addProduct }) => {
   const handleShow = () => setShow(true);
 
   const submitHandler = (values) => {
-    if (values.color === '' || values.color === 'Skip') {
-      delete values.color;
-    }
+    Object.keys(values).forEach((key) => {
+      if (values[key] === '' || values[key] === 'Skip') {
+        delete values[key];
+      }
+    });
     handleClose();
     addProduct(values, navigate);
   };
@@ -64,8 +66,15 @@ const AdminProductAdd = ({ addProduct }) => {
             name: '',
             category: '',
             description: '',
-            price: '',
+            spec1: '',
+            spec2: '',
+            spec3: '',
+            spec4: '',
             color: '',
+            sizeOptions: '',
+            imageUrl1: '',
+            price: '',
+            isFeatured: false,
           }}
         >
           {({
@@ -78,7 +87,7 @@ const AdminProductAdd = ({ addProduct }) => {
             errors,
           }) => (
             <Fragment>
-              <Form onSubmit={handleSubmit}>
+              <Form noValidate onSubmit={handleSubmit}>
                 <Modal.Body>
                   <Form.Group controlId="name" className="mb-3">
                     <Form.Label>Name</Form.Label>
@@ -86,7 +95,7 @@ const AdminProductAdd = ({ addProduct }) => {
                       type="text"
                       name="name"
                       placeholder="Enter product name"
-                      value={values.name}
+                      value={values.name || ''}
                       onChange={handleChange}
                       isValid={touched.name && !errors.name}
                       isInvalid={touched.name && !!errors.name}
@@ -94,14 +103,13 @@ const AdminProductAdd = ({ addProduct }) => {
                     <Form.Control.Feedback type="invalid">
                       {errors.name}
                     </Form.Control.Feedback>
-                    <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                   </Form.Group>{' '}
                   <Form.Group controlId="formBasicSelect" className="mb-3">
                     <Form.Label>Category</Form.Label>
                     <Form.Select
                       aria-label="Select product category"
                       name="category"
-                      value={values.category}
+                      value={values.category || ''}
                       placeholder="Select product category"
                       onChange={handleChange}
                       isValid={touched.category && !errors.category}
@@ -117,7 +125,6 @@ const AdminProductAdd = ({ addProduct }) => {
                     <Form.Control.Feedback type="invalid">
                       {errors.category}
                     </Form.Control.Feedback>
-                    <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                   </Form.Group>
                   <Form.Group controlId="description" className="mb-3">
                     <Form.Label>Description</Form.Label>
@@ -125,7 +132,7 @@ const AdminProductAdd = ({ addProduct }) => {
                       type="text"
                       name="description"
                       placeholder="Enter product description"
-                      value={values.description}
+                      value={values.description || ''}
                       onChange={handleChange}
                       isValid={touched.description && !errors.description}
                       isInvalid={touched.description && !!errors.description}
@@ -133,7 +140,6 @@ const AdminProductAdd = ({ addProduct }) => {
                     <Form.Control.Feedback type="invalid">
                       {errors.description}
                     </Form.Control.Feedback>
-                    <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                   </Form.Group>
                   <Form.Group controlId="formBasicText" className="mb-3">
                     <Form.Label>Specifications</Form.Label>
@@ -143,7 +149,9 @@ const AdminProductAdd = ({ addProduct }) => {
                       name="spec1"
                       onChange={handleChange}
                       className="mb-1"
-                      value={values.spec1}
+                      value={values.spec1 || ''}
+                      isValid={touched.spec1 && !errors.spec1}
+                      isInvalid={touched.spec1 && !!errors.spec1}
                     />
                     <Form.Control
                       type="text"
@@ -151,7 +159,9 @@ const AdminProductAdd = ({ addProduct }) => {
                       name="spec2"
                       onChange={handleChange}
                       className="mb-1"
-                      value={values.spec2}
+                      value={values.spec2 || ''}
+                      isValid={touched.spec2 && !errors.spec2}
+                      isInvalid={touched.spec2 && !!errors.spec2}
                     />
                     <Form.Control
                       type="text"
@@ -159,14 +169,18 @@ const AdminProductAdd = ({ addProduct }) => {
                       name="spec3"
                       onChange={handleChange}
                       className="mb-1"
-                      value={values.spec3}
+                      value={values.spec3 || ''}
+                      isValid={touched.spec3 && !errors.spec3}
+                      isInvalid={touched.spec3 && !!errors.spec3}
                     />
                     <Form.Control
                       type="text"
                       placeholder="Enter a specification"
                       name="spec4"
                       onChange={handleChange}
-                      value={values.spec4}
+                      value={values.spec4 || ''}
+                      isValid={touched.spec4 && !errors.spec4}
+                      isInvalid={touched.spec4 && !!errors.spec4}
                     />
                   </Form.Group>
                   <Form.Group controlId="formBasicSelect" className="mb-3">
@@ -176,7 +190,9 @@ const AdminProductAdd = ({ addProduct }) => {
                       name="color"
                       onChange={handleChange}
                       placeholder="Select option"
-                      value={values.color}
+                      value={values.color || ''}
+                      isValid={touched.color && !errors.color}
+                      isInvalid={touched.color && !!errors.color}
                     >
                       <option value="" disabled>
                         Select color
@@ -203,7 +219,9 @@ const AdminProductAdd = ({ addProduct }) => {
                       placeholder="Separate by commas like S,M,L,XL"
                       name="sizeOptions"
                       onChange={handleChange}
-                      value={values.sizeOptions}
+                      value={values.sizeOptions || ''}
+                      isValid={touched.sizeOptions && !errors.sizeOptions}
+                      isInvalid={touched.sizeOptions && !!errors.sizeOptions}
                     />
                   </Form.Group>
                   <Form.Group controlId="formBasicText" className="mb-3">
@@ -213,7 +231,9 @@ const AdminProductAdd = ({ addProduct }) => {
                       placeholder="Enter image URL"
                       name="imageUrl1"
                       onChange={handleChange}
-                      value={values.imageUrl1}
+                      value={values.imageUrl1 || ''}
+                      isValid={touched.imageUrl1 && !errors.imageUrl1}
+                      isInvalid={touched.imageUrl1 && !!errors.imageUrl1}
                     />
                   </Form.Group>
                   <Form.Group controlId="price" className="mb-3">
@@ -222,7 +242,7 @@ const AdminProductAdd = ({ addProduct }) => {
                       type="text"
                       name="price"
                       placeholder="Enter product price"
-                      value={values.price}
+                      value={values.price || ''}
                       onChange={handleChange}
                       isValid={touched.price && !errors.price}
                       isInvalid={touched.price && !!errors.price}
@@ -230,7 +250,6 @@ const AdminProductAdd = ({ addProduct }) => {
                     <Form.Control.Feedback type="invalid">
                       {errors.price}
                     </Form.Control.Feedback>
-                    <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                   </Form.Group>
                   <Form.Check // prettier-ignore
                     type="switch"
@@ -238,7 +257,7 @@ const AdminProductAdd = ({ addProduct }) => {
                     label="Feature this item"
                     name="isFeatured"
                     onChange={handleChange}
-                    value={values.isFeatured}
+                    value={values.isFeatured || false}
                   />
                 </Modal.Body>
                 <Modal.Footer>
