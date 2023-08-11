@@ -12,7 +12,7 @@ const User = (props) => {
   const [historyShow, setHistoryShow] = useState(false);
   const [userDetails, setUserDetails] = useState({ 
     email: '', 
-    Address: '', 
+    address: '', 
     city: '', 
     state: '', 
     country: '', 
@@ -72,7 +72,7 @@ const User = (props) => {
 
                   <Form.Group className="mb-3">
                     <Form.Label>Address</Form.Label>
-                    <Form.Control type="text" placeholder="Address" value={userDetails.Address} name="Address" onChange={handleChange}/>
+                    <Form.Control type="text" placeholder="Address" value={userDetails.address} name="address" onChange={handleChange}/>
                   </Form.Group>
 
                   <Form.Group className="mb-3">
