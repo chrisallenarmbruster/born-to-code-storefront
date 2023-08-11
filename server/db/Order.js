@@ -1,5 +1,5 @@
 const conn = require('./conn');
-const { STRING, BOOLEAN, UUID, UUIDV4, DATE, ENUM } = conn.Sequelize;
+const { STRING, BOOLEAN, UUID, UUIDV4, DATE, ENUM, BIGINT } = conn.Sequelize;
 
 const Order = conn.define('order', {
   id: {
@@ -77,6 +77,10 @@ const Order = conn.define('order', {
   },
   transactionId: {
     type: STRING,
+    required: false,
+  },
+  amount: {
+    type: BIGINT,
     required: false,
   },
 });

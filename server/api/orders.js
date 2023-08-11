@@ -21,6 +21,7 @@ app.post('/', async (req, res, next) => {
       'shipDate',
       'paymentMethod',
       'transactionId',
+      'amount',
     ];
 
     cartPropsToUpdate.forEach((prop) => {

@@ -157,13 +157,9 @@ export class CheckOut extends Component {
   }
 
   render() {
-    console.log('props here: ', this.props); // This will show you the current state.
     const { cart } = this.props;
-    console.log('cart in CheckOutModal ', cart);
     const lineItems = cart.lineItems;
-    console.log('lineitems in CheckOutModal ', lineItems);
     const amount = this.subTotal(lineItems).toFixed(2);
-    console.log(amount);
     const zip = this.state.zip;
     return (
       <>

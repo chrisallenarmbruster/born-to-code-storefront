@@ -46,6 +46,7 @@ export class MyPaymentForm extends Component {
                 first,
                 last,
                 address,
+                city,
                 state,
                 zip,
                 email,
@@ -53,6 +54,7 @@ export class MyPaymentForm extends Component {
                   res.payment.cardDetails.cardPaymentTimeline.capturedAt,
                 paymentMethod: res.payment.sourceType,
                 transactionId: res.payment.id,
+                amount,
               });
               console.log(res.payment.status, 'success');
             } else {

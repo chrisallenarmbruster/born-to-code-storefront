@@ -38,12 +38,6 @@ export const fetchCart = () => {
 };
 
 export const addToCart = (obj) => {
-  console.log(
-    'inside addToCart product : ',
-    obj.product,
-    'quantity : ',
-    obj.quantity
-  );
   let { product, quantity } = obj;
   return async (dispatch) => {
     const token = window.localStorage.getItem('token');
@@ -85,26 +79,30 @@ export const addOrders = (obj) => {
     first,
     last,
     address,
+    city,
     state,
     zip,
     email,
-    // date,
-    // paymentMethod,
-    // transactionId,
+    date,
+    paymentMethod,
+    transactionId,
+    amount,
   } = obj;
   return async (dispatch) => {
     const token = window.localStorage.getItem('token');
     const { data: updated } = await axios.post(
       '/api/orders/',
       {
-        name: `${first} ${last}`,
-        address,
-        state,
-        zip,
+        shipToName: `${first} ${last}`,
+        shipToAddress: address,
+        shipToCity: city,
+        shipToState: state,
+        shipToZip: zip,
         email,
-        // date,
-        // paymentMethod,
-        // transactionId,
+        shipDate: date,
+        paymentMethod,
+        transactionId,
+        amount,
       },
       {
         headers: {
