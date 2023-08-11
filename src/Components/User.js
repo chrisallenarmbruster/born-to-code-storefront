@@ -5,10 +5,12 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { connect } from 'react-redux';
 import Form from 'react-bootstrap/Form';
+import { adjustUserDetails } from '../store/auth';
 
 const User = (props) => {
   const [show, setShow] = useState(false);
   const [historyShow, setHistoryShow] = useState(false);
+  // const [userDetails, setUserDetails] = {email: '', Address: '', city: '', state: '', country: '', zip: ''};
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -17,6 +19,8 @@ const User = (props) => {
   const handleHistoryShow = () => setHistoryShow(true);
 
   const { auth } = props;
+
+  const handleSubmit = () => {};
 
   return (
     <div>
@@ -83,6 +87,7 @@ const User = (props) => {
               <Button variant="primary" onClick={() => console.log(auth)}>
                 Save Changes
               </Button>
+              <Button onClick={() => auth.email = 'test'}>Test</Button>
             </Modal.Footer>
           </Modal>
           <Card.Link onClick={handleHistoryShow}>See Order History</Card.Link>
@@ -122,5 +127,11 @@ const mapStateToProps = (state) => {
   return { auth: state.auth };
 };
 
-export default connect(mapStateToProps)(User);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    adjustUserDetails: (user) => dispatch(adjustUserDetails(user)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(User);
 

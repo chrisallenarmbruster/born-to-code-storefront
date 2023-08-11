@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import Button from 'react-bootstrap/Button'
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
+import Modal from 'react-bootstrap/Modal';
 
 class Login extends Component {
   constructor() {
@@ -19,6 +20,7 @@ class Login extends Component {
       },
       login: true,
       register: false,
+      show: true,
     };
     this.onChange = this.onChange.bind(this);
     this.login = this.login.bind(this);
@@ -63,21 +65,17 @@ class Login extends Component {
   }
 
   toggleLogin() {
-    console.log('toggleLogin called');
     this.setState({
       login: true,
       register: false,
     });
-    console.log('toggleLogin called ' + 'login: ' + this.state.login + ' register: ' + this.state.register);
   }
 
-  toggleRegister() {
-    console.log('toggleRegister called');
+  toggleRegister() {  
     this.setState({
       login: false,
       register: true,
     });
-    console.log('toggleRegister called ' + 'login: ' + this.state.login + ' register: ' + this.state.register);
   }
 
   render() {
@@ -98,7 +96,8 @@ class Login extends Component {
             </div>
           </div>
         ) : (
-          <div>
+          <Modal show={this.state.show}>
+            <div>
             <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop:'10px'}}>
               <Button variant="primary" onClick={() => this.toggleLogin()}>Login</Button>
               <Button variant="secondary" onClick={() => this.toggleRegister()}>Register</Button>
@@ -137,6 +136,7 @@ class Login extends Component {
               </div>
             )}  
           </div>
+          </Modal>       
         )}
       </div>
     );

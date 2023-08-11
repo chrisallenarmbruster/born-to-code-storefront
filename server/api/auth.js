@@ -31,13 +31,3 @@ app.get('/', async (req, res, next) => {
     next(ex);
   }
 });
-
-app.put('/', async(req, res, next) => {
-  try {
-    const user = await User.findByToken(req.headers.authorization);
-    await user.update(req.body);
-    res.status(200).json(user);
-  } catch (error) {
-    next(error);
-  }
-});
