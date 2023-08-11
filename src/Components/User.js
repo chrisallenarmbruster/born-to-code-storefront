@@ -37,9 +37,15 @@ const User = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(userDetails);
+
+    Object.keys(userDetails).forEach((key) => {
+      if (userDetails[key] === '') {
+        delete userDetails[key];
+      }
+    });
+
     adjustUserDetails(auth.id, userDetails);
-    console.log(userDetails);
+    
     handleClose();
   };
 
