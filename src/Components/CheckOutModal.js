@@ -31,6 +31,7 @@ export class CheckOut extends Component {
       phone: '7204801877',
       show: false,
       validationErrors: {},
+      transactionComplete: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -90,6 +91,14 @@ export class CheckOut extends Component {
         console.log('State has been updated!', this.state);
       }
     );
+  };
+
+  // send the user to the confirmation page after the transaction is complete
+  handleCompleteTransaction = () => {
+    this.setState({ transactionComplete: true });
+    //q: why isn't the history.push working?
+    //a: because this component is not being rendered by a route in App.js
+    this.props.history.push('/');
   };
 
   handleClose() {
@@ -160,276 +169,306 @@ export class CheckOut extends Component {
     const { cart } = this.props;
     const lineItems = cart.lineItems;
     const amount = this.subTotal(lineItems).toFixed(2);
+    let tax = 8;
+    const total = (amount * 1.08).toFixed(2);
+    console.log('amount ', amount);
     const zip = this.state.zip;
     return (
+      //q: how do you write this turnary statement to only show when the transactionComplete state is false?
+      //a: use the && operator to only show when the first condition is true
       <>
-        <Button variant="primary" onClick={this.handleShow}>
-          Checkout
-        </Button>
+        {!this.state.transactionComplete && (
+          <>
+            <Button variant="primary" onClick={this.handleShow}>
+              Checkout
+            </Button>
 
-        <Modal
-          show={this.state.show}
-          onHide={this.handleClose}
-          size="lg"
-          scrollable={true}
-          animation={true}
-          contentClassName="modal-height"
-        >
-          <Modal.Header closeButton>
-            <Modal.Title>Checkout</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <Container>
-              <Row>Your Cart:</Row>
-              {lineItems.map((item) => {
-                return (
-                  <Card
-                    style={{ height: '3rem', border: 0 }}
-                    key={item.product.id}
-                  >
-                    <Card.Body
-                      border={0}
-                      className="square border-bottom"
-                      aria-label="Form"
-                    >
+            <Modal
+              show={this.state.show}
+              onHide={this.handleClose}
+              size="lg"
+              scrollable={true}
+              animation={true}
+              contentClassName="modal-height"
+            >
+              <Modal.Header closeButton>
+                <Modal.Title>Checkout</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <Container>
+                  <Row>Your Cart:</Row>
+                  {lineItems.map((item) => {
+                    return (
+                      <Card
+                        style={{ height: '3rem', border: 0 }}
+                        key={item.product.id}
+                      >
+                        <Card.Body
+                          border={0}
+                          className="square border-bottom"
+                          aria-label="Form"
+                        >
+                          <Row>
+                            <Col sm={6}>
+                              <Card.Text
+                                style={{ fontSize: 12 }}
+                                aria-label="Product"
+                              >
+                                {item.product.name}
+                              </Card.Text>
+                            </Col>
+                            <Col sm={2}>
+                              <Card.Text
+                                style={{ fontSize: 12 }}
+                                aria-label="Quantity"
+                              >
+                                Quantity: {item.quantity}
+                              </Card.Text>
+                            </Col>
+                            <Col sm={2}>
+                              <Card.Text
+                                style={{ fontSize: 12 }}
+                                aria-label="Price"
+                              >
+                                Price: ${item.product.price}
+                              </Card.Text>
+                            </Col>
+                            <Col sm={2}>
+                              <CloseButton
+                                aria-label="Remove"
+                                onClick={() =>
+                                  handleRemove(
+                                    cart,
+                                    item.product,
+                                    -item.quantity
+                                  )
+                                }
+                              ></CloseButton>
+                            </Col>
+                          </Row>
+                        </Card.Body>
+                      </Card>
+                    );
+                  })}
+                  <Card style={{ height: '8rem', border: 0 }}>
+                    <Card.Body className="square border-top">
                       <Row>
-                        <Col sm={6}>
-                          <Card.Text
-                            style={{ fontSize: 12 }}
-                            aria-label="Product"
-                          >
-                            {item.product.name}
-                          </Card.Text>
-                        </Col>
-                        <Col sm={2}>
-                          <Card.Text
-                            style={{ fontSize: 12 }}
-                            aria-label="Quantity"
-                          >
-                            Quantity: {item.quantity}
-                          </Card.Text>
-                        </Col>
-                        <Col sm={2}>
-                          <Card.Text
-                            style={{ fontSize: 12 }}
-                            aria-label="Price"
-                          >
-                            Price: ${item.product.price}
-                          </Card.Text>
-                        </Col>
-                        <Col sm={2}>
-                          <CloseButton
-                            aria-label="Remove"
-                            onClick={() =>
-                              handleRemove(cart, item.product, -item.quantity)
-                            }
-                          ></CloseButton>
-                        </Col>
+                        <Col sm={2}></Col>
+                        <Col sm={7}>Subtotal</Col>
+                        <Col sm={1}></Col>
+                        <Col sm={2}>${amount}</Col>
+                      </Row>
+                      <Row>
+                        <Col sm={2}></Col>
+                        <Col sm={7}>Shipping</Col>
+                        <Col sm={1}></Col>
+                        <Col sm={2}>Free</Col>
+                      </Row>
+                      <Row>
+                        <Col sm={2}></Col>
+                        <Col sm={7}>Estimated tax for: {zip}</Col>
+                        <Col sm={1}></Col>
+                        <Col sm={2}>{tax}%</Col>
+                      </Row>
+                      <Row>
+                        <Col sm={2}></Col>
+                        <Col sm={7}>Total</Col>
+                        <Col sm={1}></Col>
+                        <Col sm={2}>${total}</Col>
                       </Row>
                     </Card.Body>
                   </Card>
-                );
-              })}
-              <Card style={{ height: '8rem', border: 0 }}>
-                <Card.Body className="square border-top">
-                  <Row>
-                    <Col sm={2}></Col>
-                    <Col sm={7}>Subtotal</Col>
-                    <Col sm={1}></Col>
-                    <Col sm={2}>${this.subTotal}</Col>
-                  </Row>
-                  <Row>
-                    <Col sm={2}></Col>
-                    <Col sm={7}>Shipping</Col>
-                    <Col sm={1}></Col>
-                    <Col sm={2}>Free</Col>
-                  </Row>
-                  <Row>
-                    <Col sm={2}></Col>
-                    <Col sm={7}>Estimated tax for: 80439</Col>
-                    <Col sm={1}></Col>
-                    <Col sm={2}>$1.00</Col>
-                  </Row>
-                </Card.Body>
-              </Card>
-              <Card style={{ height: '3rem', border: 0 }}>
-                <Card.Body border={0} className="square border-bottom">
-                  <Row>Where should we send your order?</Row>
-                  <Row>
-                    <Col sm={6}>
-                      <Form>
-                        <Form.Group className="mb-3" controlId="formFirstName">
-                          <Form.Label>First Name</Form.Label>
-                          <Form.Control
-                            name="first"
-                            type="name"
-                            placeholder="Enter first name"
-                            value={this.state.first || ''}
-                            onChange={this.handleChange}
-                            isInvalid={!!this.state.validationErrors.first}
+                  <Card style={{ height: '3rem', border: 0 }}>
+                    <Card.Body border={0} className="square border-bottom">
+                      <Row>Where should we send your order?</Row>
+                      <Row>
+                        <Col sm={6}>
+                          <Form>
+                            <Form.Group
+                              className="mb-3"
+                              controlId="formFirstName"
+                            >
+                              <Form.Label>First Name</Form.Label>
+                              <Form.Control
+                                name="first"
+                                type="name"
+                                placeholder="Enter first name"
+                                value={this.state.first || ''}
+                                onChange={this.handleChange}
+                                isInvalid={!!this.state.validationErrors.first}
+                              />
+                              <Form.Control.Feedback type="invalid">
+                                {this.state.validationErrors.first}
+                              </Form.Control.Feedback>
+                            </Form.Group>
+                          </Form>
+                        </Col>
+                        <Col sm={6}>
+                          <Form>
+                            <Form.Group
+                              className="mb-3"
+                              controlId="formLastName"
+                            >
+                              <Form.Label>Last Name</Form.Label>
+                              <Form.Control
+                                name="last"
+                                type="name"
+                                placeholder="Enter last name"
+                                value={this.state.last}
+                                onChange={this.handleChange}
+                                isInvalid={!!this.state.validationErrors.last}
+                              />
+                              <Form.Control.Feedback type="invalid">
+                                {this.state.validationErrors.last}
+                              </Form.Control.Feedback>
+                            </Form.Group>
+                          </Form>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col sm={6}>
+                          <Form>
+                            <Form.Group className="mb-3" controlId="formEmail">
+                              <Form.Label>Email</Form.Label>
+                              <Form.Control
+                                name="email"
+                                type="name"
+                                placeholder="Enter email"
+                                value={this.state.email}
+                                onChange={this.handleChange}
+                                isInvalid={!!this.state.validationErrors.email}
+                              />
+                              <Form.Control.Feedback type="invalid">
+                                {this.state.validationErrors.email}
+                              </Form.Control.Feedback>
+                            </Form.Group>
+                          </Form>
+                        </Col>
+                        <Col sm={6}></Col>
+                      </Row>
+                      <Row>
+                        <Col sm={6}>
+                          <Form>
+                            <Form.Group
+                              className="mb-3"
+                              controlId="formAddressName"
+                            >
+                              <Form.Label>Street Address</Form.Label>
+                              <Form.Control
+                                name="address"
+                                type="address"
+                                placeholder="Enter street address"
+                                value={this.state.address}
+                                onChange={this.handleChange}
+                                isInvalid={
+                                  !!this.state.validationErrors.address
+                                }
+                              />
+                              <Form.Control.Feedback type="invalid">
+                                {this.state.validationErrors.address}
+                              </Form.Control.Feedback>
+                            </Form.Group>
+                          </Form>
+                        </Col>
+                        <Col sm={6}>
+                          <Form>
+                            <Form.Group className="mb-3" controlId="formCity">
+                              <Form.Label>City</Form.Label>
+                              <Form.Control
+                                name="city"
+                                type="name"
+                                placeholder="Enter city"
+                                value={this.state.city}
+                                onChange={this.handleChange}
+                                isInvalid={!!this.state.validationErrors.city}
+                              />
+                              <Form.Control.Feedback type="invalid">
+                                {this.state.validationErrors.city}
+                              </Form.Control.Feedback>
+                            </Form.Group>
+                          </Form>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col sm={6}>
+                          <Form>
+                            <Form.Group className="mb-3" controlId="formState">
+                              <Form.Label>State</Form.Label>
+                              <Form.Control
+                                name="state"
+                                type="name"
+                                placeholder="Enter state"
+                                value={this.state.state}
+                                onChange={this.handleChange}
+                                isInvalid={!!this.state.validationErrors.state}
+                              />
+                              <Form.Control.Feedback type="invalid">
+                                {this.state.validationErrors.state}
+                              </Form.Control.Feedback>
+                            </Form.Group>
+                          </Form>
+                        </Col>
+                        <Col sm={6}>
+                          <Form>
+                            <Form.Group className="mb-3" controlId="formZip">
+                              <Form.Label>Zip Code</Form.Label>
+                              <Form.Control
+                                name="zip"
+                                type="name"
+                                placeholder="Enter zip code"
+                                value={this.state.zip}
+                                onChange={this.handleChange}
+                                isInvalid={!!this.state.validationErrors.zip}
+                              />
+                              <Form.Control.Feedback type="invalid">
+                                {this.state.validationErrors.zip}
+                              </Form.Control.Feedback>
+                            </Form.Group>
+                          </Form>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col sm={6}>
+                          <Form>
+                            <Form.Group className="mb-3" controlId="formPhone">
+                              <Form.Label>Phone Number</Form.Label>
+                              <Form.Control
+                                name="phone"
+                                type="name"
+                                placeholder="Enter phone numer"
+                                value={this.state.phone}
+                                onChange={this.handleChange}
+                                isInvalid={!!this.state.validationErrors.phone}
+                              />
+                              <Form.Control.Feedback type="invalid">
+                                {this.state.validationErrors.phone}
+                              </Form.Control.Feedback>
+                            </Form.Group>
+                          </Form>
+                        </Col>
+                      </Row>
+                      <Row>
+                        {this.shouldShowPaymentForm() ? (
+                          <MyPaymentForm
+                            amount={amount * 100}
+                            first={this.state.first}
+                            zip={zip}
+                            handleCompleteTransaction={() =>
+                              this.handleCompleteTransaction()
+                            }
+                            addOrders={() => this.props.addOrders()}
+                            {...this.state}
                           />
-                          <Form.Control.Feedback type="invalid">
-                            {this.state.validationErrors.first}
-                          </Form.Control.Feedback>
-                        </Form.Group>
-                      </Form>
-                    </Col>
-                    <Col sm={6}>
-                      <Form>
-                        <Form.Group className="mb-3" controlId="formLastName">
-                          <Form.Label>Last Name</Form.Label>
-                          <Form.Control
-                            name="last"
-                            type="name"
-                            placeholder="Enter last name"
-                            value={this.state.last}
-                            onChange={this.handleChange}
-                            isInvalid={!!this.state.validationErrors.last}
-                          />
-                          <Form.Control.Feedback type="invalid">
-                            {this.state.validationErrors.last}
-                          </Form.Control.Feedback>
-                        </Form.Group>
-                      </Form>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col sm={6}>
-                      <Form>
-                        <Form.Group className="mb-3" controlId="formEmail">
-                          <Form.Label>Email</Form.Label>
-                          <Form.Control
-                            name="email"
-                            type="name"
-                            placeholder="Enter email"
-                            value={this.state.email}
-                            onChange={this.handleChange}
-                            isInvalid={!!this.state.validationErrors.email}
-                          />
-                          <Form.Control.Feedback type="invalid">
-                            {this.state.validationErrors.email}
-                          </Form.Control.Feedback>
-                        </Form.Group>
-                      </Form>
-                    </Col>
-                    <Col sm={6}></Col>
-                  </Row>
-                  <Row>
-                    <Col sm={6}>
-                      <Form>
-                        <Form.Group
-                          className="mb-3"
-                          controlId="formAddressName"
-                        >
-                          <Form.Label>Street Address</Form.Label>
-                          <Form.Control
-                            name="address"
-                            type="address"
-                            placeholder="Enter street address"
-                            value={this.state.address}
-                            onChange={this.handleChange}
-                            isInvalid={!!this.state.validationErrors.address}
-                          />
-                          <Form.Control.Feedback type="invalid">
-                            {this.state.validationErrors.address}
-                          </Form.Control.Feedback>
-                        </Form.Group>
-                      </Form>
-                    </Col>
-                    <Col sm={6}>
-                      <Form>
-                        <Form.Group className="mb-3" controlId="formCity">
-                          <Form.Label>City</Form.Label>
-                          <Form.Control
-                            name="city"
-                            type="name"
-                            placeholder="Enter city"
-                            value={this.state.city}
-                            onChange={this.handleChange}
-                            isInvalid={!!this.state.validationErrors.city}
-                          />
-                          <Form.Control.Feedback type="invalid">
-                            {this.state.validationErrors.city}
-                          </Form.Control.Feedback>
-                        </Form.Group>
-                      </Form>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col sm={6}>
-                      <Form>
-                        <Form.Group className="mb-3" controlId="formState">
-                          <Form.Label>State</Form.Label>
-                          <Form.Control
-                            name="state"
-                            type="name"
-                            placeholder="Enter state"
-                            value={this.state.state}
-                            onChange={this.handleChange}
-                            isInvalid={!!this.state.validationErrors.state}
-                          />
-                          <Form.Control.Feedback type="invalid">
-                            {this.state.validationErrors.state}
-                          </Form.Control.Feedback>
-                        </Form.Group>
-                      </Form>
-                    </Col>
-                    <Col sm={6}>
-                      <Form>
-                        <Form.Group className="mb-3" controlId="formZip">
-                          <Form.Label>Zip Code</Form.Label>
-                          <Form.Control
-                            name="zip"
-                            type="name"
-                            placeholder="Enter zip code"
-                            value={this.state.zip}
-                            onChange={this.handleChange}
-                            isInvalid={!!this.state.validationErrors.zip}
-                          />
-                          <Form.Control.Feedback type="invalid">
-                            {this.state.validationErrors.zip}
-                          </Form.Control.Feedback>
-                        </Form.Group>
-                      </Form>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col sm={6}>
-                      <Form>
-                        <Form.Group className="mb-3" controlId="formPhone">
-                          <Form.Label>Phone Number</Form.Label>
-                          <Form.Control
-                            name="phone"
-                            type="name"
-                            placeholder="Enter phone numer"
-                            value={this.state.phone}
-                            onChange={this.handleChange}
-                            isInvalid={!!this.state.validationErrors.phone}
-                          />
-                          <Form.Control.Feedback type="invalid">
-                            {this.state.validationErrors.phone}
-                          </Form.Control.Feedback>
-                        </Form.Group>
-                      </Form>
-                    </Col>
-                  </Row>
-                  <Row>
-                    {this.shouldShowPaymentForm() ? (
-                      <MyPaymentForm
-                        amount={amount * 100}
-                        first={this.state.first}
-                        zip={this.state.zip}
-                        addOrders={() => this.props.addOrders()}
-                        {...this.state}
-                      />
-                    ) : null}
-                  </Row>
-                </Card.Body>
-              </Card>
-            </Container>
-          </Modal.Body>
-          <Modal.Footer></Modal.Footer>
-        </Modal>
+                        ) : null}
+                      </Row>
+                    </Card.Body>
+                  </Card>
+                </Container>
+              </Modal.Body>
+              <Modal.Footer></Modal.Footer>
+            </Modal>
+          </>
+        )}
       </>
     );
   }

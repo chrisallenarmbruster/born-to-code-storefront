@@ -17,6 +17,7 @@ export class MyPaymentForm extends Component {
       zip: '',
       email: '',
       phone: '',
+      transactionComplete: false,
     };
   }
 
@@ -38,7 +39,6 @@ export class MyPaymentForm extends Component {
                 amount: amount,
               }),
             });
-            //TODO: Add success and failure pages and post to db
             let res = await response.json();
             if (res.payment.status === 'COMPLETED') {
               console.log('inside completed ', res);
@@ -57,6 +57,7 @@ export class MyPaymentForm extends Component {
                 amount,
               });
               console.log(res.payment.status, 'success');
+              this.props.handleCompleteTransaction();
             } else {
               console.log(res.payment.status, 'failure');
             }
@@ -67,7 +68,7 @@ export class MyPaymentForm extends Component {
         >
           <CreditCard
             includeInputLabels
-            postalCode={this.state.zip.zip}
+            postalCode={zip}
             buttonProps={{
               css: {
                 "[data-theme='dark'] &": {

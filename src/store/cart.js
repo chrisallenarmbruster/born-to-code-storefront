@@ -110,7 +110,7 @@ export const addOrders = (obj) => {
         },
       }
     );
-    dispatch(_addOrder(null));
+    dispatch(_addOrder(updated));
   };
 };
 
