@@ -40,6 +40,7 @@ const User = (props) => {
     console.log(userDetails);
     adjustUserDetails(auth.id, userDetails);
     console.log(userDetails);
+    handleClose();
   };
 
   return (
