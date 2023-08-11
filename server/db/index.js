@@ -21,4 +21,5 @@ module.exports = {
   Product,
   Review,
   Order,
+  LineItem,
 };
