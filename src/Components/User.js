@@ -10,7 +10,14 @@ import { adjustUserDetails } from '../store/auth';
 const User = (props) => {
   const [show, setShow] = useState(false);
   const [historyShow, setHistoryShow] = useState(false);
-  // const [userDetails, setUserDetails] = {email: '', Address: '', city: '', state: '', country: '', zip: ''};
+  const [userDetails, setUserDetails] = useState({ 
+    email: '', 
+    Address: '', 
+    city: '', 
+    state: '', 
+    country: '', 
+    zip: '' 
+  })
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -20,9 +27,20 @@ const User = (props) => {
 
   const { auth } = props;
 
-  const handleSubmit = () => {
-
+  const handleChange = (ev) => {
+    setUserDetails({
+      ...userDetails, [ev.target.name]: ev.target.value
+    });
   };
+
+  const { adjustUserDetails } = props;
+
+  const handleSubmit = (user) => {
+    console.log(user);
+    adjustUserDetails(user);
+  };
+
+  //pass adjustUserDetails auth for the user variable
 
   return (
     <div>
@@ -50,35 +68,35 @@ const User = (props) => {
               <Modal.Title>Edit {auth.username} Info</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <Form onSubmit={adjustUserDetails(user)}>
+              <Form onSubmit={handleSubmit(auth)}>
                 <Form.Group className="mb-3">
                   <Form.Label>Email address</Form.Label>
-                  <Form.Control type="email" placeholder="Enter email" />
+                  <Form.Control type="email" placeholder="Enter email" value={auth.email} name="email" onChange={handleChange}/>
                 </Form.Group>
 
                 <Form.Group className="mb-3">
                   <Form.Label>Address</Form.Label>
-                  <Form.Control type="text" placeholder="Address" />
+                  <Form.Control type="text" placeholder="Address" value={auth.Address} name="Address" onChange={handleChange}/>
                 </Form.Group>
 
                 <Form.Group className="mb-3">
                   <Form.Label>City</Form.Label>
-                  <Form.Control type="text" placeholder="City" />
+                  <Form.Control type="text" placeholder="City" value={auth.city} name="city" onChange={handleChange} />
                 </Form.Group>
 
                 <Form.Group className="mb-3">
                   <Form.Label>State</Form.Label>
-                  <Form.Control type="text" placeholder="State" />
+                  <Form.Control type="text" placeholder="State" value={auth.state} name="State" onChange={handleChange} />
                 </Form.Group>
 
                 <Form.Group className="mb-3">
                   <Form.Label>Country</Form.Label>
-                  <Form.Control type="text" placeholder="Country" />
+                  <Form.Control type="text" placeholder="Country" value={auth.country} name="Country" onChange={handleChange} />
                 </Form.Group>
 
                 <Form.Group className="mb-3">
                   <Form.Label>Zip Code</Form.Label>
-                  <Form.Control type="text" placeholder="Zip Code" />
+                  <Form.Control type="text" placeholder="Zip Code" value={auth.zip} name="zip" onChange={handleChange} />
                 </Form.Group>
               </Form>
             </Modal.Body>
