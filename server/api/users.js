@@ -52,7 +52,10 @@ app.put('/:id', async (req, res, next) => {
       error.status = 401;
       throw error;
     }
-    res.send(await user.update(req.body));
+    console.log("req body: ", req.body);
+    const updatedUser = await user.update(req.body);
+    console.log("updated user: ", updatedUser);
+    res.send(updatedUser);
   } catch (ex) {
     next(ex);
   }

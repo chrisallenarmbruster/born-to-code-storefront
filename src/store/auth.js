@@ -58,7 +58,7 @@ export const adjustUserDetails = (user) => {
     try {
       const token = window.localStorage.getItem('token');
       if (token) {
-        const updatedUser = (await axios.put(`/api/users/:id`, user, { headers: { authorization: token } })).data;
+        const updatedUser = (await axios.put(`/api/users/${user.id}`, user, { headers: { authorization: token } })).data;
         dispatch(updateUserProfile(updatedUser))
       }  
     } catch (error) {

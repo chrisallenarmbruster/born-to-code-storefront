@@ -35,12 +35,12 @@ const User = (props) => {
 
   const { adjustUserDetails } = props;
 
-  const handleSubmit = (user) => {
-    console.log(user);
-    adjustUserDetails(user);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(userDetails);
+    adjustUserDetails(userDetails);
+    console.log(userDetails);
   };
-
-  //pass adjustUserDetails auth for the user variable
 
   return (
     <div>
@@ -62,54 +62,55 @@ const User = (props) => {
           </Card.Text>
         </Card.Body>
         <Card.Body>
-          <Card.Link onClick={handleShow}>Edit User Info</Card.Link>
+          <Card.Link onClick={handleShow}>Edit User Info</Card.Link>    
+          
           <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>
               <Modal.Title>Edit {auth.username} Info</Modal.Title>
             </Modal.Header>
-            <Modal.Body>
-              <Form onSubmit={handleSubmit(auth)}>
-                <Form.Group className="mb-3">
-                  <Form.Label>Email address</Form.Label>
-                  <Form.Control type="email" placeholder="Enter email" value={auth.email} name="email" onChange={handleChange}/>
-                </Form.Group>
+            <Form onSubmit={(e) => handleSubmit(e)}>
+              <Modal.Body>
+                  <Form.Group className="mb-3">
+                    <Form.Label>Email address</Form.Label>
+                    <Form.Control type="email" placeholder="Enter email" value={userDetails.email} name="email" onChange={handleChange}/>
+                  </Form.Group>
 
-                <Form.Group className="mb-3">
-                  <Form.Label>Address</Form.Label>
-                  <Form.Control type="text" placeholder="Address" value={auth.Address} name="Address" onChange={handleChange}/>
-                </Form.Group>
+                  <Form.Group className="mb-3">
+                    <Form.Label>Address</Form.Label>
+                    <Form.Control type="text" placeholder="Address" value={userDetails.Address} name="Address" onChange={handleChange}/>
+                  </Form.Group>
 
-                <Form.Group className="mb-3">
-                  <Form.Label>City</Form.Label>
-                  <Form.Control type="text" placeholder="City" value={auth.city} name="city" onChange={handleChange} />
-                </Form.Group>
+                  <Form.Group className="mb-3">
+                    <Form.Label>City</Form.Label>
+                    <Form.Control type="text" placeholder="City" value={userDetails.city} name="city" onChange={handleChange} />
+                  </Form.Group>
 
-                <Form.Group className="mb-3">
-                  <Form.Label>State</Form.Label>
-                  <Form.Control type="text" placeholder="State" value={auth.state} name="State" onChange={handleChange} />
-                </Form.Group>
+                  <Form.Group className="mb-3">
+                    <Form.Label>State</Form.Label>
+                    <Form.Control type="text" placeholder="State" value={userDetails.state} name="state" onChange={handleChange} />
+                  </Form.Group>
 
-                <Form.Group className="mb-3">
-                  <Form.Label>Country</Form.Label>
-                  <Form.Control type="text" placeholder="Country" value={auth.country} name="Country" onChange={handleChange} />
-                </Form.Group>
+                  <Form.Group className="mb-3">
+                    <Form.Label>Country</Form.Label>
+                    <Form.Control type="text" placeholder="Country" value={userDetails.country} name="country" onChange={handleChange} />
+                  </Form.Group>
 
-                <Form.Group className="mb-3">
-                  <Form.Label>Zip Code</Form.Label>
-                  <Form.Control type="text" placeholder="Zip Code" value={auth.zip} name="zip" onChange={handleChange} />
-                </Form.Group>
-              </Form>
-            </Modal.Body>
-            <Modal.Footer>
-              <Button variant="secondary" onClick={handleClose}>
-                Close
-              </Button>
-              <Button variant="primary" onClick={() => console.log(auth)}>
-                Save Changes
-              </Button>
-              <Button type="submit">Submit</Button>
-            </Modal.Footer>
+                  <Form.Group className="mb-3">
+                    <Form.Label>Zip Code</Form.Label>
+                    <Form.Control type="text" placeholder="Zip Code" value={userDetails.zip} name="zip" onChange={handleChange} />
+                  </Form.Group>
+              </Modal.Body>
+              <Modal.Footer>
+                <Button variant="secondary" onClick={handleClose}>
+                  Close
+                </Button>
+                <Button variant="primary" type="submit">
+                  Save Changes
+                </Button>            
+              </Modal.Footer>
+            </Form>
           </Modal>
+      
           <Card.Link onClick={handleHistoryShow}>See Order History</Card.Link>
           <Modal show={historyShow} onHide={handleHistoryClose}>
             <Modal.Header closeButton>
