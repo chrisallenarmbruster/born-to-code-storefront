@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button'
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
-
+import Nav from 'react-bootstrap/Nav';
 class Login extends Component {
   constructor() {
     super();
@@ -100,7 +100,7 @@ class Login extends Component {
             <div>
             <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop:'10px'}}>
               <Button variant="primary" onClick={() => this.toggleLogin()}>Login</Button>
-              <Button variant="secondary" onClick={() => this.toggleRegister()}>Register</Button>
+              <Button variant="secondary" onClick={() => this.toggleRegister()} style={{ marginLeft: '10px' }} >Register</Button>
             </div>
             
             <br />
@@ -117,7 +117,11 @@ class Login extends Component {
                   <Form.Control type="password" placeholder="Password" value={credentials.password} name="password" onChange={onChange}/>
                 </FloatingLabel>
                 
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop:'10px' }}><Button type="submit">Login</Button></div>             
+                
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop:'10px', marginLeft: '10px'}}>
+                  <Button style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop:'10px'}} href="#/">Go Back</Button>
+                  <Button type="submit" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop:'10px', marginLeft: '10px'}}>Login</Button>  
+                </div>             
             </Form>
             </div>) : (
               <div>
@@ -131,7 +135,10 @@ class Login extends Component {
                     <Form.Control type="password" placeholder="Password" name="password" value={newUser.password} onChange={this.onChangeRegister}/>
                   </FloatingLabel>
                     
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop:'10px'}}><Button onClick={(e) => this.register(e)} type="submit">Sign Up</Button></div> 
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop:'10px'}}>
+                    <Button style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop:'10px'}} href="#/">Go Back</Button>
+                    <Button onClick={(e) => this.register(e)} type="submit" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop:'10px', marginLeft: '10px'}}>Sign Up</Button>
+                  </div> 
                 </Form>  
               </div>
             )}  

@@ -20,7 +20,9 @@ const User = (props) => {
 
   const { auth } = props;
 
-  const handleSubmit = () => {};
+  const handleSubmit = () => {
+
+  };
 
   return (
     <div>
@@ -48,7 +50,7 @@ const User = (props) => {
               <Modal.Title>Edit {auth.username} Info</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <Form>
+              <Form onSubmit={adjustUserDetails(user)}>
                 <Form.Group className="mb-3">
                   <Form.Label>Email address</Form.Label>
                   <Form.Control type="email" placeholder="Enter email" />
@@ -87,7 +89,7 @@ const User = (props) => {
               <Button variant="primary" onClick={() => console.log(auth)}>
                 Save Changes
               </Button>
-              <Button onClick={() => auth.email = 'test'}>Test</Button>
+              <Button type="submit">Submit</Button>
             </Modal.Footer>
           </Modal>
           <Card.Link onClick={handleHistoryShow}>See Order History</Card.Link>
