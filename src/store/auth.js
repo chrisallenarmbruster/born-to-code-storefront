@@ -35,6 +35,18 @@ export const attemptLogin = (credentials) => {
   };
 };
 
+export const attemptRegistration = (user) => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.post('/api/auth/signup', user);
+      window.localStorage.setItem('token', response.data);
+      dispatch(loginWithToken())
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
 const initialState = {};
 
 const authReducer = (state = initialState, action) => {

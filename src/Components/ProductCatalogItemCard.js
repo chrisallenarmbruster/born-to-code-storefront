@@ -17,9 +17,13 @@ const ProductCatalogItemCard = ({ product }) => {
           <Link to={`/products/${product.id}`} className="text-decoration-none">
             <Card.Title className="text-center">{product.name}</Card.Title>
           </Link>
-          <span className="d-flex justify-content-center">
-            <ProductReviewStars rating={product.rating} />
-          </span>
+          {product.rating ? (
+            <span className="d-flex justify-content-center">
+              <ProductReviewStars rating={product.rating} />
+            </span>
+          ) : (
+            'Item not yet rated.'
+          )}
         </span>
       </Card.Footer>
       <Card.Footer className="d-flex justify-content-between align-items-center">

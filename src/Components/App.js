@@ -5,6 +5,8 @@ import NavBar from './Navbar';
 import ProductAll from './ProductAll';
 import ProductSingle from './ProductSingle';
 import ProductLanding from './ProductLanding';
+import AdminDashboard from './AdminDashboard';
+import OrderHistory from './OrderHistory';
 import User from './User';
 import { loginWithToken, fetchCart } from '../store';
 import { Routes, Route } from 'react-router-dom';
@@ -32,6 +34,8 @@ class App extends Component {
             <Route path="/products" element={<ProductAll />} />
             <Route path="/products/:id" element={<ProductSingle />} />
             <Route path="/users/:id" element={<User />} />
+            <Route path="/users/:id/orders" element={<OrderHistory />} />
+            <Route path="/admin" element={<AdminDashboard />} />
           </Routes>
         </Fragment>
       </Fragment>
