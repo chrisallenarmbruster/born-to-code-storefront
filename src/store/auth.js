@@ -53,12 +53,12 @@ export const attemptRegistration = (user) => {
   };
 };
 
-export const adjustUserDetails = (user) => {
+export const adjustUserDetails = (userId, userData) => {
   return async (dispatch) => {
     try {
       const token = window.localStorage.getItem('token');
       if (token) {
-        const updatedUser = (await axios.put(`/api/users/${user.id}`, user, { headers: { authorization: token } })).data;
+        const updatedUser = (await axios.put(`/api/users/${userId}`, userData, { headers: { authorization: token } })).data;
         dispatch(updateUserProfile(updatedUser))
       }  
     } catch (error) {

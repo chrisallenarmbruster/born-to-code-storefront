@@ -38,7 +38,7 @@ const User = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(userDetails);
-    adjustUserDetails(userDetails);
+    adjustUserDetails(auth.id, userDetails);
     console.log(userDetails);
   };
 
@@ -49,17 +49,12 @@ const User = (props) => {
         <Card.Header>User Profile</Card.Header>
         <Card.Body>
           <Card.Title>Welcome {auth.username}</Card.Title>
-          <Card.Text>
-            lorem ipsum dolor sit amet, consectetur adipiscing 
-            lorem ipsum dolor sit amet
-            lorem ipsum dolor sit
-            {auth.email}
-            {auth.Address}
-            {auth.city}
-            {auth.state}
-            {auth.country}
-            {auth.zip}
-          </Card.Text>
+          <Card.Text>User Email: {auth.email}</Card.Text>
+          <Card.Text>User Address: {auth.address}</Card.Text>
+          <Card.Text>User City: {auth.city}</Card.Text>
+          <Card.Text>User State: {auth.state}</Card.Text>
+          <Card.Text>User Country: {auth.country}</Card.Text>
+          <Card.Text>User Zipcode: {auth.zip}</Card.Text>
         </Card.Body>
         <Card.Body>
           <Card.Link onClick={handleShow}>Edit User Info</Card.Link>    
@@ -150,7 +145,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    adjustUserDetails: (user) => dispatch(adjustUserDetails(user)),
+    adjustUserDetails: (userId, userData) => dispatch(adjustUserDetails(userId, userData)),
   };
 };
 
