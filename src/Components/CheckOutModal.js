@@ -15,20 +15,20 @@ import {
 import MyPaymentForm from './Payment';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { updateQuantity, fetchCart, addOrders } from '../store/cart';
+import { updateQuantity, fetchCart } from '../store/cart';
 
 export class CheckOut extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      first: '',
-      last: '',
-      address: '',
-      city: '',
-      state: '',
-      zip: '',
-      email: '',
-      phone: '',
+      first: 'Joel',
+      last: 'Janov',
+      address: '30122 Wingfoot Dr',
+      city: 'Evergreen',
+      state: 'Co',
+      zip: '80439',
+      email: 'jejanov@gmail.com',
+      phone: '7204801877',
       show: false,
       validationErrors: {},
     };
@@ -418,16 +418,15 @@ export class CheckOut extends Component {
                     </Col>
                   </Row>
                   <Row>
-                    {/* //BUG: This isn't passing in the state variables to the payment form  */}
-                    {/* {this.shouldShowPaymentForm() ? ( */}
-                    <MyPaymentForm
-                      amount={amount * 100}
-                      first={this.state.first}
-                      zip={this.state.zip}
-                      addOrders={() => this.props.addOrders()}
-                      {...this.state}
-                    />
-                    {/* ) : null} */}
+                    {this.shouldShowPaymentForm() ? (
+                      <MyPaymentForm
+                        amount={amount * 100}
+                        first={this.state.first}
+                        zip={this.state.zip}
+                        addOrders={() => this.props.addOrders()}
+                        {...this.state}
+                      />
+                    ) : null}
                   </Row>
                 </Card.Body>
               </Card>
@@ -450,7 +449,6 @@ const mapDispatchToProps = (dispatch, { history }) => {
   return {
     updateQuantity: (item) => dispatch(updateQuantity(item, history)),
     fetchCart: () => dispatch(fetchCart()),
-    addOrders: (orders) => dispatch(addOrders(orders, history)),
   };
 };
 

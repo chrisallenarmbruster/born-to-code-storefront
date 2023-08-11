@@ -81,22 +81,30 @@ export const updateQuantity = (obj) => {
 
 export const addOrders = (obj) => {
   console.log('inside updateOrders', obj);
-  let { first, last, address, state, zip, email, date, paymentMethod, transactionId } = obj;
+  let {
+    first,
+    last,
+    address,
+    state,
+    zip,
+    email,
+    // date,
+    // paymentMethod,
+    // transactionId,
+  } = obj;
   return async (dispatch) => {
     const token = window.localStorage.getItem('token');
     const { data: updated } = await axios.post(
-      '/api/orders/cart/',
-
+      '/api/orders/',
       {
-        first,
-        last,
+        name: `${first} ${last}`,
         address,
         state,
         zip,
         email,
-        date,
-        paymentMethod,
-        transactionId,
+        // date,
+        // paymentMethod,
+        // transactionId,
       },
       {
         headers: {
@@ -104,7 +112,7 @@ export const addOrders = (obj) => {
         },
       }
     );
-    dispatch(_addOrder(updated, product, quantity));
+    dispatch(_addOrder(updated));
   };
 };
 

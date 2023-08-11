@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { CreditCard, PaymentForm } from 'react-square-web-payments-sdk';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { addOrders } from '../store/cart';
 export class MyPaymentForm extends Component {
   constructor(props) {
     super(props);
@@ -20,8 +21,8 @@ export class MyPaymentForm extends Component {
   }
 
   render() {
-    let { amount, zip } = this.props;
-    console.log('props inside Payment ', this.props);
+    let { amount, zip, first, last, address, email, phone, city, state } =
+      this.props;
     return (
       <div>
         <PaymentForm
@@ -40,7 +41,19 @@ export class MyPaymentForm extends Component {
             //TODO: Add success and failure pages and post to db
             let res = await response.json();
             if (res.payment.status === 'COMPLETED') {
-              addOrders({ last, email, address, city, state, zip });
+              console.log('inside completed ', res);
+              this.props.addOrders({
+                first,
+                last,
+                address,
+                state,
+                zip,
+                email,
+                shipDate:
+                  res.payment.cardDetails.cardPaymentTimeline.capturedAt,
+                paymentMethod: res.payment.sourceType,
+                transactionId: res.payment.id,
+              });
               console.log(res.payment.status, 'success');
             } else {
               console.log(res.payment.status, 'failure');
@@ -85,4 +98,10 @@ export class MyPaymentForm extends Component {
   }
 }
 
-export default MyPaymentForm;
+const mapDispatchToProps = (dispatch, { history }) => {
+  return {
+    addOrders: (orders) => dispatch(addOrders(orders)),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(MyPaymentForm);

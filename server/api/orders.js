@@ -6,6 +6,7 @@ module.exports = app;
 
 app.post('/', async (req, res, next) => {
   try {
+    console.log('inside orders post route ', req);
     const user = await User.findByToken(req.headers.authorization);
     const cart = await user.getCart();
     console.log('inside order post api route', req.body);
@@ -18,8 +19,8 @@ app.post('/', async (req, res, next) => {
       'shipToState',
       'shipToZip',
       'shipDate',
-      // 'paymentMethod',
-      // 'transactionId',
+      'paymentMethod',
+      'transactionId',
     ];
 
     cartPropsToUpdate.forEach((prop) => {
