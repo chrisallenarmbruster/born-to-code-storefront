@@ -112,7 +112,7 @@ export const addOrders = (obj) => {
         },
       }
     );
-    dispatch(_addOrder(updated));
+    dispatch(_addOrder(null));
   };
 };
 
