@@ -4,8 +4,6 @@ import { CreditCard, PaymentForm } from 'react-square-web-payments-sdk';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 export class MyPaymentForm extends Component {
-  //q: what is this constructor doing?
-  //a: it is binding the handleChange function to the class so that it can be used in the render function below (see line 20)
   constructor(props) {
     super(props);
     console.log('inside Payment constructor ', props);
@@ -87,26 +85,4 @@ export class MyPaymentForm extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  console.log('state 1', state);
-  return {
-    first: state.name,
-    last: state.last,
-    email: state.email,
-    address: state.address,
-    city: state.city,
-    state: state.state,
-    zip: state.zip,
-    amount: state.cart.total,
-  };
-};
-
-// const mapDispatchToProps = (dispatch, { history }) => {
-//   return {
-//     updateQuantity: (item) => dispatch(updateQuantity(item, history)),
-//     fetchCart: () => dispatch(fetchCart()),
-//     addOrders: (orders) => dispatch(addOrders(orders, history)),
-//   };
-// };
-
-export default connect(mapStateToProps)(MyPaymentForm);
+export default MyPaymentForm;

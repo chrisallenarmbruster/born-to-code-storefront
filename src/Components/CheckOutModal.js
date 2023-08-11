@@ -31,7 +31,6 @@ export class CheckOut extends Component {
       phone: '',
       show: false,
       validationErrors: {},
-      bogus: "I'm bogus",
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -77,7 +76,7 @@ export class CheckOut extends Component {
     return error;
   }
 
-  handleChange(event) {
+  handleChange = async (event) => {
     const { name, value } = event.target;
     const error = this.validateField(name, value);
     this.setState(
@@ -91,7 +90,7 @@ export class CheckOut extends Component {
         console.log('State has been updated!', this.state);
       }
     );
-  }
+  };
 
   handleClose() {
     this.setState({
@@ -164,6 +163,7 @@ export class CheckOut extends Component {
     const lineItems = cart.lineItems;
     console.log('lineitems in CheckOutModal ', lineItems);
     const amount = this.subTotal(lineItems).toFixed(2);
+    console.log(amount);
     const zip = this.state.zip;
     return (
       <>
@@ -268,7 +268,7 @@ export class CheckOut extends Component {
                             name="first"
                             type="name"
                             placeholder="Enter first name"
-                            value={this.state.first}
+                            value={this.state.first || ''}
                             onChange={this.handleChange}
                             isInvalid={!!this.state.validationErrors.first}
                           />
@@ -419,14 +419,15 @@ export class CheckOut extends Component {
                   </Row>
                   <Row>
                     {/* //BUG: This isn't passing in the state variables to the payment form  */}
-                    {this.shouldShowPaymentForm() ? (
-                      <MyPaymentForm
-                        amount={amount * 100}
-                        first={this.state.first}
-                        zip={this.state.zip}
-                        addOrders={() => this.props.addOrders()}
-                      />
-                    ) : null}
+                    {/* {this.shouldShowPaymentForm() ? ( */}
+                    <MyPaymentForm
+                      amount={amount * 100}
+                      first={this.state.first}
+                      zip={this.state.zip}
+                      addOrders={() => this.props.addOrders()}
+                      {...this.state}
+                    />
+                    {/* ) : null} */}
                   </Row>
                 </Card.Body>
               </Card>
