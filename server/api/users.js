@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express.Router();
-const { User } = require('../db');
+const { User, LineItem, Product, Order } = require('../db');
 
 module.exports = app;
 
@@ -38,6 +38,27 @@ app.get('/:id', async (req, res, next) => {
       throw error;
     }
     res.send(user);
+  } catch (ex) {
+    next(ex);
+  }
+});
+
+app.get('/:id/orders', async (req, res, next) => {
+  try {
+    const loggedInUser = await User.findByToken(req.headers.authorization);
+    const user = await User.findByPk(req.params.id);
+    if (!loggedInUser.isAdmin && loggedInUser.id !== req.params.id) {
+      const error = new Error('not authorized');
+      error.status = 401;
+      throw error;
+    } else {
+      res.send(
+        await Order.findAll({
+          where: { userId: req.params.id, isCart: false },
+          include: [{ model: LineItem, include: [{ model: Product }] }],
+        })
+      );
+    }
   } catch (ex) {
     next(ex);
   }
