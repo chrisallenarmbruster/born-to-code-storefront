@@ -15,7 +15,7 @@ import {
 import MyPaymentForm from './Payment';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { updateQuantity, fetchCart } from '../store/cart';
+import { updateQuantity, fetchCart, addOrders } from '../store/cart';
 
 export class CheckOut extends Component {
   constructor(props) {
@@ -31,6 +31,7 @@ export class CheckOut extends Component {
       phone: '',
       show: false,
       validationErrors: {},
+      bogus: "I'm bogus",
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -79,11 +80,17 @@ export class CheckOut extends Component {
   handleChange(event) {
     const { name, value } = event.target;
     const error = this.validateField(name, value);
-    this.setState((prevState) => ({
-      ...prevState,
-      [name]: value,
-      validationErrors: { ...prevState.validationErrors, [name]: error },
-    }));
+    this.setState(
+      (prevState) => ({
+        ...prevState,
+        [name]: value,
+        validationErrors: { ...prevState.validationErrors, [name]: error },
+      }),
+      () => {
+        // Anything you put here will be executed after the state has been updated
+        console.log('State has been updated!', this.state);
+      }
+    );
   }
 
   handleClose() {
@@ -101,14 +108,21 @@ export class CheckOut extends Component {
   subTotal(lineItems) {
     let subtotal = 0;
     lineItems.forEach((element) => {
+      console.log(element);
+      console.log(subtotal);
       subtotal =
         subtotal + Number(element.quantity) * Number(element.product.price);
     });
+    console.log('subtotal ', subtotal);
     return subtotal;
   }
 
   handleRemove(cart, product, quantity) {
     this.props.updateQuantity({ cart, product, quantity });
+  }
+
+  handleAddOrder(cart, order) {
+    this.props.addOrders({ cart, order });
   }
 
   shouldShowPaymentForm() {
@@ -144,11 +158,13 @@ export class CheckOut extends Component {
   }
 
   render() {
-    console.log(this.state); // This will show you the current state.
-    console.log(this.shouldShowPaymentForm());
+    console.log('props here: ', this.props); // This will show you the current state.
     const { cart } = this.props;
+    console.log('cart in CheckOutModal ', cart);
     const lineItems = cart.lineItems;
-    this.subTotal(lineItems).toFixed(2);
+    console.log('lineitems in CheckOutModal ', lineItems);
+    const amount = this.subTotal(lineItems).toFixed(2);
+    const zip = this.state.zip;
     return (
       <>
         <Button variant="primary" onClick={this.handleShow}>
@@ -402,10 +418,13 @@ export class CheckOut extends Component {
                     </Col>
                   </Row>
                   <Row>
+                    {/* //BUG: This isn't passing in the state variables to the payment form  */}
                     {this.shouldShowPaymentForm() ? (
                       <MyPaymentForm
-                        amount={this.props.amount * 100}
-                        zip={{ zip: this.state.zip }}
+                        amount={amount * 100}
+                        first={this.state.first}
+                        zip={this.state.zip}
+                        addOrders={() => this.props.addOrders()}
                       />
                     ) : null}
                   </Row>
@@ -430,6 +449,7 @@ const mapDispatchToProps = (dispatch, { history }) => {
   return {
     updateQuantity: (item) => dispatch(updateQuantity(item, history)),
     fetchCart: () => dispatch(fetchCart()),
+    addOrders: (orders) => dispatch(addOrders(orders, history)),
   };
 };
 

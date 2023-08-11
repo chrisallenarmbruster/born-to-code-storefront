@@ -18,6 +18,13 @@ const _addToCart = (cart, product, quantity) => {
   };
 };
 
+const _addOrder = (order) => {
+  return {
+    type: 'ADD_ORDER',
+    order,
+  };
+};
+
 export const fetchCart = () => {
   return async (dispatch) => {
     const token = window.localStorage.getItem('token');
@@ -72,6 +79,35 @@ export const updateQuantity = (obj) => {
   };
 };
 
+export const addOrders = (obj) => {
+  console.log('inside updateOrders', obj);
+  let { first, last, address, state, zip, email, date, paymentMethod, transactionId } = obj;
+  return async (dispatch) => {
+    const token = window.localStorage.getItem('token');
+    const { data: updated } = await axios.post(
+      '/api/orders/cart/',
+
+      {
+        first,
+        last,
+        address,
+        state,
+        zip,
+        email,
+        date,
+        paymentMethod,
+        transactionId,
+      },
+      {
+        headers: {
+          authorization: token,
+        },
+      }
+    );
+    dispatch(_addOrder(updated, product, quantity));
+  };
+};
+
 const initialState = { lineItems: [] };
 
 const cartReducer = (state = initialState, action) => {
@@ -82,7 +118,8 @@ const cartReducer = (state = initialState, action) => {
       return action.cart; //.sort((a, b) => a.id - b.id);
     case 'ADD_TO_CART':
       return action.cart;
-
+    case 'ADD_ORDER':
+      return action.cart;
     default:
       return state;
   }

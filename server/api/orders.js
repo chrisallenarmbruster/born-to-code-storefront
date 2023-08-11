@@ -8,17 +8,18 @@ app.post('/', async (req, res, next) => {
   try {
     const user = await User.findByToken(req.headers.authorization);
     const cart = await user.getCart();
+    console.log('inside order post api route', req.body);
 
     const cartPropsToUpdate = [
       'shipToName',
-      'shipToCity',
+      'email',
       'shipToAddress',
+      'shipToCity',
       'shipToState',
       'shipToZip',
-      'email',
       'shipDate',
-      'paymentMethod',
-      'transactionId',
+      // 'paymentMethod',
+      // 'transactionId',
     ];
 
     cartPropsToUpdate.forEach((prop) => {

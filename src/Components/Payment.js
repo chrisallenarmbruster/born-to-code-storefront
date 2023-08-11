@@ -1,63 +1,112 @@
 // Dependencies
-import * as React from 'react';
+import React, { Component } from 'react';
 import { CreditCard, PaymentForm } from 'react-square-web-payments-sdk';
-//   NOTE: collect payment info to send to db as an order
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+export class MyPaymentForm extends Component {
+  //q: what is this constructor doing?
+  //a: it is binding the handleChange function to the class so that it can be used in the render function below (see line 20)
+  constructor(props) {
+    super(props);
+    console.log('inside Payment constructor ', props);
+    this.state = {
+      first: '',
+      last: '',
+      address: '',
+      city: '',
+      state: '',
+      zip: '',
+      email: '',
+      phone: '',
+    };
+  }
 
-const MyPaymentForm = (props) => {
-  let { amount } = props;
-  let { zip } = props;
-  console.log('zip ', zip);
-  return (
-    <div>
-      <PaymentForm
-        applicationId="sandbox-sq0idb-9aiQYyJJerVQ_xS_gMVOmA"
-        cardTokenizeResponseReceived={async (token, buyer) => {
-          const response = await fetch('/api/pay', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              sourceId: token.token,
-              amount: amount,
-            }),
-          });
-          console.log('response ', await response.json());
-          alert('Payment complete! ', JSON.stringify(await response.json()));
-        }}
-        locationId="LFJJJ47TKFPE2"
-      >
-        <CreditCard
-          includeInputLabels
-          postalCode={zip.zip}
-          buttonProps={{
-            css: {
-              "[data-theme='dark'] &": {
-                backgroundColor: '#61dafb',
-                color: 'var(--ifm-color-emphasis-100)',
+  render() {
+    let { amount, zip } = this.props;
+    console.log('props inside Payment ', this.props);
+    return (
+      <div>
+        <PaymentForm
+          applicationId="sandbox-sq0idb-9aiQYyJJerVQ_xS_gMVOmA"
+          cardTokenizeResponseReceived={async (token, buyer) => {
+            const response = await fetch('/api/pay', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                sourceId: token.token,
+                amount: amount,
+              }),
+            });
+            //TODO: Add success and failure pages and post to db
+            let res = await response.json();
+            if (res.payment.status === 'COMPLETED') {
+              addOrders({ last, email, address, city, state, zip });
+              console.log(res.payment.status, 'success');
+            } else {
+              console.log(res.payment.status, 'failure');
+            }
+
+            console.log('res ', res);
+          }}
+          locationId="LFJJJ47TKFPE2"
+        >
+          <CreditCard
+            includeInputLabels
+            postalCode={this.state.zip.zip}
+            buttonProps={{
+              css: {
+                "[data-theme='dark'] &": {
+                  backgroundColor: '#61dafb',
+                  color: 'var(--ifm-color-emphasis-100)',
+                  '&:hover': {
+                    backgroundColor: '#0091ea',
+                  },
+                },
+                backgroundColor: '#771520',
+                fontSize: '14px',
+                color: '#fff',
                 '&:hover': {
-                  backgroundColor: '#0091ea',
+                  backgroundColor: '#530f16',
                 },
               },
-              backgroundColor: '#771520',
-              fontSize: '14px',
-              color: '#fff',
-              '&:hover': {
-                backgroundColor: '#530f16',
+            }}
+            style={{
+              input: {
+                fontSize: '14px',
               },
-            },
-          }}
-          style={{
-            input: {
-              fontSize: '14px',
-            },
-            'input::placeholder': {
-              color: '#771520',
-            },
-          }}
-        />
-      </PaymentForm>
-    </div>
-  );
+              'input::placeholder': {
+                color: '#771520',
+              },
+            }}
+          />
+        </PaymentForm>
+      </div>
+    );
+  }
+}
+
+const mapStateToProps = (state) => {
+  console.log('state 1', state);
+  return {
+    first: state.name,
+    last: state.last,
+    email: state.email,
+    address: state.address,
+    city: state.city,
+    state: state.state,
+    zip: state.zip,
+    amount: state.cart.total,
+  };
 };
-export default MyPaymentForm;
+
+// const mapDispatchToProps = (dispatch, { history }) => {
+//   return {
+//     updateQuantity: (item) => dispatch(updateQuantity(item, history)),
+//     fetchCart: () => dispatch(fetchCart()),
+//     addOrders: (orders) => dispatch(addOrders(orders, history)),
+//   };
+// };
+
+export default connect(mapStateToProps)(MyPaymentForm);

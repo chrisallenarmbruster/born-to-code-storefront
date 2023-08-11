@@ -40,7 +40,7 @@ class App extends Component {
 }
 
 const mapStateToProps = (state) => {
-  return { auth: state.auth };
+  return { auth: state.auth  };
 };
 
 const mapDispatchToProps = (dispatch) => {
