@@ -1,11 +1,14 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { attemptLogin, logout, attemptRegistration } from '../store';
 import { connect } from 'react-redux';
-import Button from 'react-bootstrap/Button'
+import Button from 'react-bootstrap/Button';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import Nav from 'react-bootstrap/Nav';
+import Container from 'react-bootstrap/Container';
+import { withRouter } from '../utils/withRouter';
+
 class Login extends Component {
   constructor() {
     super();
@@ -38,7 +41,7 @@ class Login extends Component {
       },
     });
   }
-  
+
   login(ev) {
     ev.preventDefault();
     this.props.attemptLogin(this.state.credentials);
@@ -47,12 +50,12 @@ class Login extends Component {
   register(ev) {
     ev.preventDefault();
     this.props.attemptRegistration(this.state.newUser);
-    this.setState({ 
+    this.setState({
       newUser: {
         username: '',
         password: '',
       },
-    })
+    });
   }
 
   onChangeRegister(ev) {
@@ -71,7 +74,7 @@ class Login extends Component {
     });
   }
 
-  toggleRegister() {  
+  toggleRegister() {
     this.setState({
       login: false,
       register: true,
@@ -83,69 +86,148 @@ class Login extends Component {
     const { onChange } = this;
     const { login } = this;
     const { newUser } = this.state;
-    
+
     return (
-      <div className="container">
+      <Container>
         {this.props.auth.id ? (
-          <div>
-            <div>
-              <h2>Welcome {this.props.auth.username}!</h2>
-            </div>
-            <div>
-              <Button onClick={this.props.logout}>Logout</Button>
-            </div>
-          </div>
+          <Container className="mt-5">
+            <h2 className="mb-3">Welcome {this.props.auth.username}!</h2>
+            <Button onClick={this.props.logout}>Logout</Button>
+          </Container>
         ) : (
           <Modal show={this.state.show}>
-            <div>
-            <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop:'10px'}}>
-              <Button variant="primary" onClick={() => this.toggleLogin()}>Login</Button>
-              <Button variant="secondary" onClick={() => this.toggleRegister()} style={{ marginLeft: '10px' }} >Register</Button>
-            </div>
-            
-            <br />
+            <Modal.Header className="d-flex justify-content-center">
+              {this.state.login ? (
+                <div className="flex-column">
+                  <Modal.Title className="text-center">Log In</Modal.Title>
+                  <Button
+                    className="text-decoration-none"
+                    variant="link"
+                    onClick={() => this.toggleRegister()}
+                  >
+                    or sign up
+                  </Button>
+                </div>
+              ) : (
+                <div className="flex-column justify-content-center">
+                  <Modal.Title className="text-center">Sign Up</Modal.Title>
+                  <span>
+                    <Button
+                      className="text-decoration-none"
+                      variant="link"
+                      onClick={() => this.toggleLogin()}
+                    >
+                      or log in
+                    </Button>
+                  </span>
+                </div>
+              )}
+            </Modal.Header>
 
-            {this.state.login ? (<div>
-              <Form.Label htmlFor="SignIn" style={{ display: 'flex',alignItems: 'center', justifyContent: 'center',marginTop:'10px' }}>Sign in with Email and Password</Form.Label>
+            {this.state.login ? (
               <Form onSubmit={login}>
-                <FloatingLabel controlId="floatingUsername" label="Email">
-                  <Form.Control type="text" placeholder="Email" value={credentials.username} name="username" onChange={onChange}/>
-                  <br />
-                </FloatingLabel>
-
-                <FloatingLabel controlId="floatingPassword" label="Password">
-                  <Form.Control type="password" placeholder="Password" value={credentials.password} name="password" onChange={onChange}/>
-                </FloatingLabel>
-                
-                
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop:'10px', marginLeft: '10px'}}>
-                  <Button style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop:'10px'}} href="#/">Go Back</Button>
-                  <Button type="submit" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop:'10px', marginLeft: '10px'}}>Login</Button>  
-                </div>             
-            </Form>
-            </div>) : (
-              <div>
-                <Form.Label htmlFor="SignUp" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center',marginTop:'10px' }}>Sign up with Username and Password</Form.Label>
-                <Form onSubmit={(e) => this.register(e)}>
+                <Modal.Body>
+                  <Form.Label
+                    htmlFor="SignIn"
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      marginTop: '10px',
+                    }}
+                  >
+                    <span className="mb-3"> Enter email and password.</span>
+                  </Form.Label>
                   <FloatingLabel controlId="floatingUsername" label="Email">
-                    <Form.Control type="email" placeholder="Email" name="username" value={newUser.username} onChange={this.onChangeRegister}/>           
+                    <Form.Control
+                      type="text"
+                      placeholder="Email"
+                      value={credentials.username}
+                      name="username"
+                      onChange={onChange}
+                    />
+                    <br />
+                  </FloatingLabel>
+
+                  <FloatingLabel controlId="floatingPassword" label="Password">
+                    <Form.Control
+                      type="password"
+                      placeholder="Password"
+                      value={credentials.password}
+                      name="password"
+                      onChange={onChange}
+                      className="mb-3"
+                    />
+                  </FloatingLabel>
+                </Modal.Body>
+                <Modal.Footer className="d-flex">
+                  <Button
+                    onClick={() => this.props.router.navigate(-1)}
+                    title="Go Back"
+                  >
+                    <i className="bi bi-arrow-left h4"></i>
+                  </Button>
+                  <Button type="submit" title="Sign Up" className="h4">
+                    Log In
+                  </Button>
+                </Modal.Footer>
+              </Form>
+            ) : (
+              <Form onSubmit={(e) => this.register(e)}>
+                <Modal.Body>
+                  <Form.Label
+                    htmlFor="SignUp"
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      marginTop: '10px',
+                    }}
+                  >
+                    <span className="mb-3"> Enter email and password.</span>
+                  </Form.Label>
+                  <FloatingLabel controlId="floatingUsername" label="Email">
+                    <Form.Control
+                      type="email"
+                      placeholder="Email"
+                      name="username"
+                      value={newUser.username}
+                      onChange={this.onChangeRegister}
+                    />
                     <br />
                   </FloatingLabel>
                   <FloatingLabel controlId="floatingPassword" label="Password">
-                    <Form.Control type="password" placeholder="Password" name="password" value={newUser.password} onChange={this.onChangeRegister}/>
+                    <Form.Control
+                      type="password"
+                      placeholder="Password"
+                      name="password"
+                      value={newUser.password}
+                      onChange={this.onChangeRegister}
+                      className="mb-3"
+                    />
                   </FloatingLabel>
-                    
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop:'10px'}}>
-                    <Button style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop:'10px'}} href="#/">Go Back</Button>
-                    <Button onClick={(e) => this.register(e)} type="submit" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop:'10px', marginLeft: '10px'}}>Sign Up</Button>
-                  </div> 
-                </Form>  
-              </div>
-            )}  
-          </div>
-          </Modal>       
+                </Modal.Body>
+                <Modal.Footer>
+                  <Button
+                    onClick={() => this.props.router.navigate(-1)}
+                    title="Go Back"
+                  >
+                    <i className="bi bi-arrow-left h4"></i>
+                  </Button>
+                  <Button
+                    onClick={(e) => this.register(e)}
+                    type="submit"
+                    title="Sign Up"
+                    className="h4"
+                  >
+                    Sign Up
+                  </Button>
+                </Modal.Footer>
+              </Form>
+            )}
+          </Modal>
         )}
-      </div>
+      </Container>
     );
   }
 }
@@ -162,4 +244,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Login));
