@@ -101,10 +101,6 @@ export class MyPaymentForm extends Component {
   }
 }
 
-//q: what does history do?
-//a: history is a prop that is passed down from the router. It allows us to change the url programmatically and redirect the user to a different routec
-//q: what does passing history to addOrders do?
-//a: addOrders is an action creator that takes in an order and a history object. The history object is used to redirect the user to a different route after the order is successfully placed
 const mapDispatchToProps = (dispatch, { history }) => {
   return {
     addOrders: (orders) => dispatch(addOrders(orders, history)),
