@@ -14,7 +14,6 @@ export class AddToCart extends Component {
   async handleAddToCart(evt, product, quantity) {
     evt.preventDefault();
     let temp = await this.props.addToCart({ product, quantity });
-    console.log('handleAddToCart', temp);
   }
   render(props) {
     const { handleAddToCart } = this;

@@ -9,10 +9,9 @@ const _updateQuantity = (cart, product, quantity) => {
   };
 };
 
-const _addToCart = (cart, product, quantity) => {
+const _addToCart = ({ product, quantity }) => {
   return {
     type: 'ADD_TO_CART',
-    cart,
     product,
     quantity,
   };
@@ -24,6 +23,7 @@ const _addOrder = (order) => {
     order,
   };
 };
+
 export const fetchCart = () => {
   return async (dispatch) => {
     const token = window.localStorage.getItem('token');
@@ -33,6 +33,47 @@ export const fetchCart = () => {
       },
     });
     dispatch({ type: 'SET_CART', cart: response.data });
+  };
+};
+
+export const addOrders = (obj) => {
+  console.log('inside updateOrders', obj);
+  let {
+    first,
+    last,
+    address,
+    city,
+    state,
+    zip,
+    email,
+    date,
+    paymentMethod,
+    transactionId,
+    amount,
+  } = obj;
+  return async (dispatch) => {
+    const token = window.localStorage.getItem('token');
+    const { data: updated } = await axios.post(
+      '/api/orders/',
+      {
+        shipToName: `${first} ${last}`,
+        shipToAddress: address,
+        shipToCity: city,
+        shipToState: state,
+        shipToZip: zip,
+        email,
+        shipDate: date,
+        paymentMethod,
+        transactionId,
+        amount,
+      },
+      {
+        headers: {
+          authorization: token,
+        },
+      }
+    );
+    dispatch(_addOrder(updated));
   };
 };
 
@@ -50,7 +91,7 @@ export const addToCart = (obj) => {
       }
     );
     // Not using API response to update cart
-    dispatch(_addToCart(obj.cart, product, quantity));
+    dispatch(_addToCart(obj));
   };
 };
 
@@ -72,8 +113,6 @@ export const updateQuantity = (obj) => {
   };
 };
 
-// ... [The addOrders action creator stays unchanged]
-
 const initialState = { lineItems: [] };
 
 const cartReducer = (state = initialState, action) => {
@@ -81,7 +120,6 @@ const cartReducer = (state = initialState, action) => {
     case 'SET_CART':
       return action.cart;
     case 'UPDATE_QUANTITY':
-      // Adjusting to modify cart based on dispatched values and not API response
       const updatedItems = state.lineItems.map((item) =>
         item.product.id === action.product.id
           ? { ...item, quantity: action.quantity }
@@ -89,7 +127,6 @@ const cartReducer = (state = initialState, action) => {
       );
       return { ...state, lineItems: updatedItems };
     case 'ADD_TO_CART':
-      // Adjusting to add to cart based on dispatched values and not API response
       return {
         ...state,
         lineItems: [
@@ -98,7 +135,7 @@ const cartReducer = (state = initialState, action) => {
         ],
       };
     case 'ADD_ORDER':
-      return action.cart; // if you are not expecting cart data from the 'addOrders', adjust this accordingly
+      return action.cart;
     default:
       return state;
   }
