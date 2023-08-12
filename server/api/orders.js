@@ -49,7 +49,12 @@ app.get('/cart', async (req, res, next) => {
 app.post('/cart', async (req, res, next) => {
   try {
     const user = await User.findByToken(req.headers.authorization);
-    res.send(await user.addToCart(req.body));
+
+    if (user === 'user not found') {
+      res.send('user not found');
+    } else {
+      res.send(await user.addToCart(req.body));
+    }
   } catch (ex) {
     next(ex);
   }

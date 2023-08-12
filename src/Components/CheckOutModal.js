@@ -33,6 +33,7 @@ export class CheckOut extends Component {
       validationErrors: {},
       transactionComplete: false,
     };
+    console.log('props ', props);
 
     this.handleChange = this.handleChange.bind(this);
     this.handleRemove = this.handleRemove.bind(this);
@@ -40,6 +41,7 @@ export class CheckOut extends Component {
     this.handleClose = this.handleClose.bind(this);
     this.handleShow = this.handleShow.bind(this);
     this.shouldShowPaymentForm = this.shouldShowPaymentForm.bind(this);
+    this.handleCompleteTransaction = this.handleCompleteTransaction.bind(this);
   }
 
   validateField(name, value) {
@@ -93,12 +95,9 @@ export class CheckOut extends Component {
     );
   };
 
-  // send the user to the confirmation page after the transaction is complete
-  handleCompleteTransaction = () => {
+  handleCompleteTransaction = (history) => {
     this.setState({ transactionComplete: true });
-    //q: why isn't the history.push working?
-    //a: because this component is not being rendered by a route in App.js
-    this.props.history.push('/');
+    // history.push('/products');
   };
 
   handleClose() {
@@ -165,6 +164,10 @@ export class CheckOut extends Component {
     return !hasErrors && !hasEmptyFields;
   }
 
+  //q: how do you pass in the history prop to this component?
+  //a: use withRouter from react-router-dom to wrap the component in the export statement at the bottom of the file
+  //q: give me an example on the next line of how to use withRouter
+  //a: export withRouter(CheckOut)
   render() {
     const { cart } = this.props;
     const lineItems = cart.lineItems;
@@ -174,8 +177,6 @@ export class CheckOut extends Component {
     console.log('amount ', amount);
     const zip = this.state.zip;
     return (
-      //q: how do you write this turnary statement to only show when the transactionComplete state is false?
-      //a: use the && operator to only show when the first condition is true
       <>
         {!this.state.transactionComplete && (
           <>
@@ -448,15 +449,16 @@ export class CheckOut extends Component {
                         </Col>
                       </Row>
                       <Row>
+                        {console.log(history)}
                         {this.shouldShowPaymentForm() ? (
                           <MyPaymentForm
                             amount={amount * 100}
                             first={this.state.first}
                             zip={zip}
                             handleCompleteTransaction={() =>
-                              this.handleCompleteTransaction()
+                              this.handleCompleteTransaction(history)
                             }
-                            addOrders={() => this.props.addOrders()}
+                            addOrders={() => this.props.addOrders(history)}
                             {...this.state}
                           />
                         ) : null}
@@ -482,7 +484,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch, { history }) => {
   return {
-    updateQuantity: (item) => dispatch(updateQuantity(item, history)),
+    updateQuantity: (item) => dispatch(updateQuantity(item)),
     fetchCart: () => dispatch(fetchCart()),
   };
 };

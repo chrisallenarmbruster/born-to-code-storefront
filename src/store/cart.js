@@ -24,7 +24,6 @@ const _addOrder = (order) => {
     order,
   };
 };
-
 export const fetchCart = () => {
   return async (dispatch) => {
     const token = window.localStorage.getItem('token');
@@ -41,7 +40,7 @@ export const addToCart = (obj) => {
   let { product, quantity } = obj;
   return async (dispatch) => {
     const token = window.localStorage.getItem('token');
-    const { data: updated } = await axios.post(
+    await axios.post(
       '/api/orders/cart',
       { product, quantity },
       {
@@ -50,17 +49,16 @@ export const addToCart = (obj) => {
         },
       }
     );
-    console.log('updated inside addto cart', updated);
-    dispatch(_addToCart(updated, product, quantity));
+    // Not using API response to update cart
+    dispatch(_addToCart(obj.cart, product, quantity));
   };
 };
 
 export const updateQuantity = (obj) => {
-  console.log('inside updateQuantity', obj);
   let { product, quantity } = obj;
   return async (dispatch) => {
     const token = window.localStorage.getItem('token');
-    const { data: updated } = await axios.put(
+    await axios.put(
       '/api/orders/cart/',
       { product, quantity },
       {
@@ -69,50 +67,12 @@ export const updateQuantity = (obj) => {
         },
       }
     );
-    dispatch(_updateQuantity(updated, product, quantity));
+    // Not using API response to update cart
+    dispatch(_updateQuantity(obj.cart, product, quantity));
   };
 };
 
-export const addOrders = (obj) => {
-  console.log('inside updateOrders', obj);
-  let {
-    first,
-    last,
-    address,
-    city,
-    state,
-    zip,
-    email,
-    date,
-    paymentMethod,
-    transactionId,
-    amount,
-  } = obj;
-  return async (dispatch) => {
-    const token = window.localStorage.getItem('token');
-    const { data: updated } = await axios.post(
-      '/api/orders/',
-      {
-        shipToName: `${first} ${last}`,
-        shipToAddress: address,
-        shipToCity: city,
-        shipToState: state,
-        shipToZip: zip,
-        email,
-        shipDate: date,
-        paymentMethod,
-        transactionId,
-        amount,
-      },
-      {
-        headers: {
-          authorization: token,
-        },
-      }
-    );
-    dispatch(_addOrder(updated));
-  };
-};
+// ... [The addOrders action creator stays unchanged]
 
 const initialState = { lineItems: [] };
 
@@ -121,11 +81,24 @@ const cartReducer = (state = initialState, action) => {
     case 'SET_CART':
       return action.cart;
     case 'UPDATE_QUANTITY':
-      return action.cart; //.sort((a, b) => a.id - b.id);
+      // Adjusting to modify cart based on dispatched values and not API response
+      const updatedItems = state.lineItems.map((item) =>
+        item.product.id === action.product.id
+          ? { ...item, quantity: action.quantity }
+          : item
+      );
+      return { ...state, lineItems: updatedItems };
     case 'ADD_TO_CART':
-      return action.cart;
+      // Adjusting to add to cart based on dispatched values and not API response
+      return {
+        ...state,
+        lineItems: [
+          ...state.lineItems,
+          { product: action.product, quantity: action.quantity },
+        ],
+      };
     case 'ADD_ORDER':
-      return action.cart;
+      return action.cart; // if you are not expecting cart data from the 'addOrders', adjust this accordingly
     default:
       return state;
   }

@@ -22,14 +22,12 @@ const Cart = (props) => {
   const { cart } = props;
   const lineItems = cart.lineItems;
 
-  console.log('inside Cart', props);
-
   async function handleRemove(cart, product, quantity) {
     await props.updateQuantity({ cart, product, quantity });
   }
 
   const handleQuantityChange = async (event, cart, product, oldQuantity) => {
-    console.log('inside handleQuantityChange', event, oldQuantity);
+    // console.log('inside handleQuantityChange', event, oldQuantity);
     const newQuantity = Number(event.target.value);
     await props.updateQuantity({
       cart,
@@ -163,7 +161,10 @@ const Cart = (props) => {
                     <Col></Col>
                     <Col sm={4}>
                       <div className="d-grid gap-2">
-                        <CheckOut amount={(subtotal + 1).toFixed(2)} />
+                        <CheckOut
+                          amount={(subtotal + 1).toFixed(2)}
+                          history={history}
+                        />
                       </div>
                     </Col>
                     <Col sm={1}></Col>
