@@ -1,5 +1,11 @@
 import axios from 'axios';
 
+const UPDATE_USER_PROFILE = 'UPDATE_USER_PROFILE';
+
+const updateUserProfile = (user) => {
+  return { type: UPDATE_USER_PROFILE, user}
+};
+
 export const logout = () => {
   window.localStorage.removeItem('token');
   return { type: 'SET_AUTH', auth: {} };
@@ -47,12 +53,28 @@ export const attemptRegistration = (user) => {
   };
 };
 
+export const adjustUserDetails = (userId, userData) => {
+  return async (dispatch) => {
+    try {
+      const token = window.localStorage.getItem('token');
+      if (token) {
+        const updatedUser = (await axios.put(`/api/users/${userId}`, userData, { headers: { authorization: token } })).data;
+        dispatch(updateUserProfile(updatedUser))
+      }  
+    } catch (error) {
+      console.log(error);
+    }
+  }
+};
+
 const initialState = {};
 
 const authReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'SET_AUTH':
       return action.auth;
+    case 'UPDATE_USER_PROFILE':
+      return action.user;
     default:
       return state;
   }
