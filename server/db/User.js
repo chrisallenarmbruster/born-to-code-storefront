@@ -147,12 +147,13 @@ User.findByToken = async function (token) {
     const user = await this.findByPk(id);
     if (user) {
       return user;
+    } else {
+      console.log('user not found');
+      return 'user not found';
     }
-    throw 'user not found';
   } catch (ex) {
     const error = new Error('bad credentials');
     error.status = 401;
-    throw error;
   }
 };
 
