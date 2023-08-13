@@ -5,6 +5,7 @@ import Spinner from 'react-bootstrap/Spinner';
 import axios from 'axios';
 import { resetSetSingleProduct } from '../store/productSingle';
 import { resetProducts } from '../store/productAll';
+import { resetUserOrders } from '../store/ordersSingleUser';
 
 export class ProductReviewCreate extends Component {
   constructor() {
@@ -15,6 +16,11 @@ export class ProductReviewCreate extends Component {
   async componentDidMount() {
     await this.getRating();
     this.state.isLoading = false;
+  }
+  async componentDidUpdate(prevProps) {
+    if (prevProps.orders !== this.props.orders) {
+      await this.getRating();
+    }
   }
 
   getRating = async () => {
@@ -57,6 +63,7 @@ export class ProductReviewCreate extends Component {
         })
       ).data;
       this.state.rating = newProductReview.rating;
+      await this.props.resetUserOrders(this.props.auth.id);
       this.forceUpdate();
       this.props.resetSetSingleProduct();
       this.props.resetProducts();
@@ -94,11 +101,13 @@ export class ProductReviewCreate extends Component {
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
+  orders: state.ordersSingleUser.orders,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   resetSetSingleProduct: () => dispatch(resetSetSingleProduct()),
   resetProducts: () => dispatch(resetProducts()),
+  resetUserOrders: (id) => dispatch(resetUserOrders(id)),
 });
 
 export default connect(

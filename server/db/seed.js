@@ -445,6 +445,78 @@ const syncAndSeed = async () => {
     product: products.random(),
     quantity: Math.floor(Math.random() * 10) + 1,
   });
+  await chris.addToCart({
+    product: products.random(),
+    quantity: Math.floor(Math.random() * 10) + 1,
+  });
+  await chris.addToCart({
+    product: products.random(),
+    quantity: Math.floor(Math.random() * 10) + 1,
+  });
+  await chris.addToCart({
+    product: products.random(),
+    quantity: Math.floor(Math.random() * 10) + 1,
+  });
+
+  order = await chris.createOrder();
+
+  cart = await chris.getCart();
+  await chris.addToCart({
+    product: products.random(),
+    quantity: Math.floor(Math.random() * 10) + 1,
+  });
+  await chris.addToCart({
+    product: products.random(),
+    quantity: Math.floor(Math.random() * 10) + 1,
+  });
+  await chris.addToCart({
+    product: products.random(),
+    quantity: Math.floor(Math.random() * 10) + 1,
+  });
+  await chris.addToCart({
+    product: products.random(),
+    quantity: Math.floor(Math.random() * 10) + 1,
+  });
+  await chris.addToCart({
+    product: products.random(),
+    quantity: Math.floor(Math.random() * 10) + 1,
+  });
+
+  order = await chris.createOrder();
+
+  cart = await chris.getCart();
+  await chris.addToCart({
+    product: products.random(),
+    quantity: Math.floor(Math.random() * 10) + 1,
+  });
+  await chris.addToCart({
+    product: products.random(),
+    quantity: Math.floor(Math.random() * 10) + 1,
+  });
+  await chris.addToCart({
+    product: products.random(),
+    quantity: Math.floor(Math.random() * 10) + 1,
+  });
+  await chris.addToCart({
+    product: products.random(),
+    quantity: Math.floor(Math.random() * 10) + 1,
+  });
+  await chris.addToCart({
+    product: products.random(),
+    quantity: Math.floor(Math.random() * 10) + 1,
+  });
+
+  order = await chris.createOrder();
+
+  cart = await chris.getCart();
+  await chris.addToCart({
+    product: products.random(),
+    quantity: Math.floor(Math.random() * 10) + 1,
+  });
+  await chris.addToCart({
+    product: products.random(),
+    quantity: Math.floor(Math.random() * 10) + 1,
+  });
 
   order = await chris.createOrder();
 

@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
-import { setUserOrders } from '../store/ordersSingleUser';
+import { setUserOrders, resetUserOrders } from '../store/ordersSingleUser';
 import { withRouter } from '../utils/withRouter';
 import Container from 'react-bootstrap/Container';
 import Spinner from 'react-bootstrap/Spinner';
@@ -43,6 +43,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     setUserOrders: (id) => dispatch(setUserOrders(id)),
+    resetUserOrders: (id) => dispatch(resetUserOrders(id)),
   };
 };
 

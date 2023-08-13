@@ -3,7 +3,7 @@ const app = express();
 const path = require('path');
 const volleyball = require('volleyball');
 
-
+app.use(volleyball);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

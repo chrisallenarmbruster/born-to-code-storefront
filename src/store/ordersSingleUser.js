@@ -46,6 +46,28 @@ export const setUserOrders = (id) => {
   };
 };
 
+export const resetUserOrders = (id) => {
+  return async (dispatch) => {
+    try {
+      const token = window.localStorage.getItem('token');
+      if (token) {
+        const data = (
+          await axios.get(`/api/users/${id}/orders`, {
+            headers: {
+              authorization: token,
+            },
+          })
+        ).data;
+        dispatch(_setUserOrders(data));
+      }
+    } catch (error) {
+      console.log(error);
+      dispatch(clearUserOrders());
+      dispatch(_clearUserOrdersLoading());
+    }
+  };
+};
+
 const initialState = {
   orders: [],
   isLoading: false,
