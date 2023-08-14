@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from 'react';
+import React, { Component, Fragment } from 'react';
 import { attemptLogin, logout, attemptRegistration } from '../store';
 import { connect } from 'react-redux';
 import Button from 'react-bootstrap/Button';
@@ -11,73 +11,86 @@ import { withRouter } from '../utils/withRouter';
 import * as formik from 'formik';
 import * as yup from 'yup';
 
-const LoginPage = () => {
-  const [credentials, setCredentials] = useState({
-    username: '',
-    password: '',
-  })
-  const [newUser, setNewUser] = useState({
-    username: '',
-    password: '',
-  })
-  const [login, setLogin] = useState(true)
-  const [register, setRegister] = useState(false)
-  const [show, setShow] = useState(true)
+class Login extends Component {
+  constructor() {
+    super();
+    this.state = {
+      credentials: {
+        username: '',
+        password: '',
+      },
+      newUser: {
+        username: '',
+        password: '',
+      },
+      login: true,
+      register: false,
+      show: true,
+    };
+    this.onChange = this.onChange.bind(this);
+    this.login = this.login.bind(this);
+    this.register = this.register.bind(this);
+    this.onChangeRegister = this.onChangeRegister.bind(this);
+    this.toggleLogin = this.toggleLogin.bind(this);
+    this.toggleRegister = this.toggleRegister.bind(this);
+  }
 
-  // onChange(ev) {
-  //   this.setState({
-  //     credentials: {
-  //       ...this.state.credentials,
-  //       [ev.target.name]: ev.target.value,
-  //     },
-  //   });
-  // }
-
-  const onChangeRegister = (ev) => {
-    setNewUser({
-        ...newUser,
+  onChange(ev) {
+    this.setState({
+      credentials: {
+        ...this.state.credentials,
         [ev.target.name]: ev.target.value,
+      },
     });
   }
 
-  const toggleLogin = () => {
-    setLogin(true);
-    setRegister(false);
-  }
-
-  const toggleRegister = () => {
-    setLogin(false);
-    setRegister(true);
-  }
-
-  const loginSubmitHandler = (ev) => {
+  login(ev) {
     ev.preventDefault();
-    attemptLogin(credentials);
+    this.props.attemptLogin(this.state.credentials);
   }
 
-  const registerSubmitHandler = (ev) => {
+  register(ev) {
     ev.preventDefault();
-    attemptRegistration(credentials);
-    setNewUser({
-      username: '',
-      password: '',
-    })
-  };
+    this.props.attemptRegistration(this.state.newUser);
+    this.setState({
+      newUser: {
+        username: '',
+        password: '',
+      },
+    });
+  }
 
-  const { Formik } = formik;
+  onChangeRegister(ev) {
+    this.setState({
+      newUser: {
+        ...this.state.newUser,
+        [ev.target.name]: ev.target.value,
+      },
+    });
+  }
 
-  const loginSchema = yup.object().shape({
-    username: yup.string().required(),
-    password: yup.string().required,
-  })
+  toggleLogin() {
+    this.setState({
+      login: true,
+      register: false,
+    });
+  }
 
-  const registerSchema = yup.object().shape({
-    username: yup.string().email("Invalid email").required('Required'),
-    password: yup.string().required('Required'),
-  });
+  toggleRegister() {
+    this.setState({
+      login: false,
+      register: true,
+    });
+  }
 
-  return (
-    <Container>
+  render() {
+    const { credentials } = this.state;
+    const { onChange } = this;
+    const { login } = this;
+    const { newUser } = this.state;
+
+    return (
+      <Container>
         {this.props.auth.id ? (
           <Container className="mt-5">
             <h2 className="mb-3">Welcome {this.props.auth.username}!</h2>
@@ -216,8 +229,9 @@ const LoginPage = () => {
             )}
           </Modal>
         )}
-    </Container>
-  ) 
+      </Container>
+    );
+  }
 }
 
 const mapStateToProps = (state) => {
@@ -232,4 +246,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(LoginPage));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Login));
