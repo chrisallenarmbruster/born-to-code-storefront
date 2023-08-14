@@ -8,52 +8,58 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import Search from './Search';
 import { connect } from 'react-redux';
 import { logout } from '../store';
+import CartIndicator from './CartIndicator';
 
 const NavBar = (props) => {
   const { auth } = props;
   const { logout } = props;
 
   return (
-    <Navbar expand="lg" bg="dark" variant="dark" sticky="top">
-      <Container>
-        <Navbar.Brand href="/">Born to Code</Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto">
-            <Nav.Link href="#/home">Home</Nav.Link>
+    <>
+      <Navbar expand="lg" bg="dark" variant="dark" sticky="top">
+        <Container>
+          <Navbar.Brand href="/">Born to Code</Navbar.Brand>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="me-auto">
+              <Nav.Link href="#/home">Home</Nav.Link>
 
-            {auth.id ? (
-              <Nav.Link href="#" onClick={logout}>
-                Logout
+              {auth.id ? (
+                <Nav.Link href="#" onClick={logout}>
+                  Logout
+                </Nav.Link>
+              ) : (
+                <Nav.Link href="#/login">Login</Nav.Link>
+              )}
+
+              <Nav.Link href="#/cart">
+                Cart <CartIndicator />
               </Nav.Link>
-            ) : (
-              <Nav.Link href="#/login">Login</Nav.Link>
-            )}
+              <Nav.Link href="#/users/:id">Profile</Nav.Link>
+              <NavDropdown title="Products" id="basic-nav-dropdown">
+                <NavDropdown.Item href="#/products?category=hats">
+                  Hats
+                </NavDropdown.Item>
+                <NavDropdown.Item href="#/products?category=mugs">
+                  Mugs
+                </NavDropdown.Item>
+                <NavDropdown.Item href="#/products?category=shirts">
+                  Shirts
+                </NavDropdown.Item>
+                <NavDropdown.Divider />
+                <NavDropdown.Item href="#/products">
+                  All Products
+                </NavDropdown.Item>
+              </NavDropdown>
 
-            <Nav.Link href="#/cart">Cart</Nav.Link>
-            <Nav.Link href="#/users/:id">Profile</Nav.Link>
-            <NavDropdown title="Products" id="basic-nav-dropdown">
-              <NavDropdown.Item href="#/products?category=hats">
-                Hats
-              </NavDropdown.Item>
-              <NavDropdown.Item href="#/products?category=mugs">
-                Mugs
-              </NavDropdown.Item>
-              <NavDropdown.Item href="#/products?category=shirts">
-                Shirts
-              </NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="#/products">
-                All Products
-              </NavDropdown.Item>
-            </NavDropdown>
-            {auth.isAdmin && <Nav.Link href="#/admin">Admin</Nav.Link>}
-          </Nav>
-          <Search />
-          {/* Could put something here indicating the signed in user */}
-        </Navbar.Collapse>
-      </Container>
-    </Navbar>
+              {auth.isAdmin && <Nav.Link href="#/admin">Admin</Nav.Link>}
+            </Nav>
+            <Search />
+            {/* Could put something here indicating the signed in user */}
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
+    </>
   );
 };
 

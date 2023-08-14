@@ -141,4 +141,8 @@ const cartReducer = (state = initialState, action) => {
   }
 };
 
+export const getNumberOfItems = (state) => {
+  return state.cart.lineItems.length;
+};
+
 export default cartReducer;
