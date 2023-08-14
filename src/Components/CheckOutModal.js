@@ -17,6 +17,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { updateQuantity, fetchCart } from '../store/cart';
 import { useNavigate } from 'react-router-dom';
+import { emailClient } from '../emailClient';
 export class CheckOut extends Component {
   constructor(props) {
     super(props);
@@ -27,7 +28,7 @@ export class CheckOut extends Component {
       city: 'Evergreen',
       state: 'Co',
       zip: '80439',
-      email: 'jejanov@gmail.com',
+      email: 'joel.janov@regiscompany.com',
       phone: '7204801877',
       show: false,
       validationErrors: {},
@@ -89,16 +90,15 @@ export class CheckOut extends Component {
         validationErrors: { ...prevState.validationErrors, [name]: error },
       }),
       () => {
-        // Anything you put here will be executed after the state has been updated
         console.log('State has been updated!', this.state);
       }
     );
   };
 
-  handleCompleteTransaction = () => {
-    // let navigate = useNavigate();
+  //NOTE: How do I get this to route back to the products page after the transaction is complete?
+  handleCompleteTransaction = (lineItems, paymentId) => {
     this.setState({ transactionComplete: true });
-    // navigate('/products');
+    emailClient(this.state.email, paymentId, lineItems);
   };
 
   handleClose() {
@@ -451,8 +451,11 @@ export class CheckOut extends Component {
                             amount={amount * 100}
                             first={this.state.first}
                             zip={zip}
-                            handleCompleteTransaction={() =>
-                              this.handleCompleteTransaction(history)
+                            handleCompleteTransaction={(paymentId) =>
+                              this.handleCompleteTransaction(
+                                lineItems,
+                                paymentId
+                              )
                             }
                             addOrders={() => this.props.addOrders(history)}
                             {...this.state}
