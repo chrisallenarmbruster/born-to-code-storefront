@@ -6,7 +6,7 @@ module.exports = app;
 
 app.use(express.json());
 
-app.post('/', async(req, res, next) => {
+app.post('/', async (req, res, next) => {
   const url = 'https://api.postmarkapp.com/email';
   const headers = {
     'X-Postmark-Server-Token': serverToken,

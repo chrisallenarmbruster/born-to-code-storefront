@@ -56,7 +56,7 @@ export class MyPaymentForm extends Component {
                 amount,
               });
               console.log(res.payment.status, 'success');
-              this.props.handleCompleteTransaction();
+              this.props.handleCompleteTransaction( res.payment.id);
             } else {
               console.log(res.payment.status, 'failure');
             }
