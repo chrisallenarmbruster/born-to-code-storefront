@@ -108,7 +108,7 @@ export const updateQuantity = (obj) => {
         },
       }
     );
-    // Not using API response to update cart
+
     dispatch(_updateQuantity(obj.cart, product, quantity));
   };
 };
