@@ -33,7 +33,7 @@ export class Search extends Component {
   render() {
     return (
       <Form
-        className="d-flex"
+        className="d-flex m-0 align-items-center"
         onSubmit={(event) => event.preventDefault()}
         onKeyDown={(event) => {
           if (event.key === 'Enter') {
@@ -52,7 +52,7 @@ export class Search extends Component {
         />
         <Button
           type="button"
-          variant="outline-success"
+          variant="outline-primary"
           onClick={this.handleSubmit}
         >
           Search
