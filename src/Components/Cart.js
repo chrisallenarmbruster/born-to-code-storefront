@@ -26,6 +26,7 @@ const Cart = (props) => {
 
   async function handleRemove(cart, product, quantity) {
     await props.updateQuantity({ cart, product, quantity });
+    await props.fetchCart();
   }
 
   const handleQuantityChange = async (event, cart, product, oldQuantity) => {
