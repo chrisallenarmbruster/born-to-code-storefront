@@ -21,7 +21,6 @@ const LoginPage = () => {
     password: '',
   })
   const [login, setLogin] = useState(true)
-  const [register, setRegister] = useState(false)
   const [show, setShow] = useState(true)
 
   // onChange(ev) {
@@ -33,35 +32,29 @@ const LoginPage = () => {
   //   });
   // }
 
-  const onChangeRegister = (ev) => {
-    setNewUser({
-        ...newUser,
-        [ev.target.name]: ev.target.value,
-    });
-  }
+  // const onChangeRegister = (ev) => {
+  //   setNewUser({
+  //       ...newUser,
+  //       [ev.target.name]: ev.target.value,
+  //   });
+  // }
 
   const toggleLogin = () => {
-    setLogin(true);
-    setRegister(false);
+    setShow(true);
   }
 
   const toggleRegister = () => {
-    setLogin(false);
-    setRegister(true);
+    setShow(false);
   }
 
-  const loginSubmitHandler = (ev) => {
+  const loginSubmitHandler = (ev, values) => {
     ev.preventDefault();
-    attemptLogin(credentials);
+    attemptLogin(values);
   }
 
-  const registerSubmitHandler = (ev) => {
+  const registerSubmitHandler = (ev, values) => {
     ev.preventDefault();
-    attemptRegistration(credentials);
-    setNewUser({
-      username: '',
-      password: '',
-    })
+    attemptRegistration(values);
   };
 
   const { Formik } = formik;
@@ -78,21 +71,21 @@ const LoginPage = () => {
 
   return (
     <Container>
-        {this.props.auth.id ? (
+        {props.auth.id ? (
           <Container className="mt-5">
-            <h2 className="mb-3">Welcome {this.props.auth.username}!</h2>
-            <Button onClick={this.props.logout}>Logout</Button>
+            <h2 className="mb-3">Welcome {props.auth.username}!</h2>
+            <Button onClick={props.logout}>Logout</Button>
           </Container>
         ) : (
-          <Modal show={this.state.show}>
+          <Modal show={show}>
             <Modal.Header className="d-flex justify-content-center">
-              {this.state.login ? (
+              {login ? (
                 <div className="flex-column">
                   <Modal.Title className="text-center">Log In</Modal.Title>
                   <Button
                     className="text-decoration-none"
                     variant="link"
-                    onClick={() => this.toggleRegister()}
+                    onClick={() => toggleRegister()}
                   >
                     or sign up
                   </Button>
@@ -104,7 +97,7 @@ const LoginPage = () => {
                     <Button
                       className="text-decoration-none"
                       variant="link"
-                      onClick={() => this.toggleLogin()}
+                      onClick={() => toggleLogin()}
                     >
                       or log in
                     </Button>
@@ -113,106 +106,166 @@ const LoginPage = () => {
               )}
             </Modal.Header>
 
-            {this.state.login ? (
-              <Form onSubmit={login}>
-                <Modal.Body>
-                  <Form.Label
-                    htmlFor="SignIn"
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      marginTop: '10px',
-                    }}
-                  >
-                    <span className="mb-3"> Enter email and password.</span>
-                  </Form.Label>
-                  <FloatingLabel controlId="floatingUsername" label="Email">
-                    <Form.Control
-                      type="text"
-                      placeholder="Email"
-                      value={credentials.username}
-                      name="username"
-                      onChange={onChange}
-                    />
-                    <br />
-                  </FloatingLabel>
+            {login ? (
+              <Formik              
+                validationSchema={loginSchema}
+                onSubmit={loginSubmitHandler}
+                initialValues={{ username: "", password: "" }}
+              >
+                {({
+                  handleSubmit,
+                  handleChange, 
+                  values,
+                  touched,
+                  errors,
+                }) => (
+                  <Form noValidate onSubmit={handleSubmit}>
+                    <Modal.Body>
+                      <Form.Label
+                        htmlFor="SignIn"
+                        style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          marginTop: '10px',
+                        }}
+                      >
+                        <span className="mb-3"> Enter email and password.</span>
+                      </Form.Label>
 
-                  <FloatingLabel controlId="floatingPassword" label="Password">
-                    <Form.Control
-                      type="password"
-                      placeholder="Password"
-                      value={credentials.password}
-                      name="password"
-                      onChange={onChange}
-                      className="mb-3"
-                    />
-                  </FloatingLabel>
-                </Modal.Body>
-                <Modal.Footer className="d-flex">
-                  <Button
-                    onClick={() => this.props.router.navigate(-1)}
-                    title="Go Back"
-                  >
-                    <i className="bi bi-arrow-left h4"></i>
-                  </Button>
-                  <Button type="submit" title="Sign Up" className="h4">
-                    Log In
-                  </Button>
-                </Modal.Footer>
-              </Form>
+                      <Form.Group controlId="username" className="mb-3">
+                        <FloatingLabel controlId="floatingUsername" label="Email">
+                          <Form.Label>Username</Form.Label>
+                          <Form.Control
+                            type="text"
+                            name="username"
+                            placeholder="Enter your email"
+                            value={values.username}   
+                            onChange={handleChange}
+                            isValid={touched.username && !errors.username}
+                            isInvalid={touched.username && !!errors.username}
+                          />
+                          <Form.Control.Feedback type="invalid">
+                            {errors.username}
+                          </Form.Control.Feedback>
+                          <br />
+                        </FloatingLabel>
+                      </Form.Group>                     
+
+                      <FloatingLabel controlId="floatingPassword" className="mb-3">
+                        <Form.Label>Password</Form.Label>
+                        <Form.Control
+                          type="password"
+                          name="password"
+                          placeholder="Password"
+                          value={values.password}
+                          onChange={handleChange}
+                          isValid={touched.password && !errors.password}
+                          isInvalid={touched.password && !!errors.password}
+                        />
+                        <Form.Control.Feedback type="invalid">
+                            {errors.password}
+                          </Form.Control.Feedback>
+                      </FloatingLabel>
+                      
+                    </Modal.Body>
+                    <Modal.Footer className="d-flex">
+                      <Button
+                        onClick={() => this.props.router.navigate(-1)}
+                        title="Go Back"
+                      >
+                        <i className="bi bi-arrow-left h4"></i>
+                      </Button>
+                      <Button type="submit" title="Sign Up" className="h4">
+                        Log In
+                      </Button>
+                    </Modal.Footer>
+                </Form>
+                )}
+                
+              </Formik>
             ) : (
-              <Form onSubmit={(e) => this.register(e)}>
-                <Modal.Body>
-                  <Form.Label
-                    htmlFor="SignUp"
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      marginTop: '10px',
-                    }}
-                  >
-                    <span className="mb-3"> Enter email and password.</span>
-                  </Form.Label>
-                  <FloatingLabel controlId="floatingUsername" label="Email">
-                    <Form.Control
-                      type="email"
-                      placeholder="Email"
-                      name="username"
-                      value={newUser.username}
-                      onChange={this.onChangeRegister}
-                    />
-                    <br />
-                  </FloatingLabel>
-                  <FloatingLabel controlId="floatingPassword" label="Password">
-                    <Form.Control
-                      type="password"
-                      placeholder="Password"
-                      name="password"
-                      value={newUser.password}
-                      onChange={this.onChangeRegister}
-                      className="mb-3"
-                    />
-                  </FloatingLabel>
-                </Modal.Body>
-                <Modal.Footer>
-                  <Button
-                    onClick={() => this.props.router.navigate(-1)}
-                    title="Go Back"
-                  >
-                    <i className="bi bi-arrow-left h4"></i>
-                  </Button>
-                  <Button
-                    onClick={(e) => this.register(e)}
-                    type="submit"
-                    title="Sign Up"
-                    className="h4"
-                  >
-                    Sign Up
-                  </Button>
-                </Modal.Footer>
-              </Form>
+              <Formik
+                validationSchema={registerSchema}
+                onSubmit={registerSubmitHandler}
+                initialValues={{ username: "", password: "" }}
+              >
+                {({
+                  handleSubmit,
+                  handleChange,
+                  handleBlur,
+                  values,
+                  touched,
+                  isValid,
+                  errors,
+                }) => (
+                  <Form noValidate onSubmit={registerSubmitHandler}>
+                    <Modal.Body>
+                      <Form.Label
+                        htmlFor="SignUp"
+                        style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          marginTop: '10px',
+                        }}
+                      >
+                        <span className="mb-3"> Enter email and password.</span>
+                      </Form.Label>
+                      
+                      <FloatingLabel controlId="floatingUsername" label="Email">
+                        <Form.Label>Username</Form.Label>
+                        <Form.Control
+                          type="text"
+                          name="username"
+                          placeholder="Enter your email"
+                          value={values.username}   
+                          onChange={handleChange}
+                          isValid={touched.username && !errors.username}
+                          isInvalid={touched.username && !!errors.username}
+                        />
+                        <Form.Control.Feedback type="invalid">
+                            {errors.username}
+                          </Form.Control.Feedback>
+                        <br />
+                      </FloatingLabel>
+
+                      <FloatingLabel controlId="floatingPassword" className="mb-3">
+                        <Form.Label>Password</Form.Label>
+                        <Form.Control
+                          type="password"
+                          name="password"
+                          placeholder="Password"
+                          value={values.password}
+                          onChange={handleChange}
+                          isValid={touched.password && !errors.password}
+                          isInvalid={touched.password && !!errors.password}
+                        />
+                        <Form.Control.Feedback type="invalid">
+                            {errors.password}
+                        </Form.Control.Feedback>
+                      </FloatingLabel>
+
+                    </Modal.Body>
+                    <Modal.Footer>
+                      <Button
+                        onClick={() => this.props.router.navigate(-1)}
+                        title="Go Back"
+                      >
+                        <i className="bi bi-arrow-left h4"></i>
+                      </Button>
+                      <Button
+                        onClick={(e) => this.register(e)}
+                        type="submit"
+                        title="Sign Up"
+                        className="h4"
+                      >
+                        Sign Up
+                      </Button>
+                    </Modal.Footer>
+                  </Form>  
+                )}          
+              </Formik>           
             )}
           </Modal>
         )}
