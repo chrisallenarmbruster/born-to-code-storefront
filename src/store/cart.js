@@ -142,7 +142,9 @@ const cartReducer = (state = initialState, action) => {
 };
 
 export const getNumberOfItems = (state) => {
-  return state.cart.lineItems.length;
+  return state.cart.lineItems.reduce((acc, item) => {
+    return acc + item.quantity;
+  }, 0);
 };
 
 export default cartReducer;

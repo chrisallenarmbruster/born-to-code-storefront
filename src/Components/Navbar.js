@@ -19,23 +19,10 @@ const NavBar = (props) => {
       <Navbar expand="lg" bg="dark" variant="dark" sticky="top">
         <Container>
           <Navbar.Brand href="/">Born to Code</Navbar.Brand>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
               <Nav.Link href="#/home">Home</Nav.Link>
-
-              {auth.id ? (
-                <Nav.Link href="#" onClick={logout}>
-                  Logout
-                </Nav.Link>
-              ) : (
-                <Nav.Link href="#/login">Login</Nav.Link>
-              )}
-
-              <Nav.Link href="#/cart">
-                Cart <CartIndicator />
-              </Nav.Link>
-              <Nav.Link href="#/users/:id">Profile</Nav.Link>
               <NavDropdown title="Products" id="basic-nav-dropdown">
                 <NavDropdown.Item href="#/products?category=hats">
                   Hats
@@ -52,11 +39,22 @@ const NavBar = (props) => {
                 </NavDropdown.Item>
               </NavDropdown>
 
+              {auth.id ? (
+                <Nav.Link href="#" onClick={logout}>
+                  Logout
+                </Nav.Link>
+              ) : (
+                <Nav.Link href="#/login">Login</Nav.Link>
+              )}
+
+              {auth.id && <Nav.Link href="#/users/:id">Profile</Nav.Link>}
+
               {auth.isAdmin && <Nav.Link href="#/admin">Admin</Nav.Link>}
             </Nav>
             <Search />
-            {/* Could put something here indicating the signed in user */}
           </Navbar.Collapse>
+          <CartIndicator />
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
         </Container>
       </Navbar>
     </>
