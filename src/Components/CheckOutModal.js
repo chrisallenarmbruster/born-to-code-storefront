@@ -17,6 +17,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { updateQuantity, fetchCart } from '../store/cart';
 import { useNavigate } from 'react-router-dom';
+import { emailClient } from '../emailClient';
 export class CheckOut extends Component {
   constructor(props) {
     super(props);
@@ -98,6 +99,7 @@ export class CheckOut extends Component {
   handleCompleteTransaction = () => {
     // let navigate = useNavigate();
     this.setState({ transactionComplete: true });
+    emailClient(this.state.email, '123');
     // navigate('/products');
   };
 
