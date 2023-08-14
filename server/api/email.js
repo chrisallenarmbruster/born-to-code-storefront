@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const request = require('request');
-const serverToken = 'd48b32f8-ef9f-4a3c-8f73-4e9d5f872b0f'; // replace with your Postmark API key
+const serverToken = process.env.POSTMARK_API_KEY;
 module.exports = app;
 
 app.use(express.json());
