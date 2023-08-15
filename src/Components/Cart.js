@@ -26,6 +26,16 @@ const Cart = (props) => {
 
   async function handleRemove(cart, product, quantity) {
     await props.updateQuantity({ cart, product, quantity });
+    if (props.auth.id === undefined) {
+      const updatedItemList = cart.lineItems.filter(
+        (item) => item.product.id !== product.id
+      );
+      const updatedCart = { ...cart, lineItems: updatedItemList };
+      props.setState({ cart: updatedCart });
+      console.log('updatedItemList', updatedItemList);
+    } else {
+      await props.fetchCart();
+    }
   }
 
   const handleQuantityChange = async (event, cart, product, oldQuantity) => {
@@ -34,7 +44,7 @@ const Cart = (props) => {
     await props.updateQuantity({
       cart,
       product,
-      quantity: newQuantity - oldQuantity,
+      quantity: newQuantity,
     });
   };
   let subtotal = 0;
@@ -89,6 +99,13 @@ const Cart = (props) => {
                           <option value={1}>1</option>
                           <option value={2}>2</option>
                           <option value={3}>3</option>
+                          <option value={4}>4</option>
+                          <option value={5}>5</option>
+                          <option value={6}>6</option>
+                          <option value={7}>7</option>
+                          <option value={8}>8</option>
+                          <option value={9}>9</option>
+                          <option value={10}>10</option>
                         </Form.Control>
                       </Form.Group>
                     </Col>
@@ -100,9 +117,7 @@ const Cart = (props) => {
                             variant="secondary"
                             size="sm"
                             aria-label="remove item button"
-                            onClick={() =>
-                              handleRemove(cart, item.product, -item.quantity)
-                            }
+                            onClick={() => handleRemove(cart, item.product, 0)}
                           >
                             Remove
                           </Button>
