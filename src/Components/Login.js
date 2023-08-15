@@ -11,7 +11,7 @@ import { withRouter } from '../utils/withRouter';
 import * as formik from 'formik';
 import * as yup from 'yup';
 
-const LoginPage = () => {
+const LoginPage = ({ auth }) => {
   const [credentials, setCredentials] = useState({
     username: '',
     password: '',
@@ -71,10 +71,10 @@ const LoginPage = () => {
 
   return (
     <Container>
-        {props.auth.id ? (
+        {auth.id ? (
           <Container className="mt-5">
-            <h2 className="mb-3">Welcome {props.auth.username}!</h2>
-            <Button onClick={props.logout}>Logout</Button>
+            <h2 className="mb-3">Welcome {auth.username}!</h2>
+            <Button onClick={logout}>Logout</Button>
           </Container>
         ) : (
           <Modal show={show}>
@@ -134,8 +134,7 @@ const LoginPage = () => {
                       </Form.Label>
 
                       <Form.Group controlId="username" className="mb-3">
-                        <FloatingLabel controlId="floatingUsername" label="Email">
-                          <Form.Label>Username</Form.Label>
+                        <FloatingLabel controlId="floatingUsername" label="Email">                
                           <Form.Control
                             type="text"
                             name="username"
@@ -152,21 +151,22 @@ const LoginPage = () => {
                         </FloatingLabel>
                       </Form.Group>                     
 
-                      <FloatingLabel controlId="floatingPassword" className="mb-3">
-                        <Form.Label>Password</Form.Label>
-                        <Form.Control
-                          type="password"
-                          name="password"
-                          placeholder="Password"
-                          value={values.password}
-                          onChange={handleChange}
-                          isValid={touched.password && !errors.password}
-                          isInvalid={touched.password && !!errors.password}
-                        />
-                        <Form.Control.Feedback type="invalid">
+                      <Form.Group controlId="password" className="mb-3">
+                        <FloatingLabel controlId="floatingPassword" label="Password">
+                          <Form.Control
+                            type="password"
+                            name="password"
+                            placeholder="Password"
+                            value={values.password}
+                            onChange={handleChange}
+                            isValid={touched.password && !errors.password}
+                            isInvalid={touched.password && !!errors.password}
+                          />
+                          <Form.Control.Feedback type="invalid">
                             {errors.password}
                           </Form.Control.Feedback>
-                      </FloatingLabel>
+                        </FloatingLabel>
+                      </Form.Group>
                       
                     </Modal.Body>
                     <Modal.Footer className="d-flex">
@@ -199,7 +199,7 @@ const LoginPage = () => {
                   isValid,
                   errors,
                 }) => (
-                  <Form noValidate onSubmit={registerSubmitHandler}>
+                  <Form noValidate onSubmit={handleSubmit}>
                     <Modal.Body>
                       <Form.Label
                         htmlFor="SignUp"
@@ -226,7 +226,7 @@ const LoginPage = () => {
                         />
                         <Form.Control.Feedback type="invalid">
                             {errors.username}
-                          </Form.Control.Feedback>
+                        </Form.Control.Feedback>
                         <br />
                       </FloatingLabel>
 
