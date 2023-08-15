@@ -33,6 +33,8 @@ const LoginPage = ({ auth, attemptLogin, logout, attemptRegistration }) => {
     await attemptLogin(values);
     if (!auth.id) {
       setError('Email or password is incorrect.');
+    } else {
+      setError('');
     }
   };
 
@@ -42,7 +44,15 @@ const LoginPage = ({ auth, attemptLogin, logout, attemptRegistration }) => {
       setError(
         'Unable to register with provided email, account may already exist.'
       );
+    } else {
+      setError('');
     }
+  };
+
+  const logoutHandler = () => {
+    setError('');
+    logout();
+    navigate(-1);
   };
 
   const { Formik } = formik;
@@ -72,7 +82,7 @@ const LoginPage = ({ auth, attemptLogin, logout, attemptRegistration }) => {
       {auth.id ? (
         <Container className="mt-5">
           <h2 className="mb-3">Welcome {auth.username}!</h2>
-          <Button onClick={logout}>Logout</Button>
+          <Button onClick={logoutHandler}>Logout</Button>
         </Container>
       ) : (
         <Modal show={show}>
