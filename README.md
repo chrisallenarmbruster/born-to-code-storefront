@@ -1,25 +1,43 @@
-# Basic Features
+# Born to Code
 
-- A user should be able to see products
-- A logged in user should be able to
-  - see the items in their cart
-  - add a new product to their cart
-  - remove an item from their cart
-  - create an order
-- A user should be able to see their orders
-- A user should be able to create an account
-- A user should be able to see their past orders
-- A non-logged in user should be able to add to their cart and have those items added to their cart after authenticating
-- A user should be able to review a product
-- A user should be able to update their profile
-- An administrator should be able to add a new product
+We developed this responsive E-Commerce site to sell coding themed merchandise.
+It was a fantastic experience working together, and we acquired valuable experience working as a team on a software project from the ground up.
 
-# Bonus Features
-- A user should be able to search for products
-- A user should be able to create a wish list
-- A user should be able to checkout using stripe
-- A user should be able to add a shipping address
-- A user should be able to upload an avatar to their profile
-- An administrator should be able to add a coupon code
-- A user should be able to use a coupon code
+## Screenshots
+Not sure how many we'd want to do. In the past, I've done Home Page, and then a screenshot of each of the important pages.
 
+## Built With
+<img src="https://github.com/devicons/devicon/blob/master/icons/react/react-original-wordmark.svg"  title="React" alt="React" width="40" height="40"/>&nbsp;
+<img src="https://github.com/devicons/devicon/blob/master/icons/nodejs/nodejs-original-wordmark.svg" title="Node.js" alt="Node.js" width="40" height="40"/>&nbsp;
+<img src="https://user-images.githubusercontent.com/10659805/183220572-4ac21d4f-5550-4989-8bbd-f2c1c10c7ae6.png" title="Express" alt="Express" width="40" height="40"/>&nbsp;
+<img src="https://github.com/devicons/devicon/blob/master/icons/bootstrap/bootstrap-plain.svg" title="Bootstrap" alt="Bootstrap" width="40" height="40"/>&nbsp;
+
+## Contributors 
+
+**Michael Hughes**
+
+- Github https://github.com/mrmchughes
+- Email mrmchughes27@gmail.com
+- Linkedin https://www.linkedin.com/in/michaelhughes27/
+
+**Chris Armbruster**
+
+- Github https://github.com/chrisallenarmbruster
+- Email chris@armbrustermail.com
+- Linkedin https://www.linkedin.com/in/chrisallenarmbruster/
+
+**Joel Janov**
+
+- Github https://github.com/jejanov
+- Email mrmchughes27@gmail.com
+- Linkedin (https://www.linkedin.com/in/joeljanov/)
+
+Contributions, issues, and feature requests are welcome!
+
+Give a ⭐️ if you like this project!
+
+# License
+
+Copyright © 2022 [Michael Hughes](https://github.com/mrmchughes).
+
+This project is MIT licensed.
