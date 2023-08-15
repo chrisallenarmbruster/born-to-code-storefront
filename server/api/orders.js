@@ -40,7 +40,11 @@ app.post('/', async (req, res, next) => {
 app.get('/cart', async (req, res, next) => {
   try {
     const user = await User.findByToken(req.headers.authorization);
-    res.send(await user.getCart());
+    if (user === 'user not found' || !user || user === null) {
+      res.send('user not found');
+    } else {
+      res.send(await user.getCart());
+    }
   } catch (ex) {
     next(ex);
   }
@@ -63,8 +67,11 @@ app.post('/cart', async (req, res, next) => {
 app.put('/cart', async (req, res, next) => {
   try {
     const user = await User.findByToken(req.headers.authorization);
-    console.log('api route ', req.body);
-    res.send(await user.updateQuantity(req.body));
+    if (user === 'user not found' || !user || user === null) {
+      res.send('user not found');
+    } else {
+      res.send(await user.updateQuantity(req.body));
+    }
   } catch (ex) {
     next(ex);
   }

@@ -99,6 +99,7 @@ export class CheckOut extends Component {
   handleCompleteTransaction = (lineItems, paymentId) => {
     this.setState({ transactionComplete: true });
     emailClient(this.state.email, paymentId, lineItems);
+    
   };
 
   handleClose() {

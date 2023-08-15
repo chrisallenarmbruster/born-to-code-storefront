@@ -117,7 +117,7 @@ User.prototype.updateQuantity = async function ({ product, quantity }) {
   const lineItem = cart.lineItems.find((lineItem) => {
     return lineItem.productId === product.id;
   });
-  lineItem.quantity = lineItem.quantity + quantity;
+  lineItem.quantity = quantity;
   if (lineItem.quantity <= 0) {
     await lineItem.destroy();
   } else {
