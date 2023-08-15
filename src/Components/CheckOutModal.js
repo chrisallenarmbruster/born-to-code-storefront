@@ -18,6 +18,7 @@ import { connect } from 'react-redux';
 import { updateQuantity, fetchCart } from '../store/cart';
 import { useNavigate } from 'react-router-dom';
 import { emailClient } from '../emailClient';
+import { withRouter } from '../utils/withRouter';
 export class CheckOut extends Component {
   constructor(props) {
     super(props);
@@ -99,6 +100,7 @@ export class CheckOut extends Component {
   handleCompleteTransaction = (lineItems, paymentId) => {
     this.setState({ transactionComplete: true });
     emailClient(this.state.email, paymentId, lineItems);
+    this.props.router.navigate('/thankyou');
   };
 
   handleClose() {
@@ -488,4 +490,6 @@ const mapDispatchToProps = (dispatch, { history }) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(CheckOut);
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(CheckOut)
+);
