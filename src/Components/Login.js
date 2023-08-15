@@ -11,15 +11,15 @@ import { withRouter } from '../utils/withRouter';
 import * as formik from 'formik';
 import * as yup from 'yup';
 
-const LoginPage = ({ auth }) => {
-  const [credentials, setCredentials] = useState({
-    username: '',
-    password: '',
-  })
-  const [newUser, setNewUser] = useState({
-    username: '',
-    password: '',
-  })
+const LoginPage = ({ auth }, logout) => {
+  // const [credentials, setCredentials] = useState({
+  //   username: '',
+  //   password: '',
+  // })
+  // const [newUser, setNewUser] = useState({
+  //   username: '',
+  //   password: '',
+  // })
   const [login, setLogin] = useState(true)
   const [show, setShow] = useState(true)
 
@@ -40,20 +40,19 @@ const LoginPage = ({ auth }) => {
   // }
 
   const toggleLogin = () => {
-    setShow(true);
+    setLogin(true);
   }
 
   const toggleRegister = () => {
-    setShow(false);
+    setLogin(false);
   }
 
-  const loginSubmitHandler = (ev, values) => {
-    ev.preventDefault();
+  const loginSubmitHandler = (values) => {
+    console.log(values);
     attemptLogin(values);
   }
 
-  const registerSubmitHandler = (ev, values) => {
-    ev.preventDefault();
+  const registerSubmitHandler = (values) => {
     attemptRegistration(values);
   };
 
@@ -61,12 +60,12 @@ const LoginPage = ({ auth }) => {
 
   const loginSchema = yup.object().shape({
     username: yup.string().required(),
-    password: yup.string().required,
+    password: yup.string().required('Required'),
   })
 
   const registerSchema = yup.object().shape({
     username: yup.string().email("Invalid email").required('Required'),
-    password: yup.string().required('Required'),
+    password: yup.string().min(6, 'Password must be at least 6 characters').max(24, 'Password can be maximum 24 characters').required('Required'),
   });
 
   return (
@@ -185,87 +184,87 @@ const LoginPage = ({ auth }) => {
                 
               </Formik>
             ) : (
-              <Formik
-                validationSchema={registerSchema}
-                onSubmit={registerSubmitHandler}
-                initialValues={{ username: "", password: "" }}
-              >
-                {({
-                  handleSubmit,
-                  handleChange,
-                  handleBlur,
-                  values,
-                  touched,
-                  isValid,
-                  errors,
-                }) => (
-                  <Form noValidate onSubmit={handleSubmit}>
-                    <Modal.Body>
-                      <Form.Label
-                        htmlFor="SignUp"
-                        style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          marginTop: '10px',
-                        }}
-                      >
-                        <span className="mb-3"> Enter email and password.</span>
-                      </Form.Label>
+              // <Formik
+              //   validationSchema={registerSchema}
+              //   onSubmit={registerSubmitHandler}
+              //   initialValues={{ username: "", password: "" }}
+              // >
+              //   {({
+              //     handleSubmit,
+              //     handleChange,
+              //     handleBlur,
+              //     values,
+              //     touched,
+              //     isValid,
+              //     errors,
+              //   }) => (
+              //     <Form noValidate onSubmit={handleSubmit}>
+              //       <Modal.Body>
+              //         <Form.Label
+              //           htmlFor="SignUp"
+              //           style={{
+              //             display: 'flex',
+              //             alignItems: 'center',
+              //             justifyContent: 'center',
+              //             marginTop: '10px',
+              //           }}
+              //         >
+              //           <span className="mb-3"> Enter email and password.</span>
+              //         </Form.Label>
                       
-                      <FloatingLabel controlId="floatingUsername" label="Email">
-                        <Form.Label>Username</Form.Label>
-                        <Form.Control
-                          type="text"
-                          name="username"
-                          placeholder="Enter your email"
-                          value={values.username}   
-                          onChange={handleChange}
-                          isValid={touched.username && !errors.username}
-                          isInvalid={touched.username && !!errors.username}
-                        />
-                        <Form.Control.Feedback type="invalid">
-                            {errors.username}
-                        </Form.Control.Feedback>
-                        <br />
-                      </FloatingLabel>
+              //         <FloatingLabel controlId="floatingUsername" label="Email">
+              //           <Form.Label>Username</Form.Label>
+              //           <Form.Control
+              //             type="text"
+              //             name="username"
+              //             placeholder="Enter your email"
+              //             value={values.username}   
+              //             onChange={handleChange}
+              //             isValid={touched.username && !errors.username}
+              //             isInvalid={touched.username && !!errors.username}
+              //           />
+              //           <Form.Control.Feedback type="invalid">
+              //               {errors.username}
+              //           </Form.Control.Feedback>
+              //           <br />
+              //         </FloatingLabel>
 
-                      <FloatingLabel controlId="floatingPassword" className="mb-3">
-                        <Form.Label>Password</Form.Label>
-                        <Form.Control
-                          type="password"
-                          name="password"
-                          placeholder="Password"
-                          value={values.password}
-                          onChange={handleChange}
-                          isValid={touched.password && !errors.password}
-                          isInvalid={touched.password && !!errors.password}
-                        />
-                        <Form.Control.Feedback type="invalid">
-                            {errors.password}
-                        </Form.Control.Feedback>
-                      </FloatingLabel>
+              //         <FloatingLabel controlId="floatingPassword" className="mb-3">
+              //           <Form.Label>Password</Form.Label>
+              //           <Form.Control
+              //             type="password"
+              //             name="password"
+              //             placeholder="Password"
+              //             value={values.password}
+              //             onChange={handleChange}
+              //             isValid={touched.password && !errors.password}
+              //             isInvalid={touched.password && !!errors.password}
+              //           />
+              //           <Form.Control.Feedback type="invalid">
+              //               {errors.password}
+              //           </Form.Control.Feedback>
+              //         </FloatingLabel>
 
-                    </Modal.Body>
-                    <Modal.Footer>
-                      <Button
-                        onClick={() => this.props.router.navigate(-1)}
-                        title="Go Back"
-                      >
-                        <i className="bi bi-arrow-left h4"></i>
-                      </Button>
-                      <Button
-                        onClick={(e) => this.register(e)}
-                        type="submit"
-                        title="Sign Up"
-                        className="h4"
-                      >
-                        Sign Up
-                      </Button>
-                    </Modal.Footer>
-                  </Form>  
-                )}          
-              </Formik>           
+              //       </Modal.Body>
+              //       <Modal.Footer>
+              //         <Button
+              //           onClick={() => this.props.router.navigate(-1)}
+              //           title="Go Back"
+              //         >
+              //           <i className="bi bi-arrow-left h4"></i>
+              //         </Button>
+              //         <Button
+              //           type="submit"
+              //           title="Sign Up"
+              //           className="h4"
+              //         >
+              //           Sign Up
+              //         </Button>
+              //       </Modal.Footer>
+              //     </Form>  
+              //   )}          
+              // </Formik>       
+              ''    
             )}
           </Modal>
         )}
