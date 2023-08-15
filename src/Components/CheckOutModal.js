@@ -23,14 +23,14 @@ export class CheckOut extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      first: 'Joel',
-      last: 'Janov',
-      address: '30122 Wingfoot Dr',
-      city: 'Evergreen',
-      state: 'Co',
-      zip: '80439',
-      email: 'joel.janov@regiscompany.com',
-      phone: '7204801877',
+      first: '',
+      last: '',
+      address: '',
+      city: '',
+      state: '',
+      zip: '',
+      email: '',
+      phone: '',
       show: false,
       validationErrors: {},
       transactionComplete: false,
