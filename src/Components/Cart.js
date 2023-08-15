@@ -58,19 +58,19 @@ const Cart = (props) => {
   } else {
     return (
       <>
-        <div className="d-flex justify-content-center">
+        <div className="my-5 d-flex justify-content-center">
           <h1>Your cart total is ${subtotal.toFixed(2)}</h1>
         </div>
         {lineItems.map((item, index) => {
           return (
-            <Container key={index}>
+            <Container  key={index}>
               <Card
-                style={{ height: '12rem', border: 0 }}
+                style={{ minHeight: '10rem', border: 0 }}
                 key={item.product.id}
               >
                 <Card.Body className="square border-top">
                   <Row>
-                    <Col sm={2}>
+                    <Col lg={2}>
                       <Image
                         style={{ height: '5rem', border: 0 }}
                         src={item.product.imageUrl1}
@@ -78,11 +78,11 @@ const Cart = (props) => {
                         thumbnail={true}
                       ></Image>
                     </Col>
-                    <Col sm={7}>
+                    <Col lg={7}>
                       <Card.Title>{item.product.name}</Card.Title>
                       <Card.Text>{item.product.description}</Card.Text>
                     </Col>
-                    <Col xs={1}>
+                    <Col lg={1}>
                       <Form.Group controlId="exampleForm.SelectCustom">
                         <Form.Control
                           as="select"
@@ -109,7 +109,7 @@ const Cart = (props) => {
                         </Form.Control>
                       </Form.Group>
                     </Col>
-                    <Col sm={2}>
+                    <Col lg={2}>
                       ${(item.quantity * item.product.price).toFixed(2)}
                       <ButtonToolbar aria-label="Toolbar with button groups">
                         <ButtonGroup className="me-2" aria-label="Second group">
@@ -131,32 +131,32 @@ const Cart = (props) => {
           );
         })}
         <Container>
-          <Card style={{ height: '8rem', border: 0 }}>
+          <Card style={{ minHeight: '8rem', border: 0 }}>
             <Card.Body className="square border-top">
               <Row>
-                <Col sm={2}></Col>
-                <Col sm={7}>Subtotal</Col>
-                <Col sm={1}></Col>
-                <Col sm={2}>${subtotal.toFixed(2)}</Col>
+                <Col lg={2}></Col>
+                <Col lg={7}>Subtotal</Col>
+                <Col lg={1}></Col>
+                <Col lg={2}>${subtotal.toFixed(2)}</Col>
               </Row>
               <Row>
-                <Col sm={2}></Col>
-                <Col sm={7}>Shipping</Col>
-                <Col sm={1}></Col>
-                <Col sm={2}>Free</Col>
+                <Col lg={2}></Col>
+                <Col lg={7}>Shipping</Col>
+                <Col lg={1}></Col>
+                <Col lg={2}>Free</Col>
               </Row>
               <Row>
-                <Col sm={2}></Col>
-                <Col sm={7}>Estimated tax for: 80439</Col>
-                <Col sm={1}></Col>
-                <Col sm={2}>$1.00</Col>
+                <Col lg={2}></Col>
+                <Col lg={7}>Estimated tax for: 80439</Col>
+                <Col lg={1}></Col>
+                <Col lg={2}>$1.00</Col>
               </Row>
             </Card.Body>
           </Card>
           <Row>
-            <Col sm={2}></Col>
-            <Col sm={10}>
-              <Card style={{ height: '8rem', border: 0 }}>
+            <Col lg={2}></Col>
+            <Col lg={10}>
+              <Card style={{ minHeight: '8rem', border: 0 }}>
                 <Card.Body className="square border-top">
                   <Row>
                     <Col></Col>
@@ -171,12 +171,12 @@ const Cart = (props) => {
                         </Col>
                       </Row>
                     </Col>
-                    <Col sm={1}></Col>
+                    <Col lg={1}></Col>
                   </Row>
                   <Row>
                     <Col></Col>
                     <Col></Col>
-                    <Col sm={4}>
+                    <Col lg={4}>
                       <div className="d-grid gap-2">
                         {props.auth.id ? (
                           <CheckOut amount={(subtotal + 1).toFixed(2)} />
@@ -187,7 +187,7 @@ const Cart = (props) => {
                         )}
                       </div>
                     </Col>
-                    <Col sm={1}></Col>
+                    <Col lg={1}></Col>
                   </Row>
                 </Card.Body>
               </Card>
