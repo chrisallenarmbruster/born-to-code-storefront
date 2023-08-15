@@ -18,18 +18,19 @@ import { connect } from 'react-redux';
 import { updateQuantity, fetchCart } from '../store/cart';
 import { useNavigate } from 'react-router-dom';
 import { emailClient } from '../emailClient';
+import { withRouter } from '../utils/withRouter';
 export class CheckOut extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      first: 'Joel',
-      last: 'Janov',
-      address: '30122 Wingfoot Dr',
-      city: 'Evergreen',
-      state: 'Co',
-      zip: '80439',
-      email: 'joel.janov@regiscompany.com',
-      phone: '7204801877',
+      first: '',
+      last: '',
+      address: '',
+      city: '',
+      state: '',
+      zip: '',
+      email: '',
+      phone: '',
       show: false,
       validationErrors: {},
       transactionComplete: false,
@@ -99,6 +100,7 @@ export class CheckOut extends Component {
   handleCompleteTransaction = (lineItems, paymentId) => {
     this.setState({ transactionComplete: true });
     emailClient(this.state.email, paymentId, lineItems);
+    this.props.router.navigate('/thankyou');
   };
 
   handleClose() {
@@ -197,7 +199,7 @@ export class CheckOut extends Component {
                   {lineItems.map((item) => {
                     return (
                       <Card
-                        style={{ height: '3rem', border: 0 }}
+                        style={{ minHeight: '3rem', border: 0 }}
                         key={item.product.id}
                       >
                         <Card.Body
@@ -206,7 +208,7 @@ export class CheckOut extends Component {
                           aria-label="Form"
                         >
                           <Row>
-                            <Col sm={6}>
+                            <Col lg={6}>
                               <Card.Text
                                 style={{ fontSize: 12 }}
                                 aria-label="Product"
@@ -214,7 +216,7 @@ export class CheckOut extends Component {
                                 {item.product.name}
                               </Card.Text>
                             </Col>
-                            <Col sm={2}>
+                            <Col lg={2}>
                               <Card.Text
                                 style={{ fontSize: 12 }}
                                 aria-label="Quantity"
@@ -222,7 +224,7 @@ export class CheckOut extends Component {
                                 Quantity: {item.quantity}
                               </Card.Text>
                             </Col>
-                            <Col sm={2}>
+                            <Col lg={2}>
                               <Card.Text
                                 style={{ fontSize: 12 }}
                                 aria-label="Price"
@@ -230,7 +232,7 @@ export class CheckOut extends Component {
                                 Price: ${item.product.price}
                               </Card.Text>
                             </Col>
-                            <Col sm={2}>
+                            <Col lg={2}>
                               <CloseButton
                                 aria-label="Remove"
                                 onClick={() =>
@@ -247,39 +249,39 @@ export class CheckOut extends Component {
                       </Card>
                     );
                   })}
-                  <Card style={{ height: '8rem', border: 0 }}>
+                  <Card style={{ minHeight: '8rem', border: 0 }}>
                     <Card.Body className="square border-top">
                       <Row>
-                        <Col sm={2}></Col>
-                        <Col sm={7}>Subtotal</Col>
-                        <Col sm={1}></Col>
-                        <Col sm={2}>${amount}</Col>
+                        <Col lg={2}></Col>
+                        <Col lg={7}>Subtotal</Col>
+                        <Col lg={1}></Col>
+                        <Col lg={2}>${amount}</Col>
                       </Row>
                       <Row>
-                        <Col sm={2}></Col>
-                        <Col sm={7}>Shipping</Col>
-                        <Col sm={1}></Col>
-                        <Col sm={2}>Free</Col>
+                        <Col lg={2}></Col>
+                        <Col lg={7}>Shipping</Col>
+                        <Col lg={1}></Col>
+                        <Col lg={2}>Free</Col>
                       </Row>
                       <Row>
-                        <Col sm={2}></Col>
-                        <Col sm={7}>Estimated tax for: {zip}</Col>
-                        <Col sm={1}></Col>
-                        <Col sm={2}>{tax}%</Col>
+                        <Col lg={2}></Col>
+                        <Col lg={7}>Estimated tax for: {zip}</Col>
+                        <Col lg={1}></Col>
+                        <Col lg={2}>{tax}%</Col>
                       </Row>
                       <Row>
-                        <Col sm={2}></Col>
-                        <Col sm={7}>Total</Col>
-                        <Col sm={1}></Col>
-                        <Col sm={2}>${total}</Col>
+                        <Col lg={2}></Col>
+                        <Col lg={7}>Total</Col>
+                        <Col lg={1}></Col>
+                        <Col lg={2}>${total}</Col>
                       </Row>
                     </Card.Body>
                   </Card>
-                  <Card style={{ height: '3rem', border: 0 }}>
+                  <Card style={{ minHeight: '3rem', border: 0 }}>
                     <Card.Body border={0} className="square border-bottom">
                       <Row>Where should we send your order?</Row>
                       <Row>
-                        <Col sm={6}>
+                        <Col lg={6}>
                           <Form>
                             <Form.Group
                               className="mb-3"
@@ -300,7 +302,7 @@ export class CheckOut extends Component {
                             </Form.Group>
                           </Form>
                         </Col>
-                        <Col sm={6}>
+                        <Col lg={6}>
                           <Form>
                             <Form.Group
                               className="mb-3"
@@ -323,7 +325,7 @@ export class CheckOut extends Component {
                         </Col>
                       </Row>
                       <Row>
-                        <Col sm={6}>
+                        <Col lg={6}>
                           <Form>
                             <Form.Group className="mb-3" controlId="formEmail">
                               <Form.Label>Email</Form.Label>
@@ -341,10 +343,10 @@ export class CheckOut extends Component {
                             </Form.Group>
                           </Form>
                         </Col>
-                        <Col sm={6}></Col>
+                        <Col lg={6}></Col>
                       </Row>
                       <Row>
-                        <Col sm={6}>
+                        <Col lg={6}>
                           <Form>
                             <Form.Group
                               className="mb-3"
@@ -367,7 +369,7 @@ export class CheckOut extends Component {
                             </Form.Group>
                           </Form>
                         </Col>
-                        <Col sm={6}>
+                        <Col lg={6}>
                           <Form>
                             <Form.Group className="mb-3" controlId="formCity">
                               <Form.Label>City</Form.Label>
@@ -387,7 +389,7 @@ export class CheckOut extends Component {
                         </Col>
                       </Row>
                       <Row>
-                        <Col sm={6}>
+                        <Col lg={6}>
                           <Form>
                             <Form.Group className="mb-3" controlId="formState">
                               <Form.Label>State</Form.Label>
@@ -405,7 +407,7 @@ export class CheckOut extends Component {
                             </Form.Group>
                           </Form>
                         </Col>
-                        <Col sm={6}>
+                        <Col lg={6}>
                           <Form>
                             <Form.Group className="mb-3" controlId="formZip">
                               <Form.Label>Zip Code</Form.Label>
@@ -425,7 +427,7 @@ export class CheckOut extends Component {
                         </Col>
                       </Row>
                       <Row>
-                        <Col sm={6}>
+                        <Col lg={6}>
                           <Form>
                             <Form.Group className="mb-3" controlId="formPhone">
                               <Form.Label>Phone Number</Form.Label>
@@ -488,4 +490,6 @@ const mapDispatchToProps = (dispatch, { history }) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(CheckOut);
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(CheckOut)
+);
