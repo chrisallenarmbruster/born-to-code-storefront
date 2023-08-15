@@ -1,236 +1,258 @@
-import React, { Component, Fragment } from 'react';
+import React, { useState } from 'react';
 import { attemptLogin, logout, attemptRegistration } from '../store';
 import { connect } from 'react-redux';
 import Button from 'react-bootstrap/Button';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
+import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
-import Nav from 'react-bootstrap/Nav';
-import Container from 'react-bootstrap/Container';
 import { withRouter } from '../utils/withRouter';
+import * as formik from 'formik';
+import * as yup from 'yup';
+import { useNavigate } from 'react-router-dom';
+import Alert from 'react-bootstrap/Alert';
 
-class Login extends Component {
-  constructor() {
-    super();
-    this.state = {
-      credentials: {
-        username: '',
-        password: '',
-      },
-      newUser: {
-        username: '',
-        password: '',
-      },
-      login: true,
-      register: false,
-      show: true,
-    };
-    this.onChange = this.onChange.bind(this);
-    this.login = this.login.bind(this);
-    this.register = this.register.bind(this);
-    this.onChangeRegister = this.onChangeRegister.bind(this);
-    this.toggleLogin = this.toggleLogin.bind(this);
-    this.toggleRegister = this.toggleRegister.bind(this);
-  }
+const LoginPage = ({ auth, attemptLogin, logout, attemptRegistration }) => {
+  const [login, setLogin] = useState(true);
+  const [show, setShow] = useState(true);
+  const [error, setError] = useState('');
 
-  onChange(ev) {
-    this.setState({
-      credentials: {
-        ...this.state.credentials,
-        [ev.target.name]: ev.target.value,
-      },
-    });
-  }
+  const navigate = useNavigate();
 
-  login(ev) {
-    ev.preventDefault();
-    this.props.attemptLogin(this.state.credentials);
-  }
+  const toggleLogin = () => {
+    setLogin(true);
+    setError('');
+  };
 
-  register(ev) {
-    ev.preventDefault();
-    this.props.attemptRegistration(this.state.newUser);
-    this.setState({
-      newUser: {
-        username: '',
-        password: '',
-      },
-    });
-  }
+  const toggleRegister = () => {
+    setLogin(false);
+    setError('');
+  };
 
-  onChangeRegister(ev) {
-    this.setState({
-      newUser: {
-        ...this.state.newUser,
-        [ev.target.name]: ev.target.value,
-      },
-    });
-  }
+  const loginSubmitHandler = async (values) => {
+    await attemptLogin(values);
+    if (!auth.id) {
+      setError('Email or password is incorrect.');
+    } else {
+      setError('');
+    }
+  };
 
-  toggleLogin() {
-    this.setState({
-      login: true,
-      register: false,
-    });
-  }
+  const registerSubmitHandler = async (values) => {
+    attemptRegistration(values);
+    if (!auth.id) {
+      setError(
+        'Unable to register with provided email, account may already exist.'
+      );
+    } else {
+      setError('');
+    }
+  };
 
-  toggleRegister() {
-    this.setState({
-      login: false,
-      register: true,
-    });
-  }
+  const logoutHandler = () => {
+    setError('');
+    logout();
+    navigate(-1);
+  };
 
-  render() {
-    const { credentials } = this.state;
-    const { onChange } = this;
-    const { login } = this;
-    const { newUser } = this.state;
+  const { Formik } = formik;
 
-    return (
-      <Container>
-        {this.props.auth.id ? (
-          <Container className="mt-5">
-            <h2 className="mb-3">Welcome {this.props.auth.username}!</h2>
-            <Button onClick={this.props.logout}>Logout</Button>
-          </Container>
-        ) : (
-          <Modal show={this.state.show}>
-            <Modal.Header className="d-flex justify-content-center">
-              {this.state.login ? (
-                <div className="flex-column">
-                  <Modal.Title className="text-center">Log In</Modal.Title>
-                  <Button
-                    className="text-decoration-none"
-                    variant="link"
-                    onClick={() => this.toggleRegister()}
-                  >
-                    or sign up
-                  </Button>
-                </div>
-              ) : (
-                <div className="flex-column justify-content-center">
-                  <Modal.Title className="text-center">Sign Up</Modal.Title>
-                  <span>
-                    <Button
-                      className="text-decoration-none"
-                      variant="link"
-                      onClick={() => this.toggleLogin()}
-                    >
-                      or log in
-                    </Button>
-                  </span>
-                </div>
-              )}
-            </Modal.Header>
+  const loginSchema = yup.object().shape({
+    username: yup.string().required('email is a required field'),
+    password: yup.string().required(),
+  });
 
-            {this.state.login ? (
-              <Form onSubmit={login}>
-                <Modal.Body>
-                  <Form.Label
-                    htmlFor="SignIn"
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      marginTop: '10px',
-                    }}
-                  >
-                    <span className="mb-3"> Enter email and password.</span>
-                  </Form.Label>
-                  <FloatingLabel controlId="floatingUsername" label="Email">
-                    <Form.Control
-                      type="text"
-                      placeholder="Email"
-                      value={credentials.username}
-                      name="username"
-                      onChange={onChange}
-                    />
-                    <br />
-                  </FloatingLabel>
+  const registerSchema = yup.object().shape({
+    username: yup
+      .string()
+      .matches(
+        /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+        'must be valid email format'
+      )
+      .required('email is a required field'),
+    password: yup
+      .string()
+      .min(6, 'password must be at least 6 characters')
+      .max(24, 'password can be maximum 24 characters')
+      .required(),
+  });
 
-                  <FloatingLabel controlId="floatingPassword" label="Password">
-                    <Form.Control
-                      type="password"
-                      placeholder="Password"
-                      value={credentials.password}
-                      name="password"
-                      onChange={onChange}
-                      className="mb-3"
-                    />
-                  </FloatingLabel>
-                </Modal.Body>
-                <Modal.Footer className="d-flex">
-                  <Button
-                    onClick={() => this.props.router.navigate(-1)}
-                    title="Go Back"
-                  >
-                    <i className="bi bi-arrow-left h4"></i>
-                  </Button>
-                  <Button type="submit" title="Sign Up" className="h4">
-                    Log In
-                  </Button>
-                </Modal.Footer>
-              </Form>
+  return (
+    <Container>
+      {auth.id ? (
+        <Container className="mt-5">
+          <h2 className="mb-3">Welcome {auth.username}!</h2>
+          <Button onClick={logoutHandler}>Logout</Button>
+        </Container>
+      ) : (
+        <Modal show={show}>
+          <Modal.Header className="d-flex justify-content-center">
+            {login ? (
+              <div className="flex-column">
+                <Modal.Title className="text-center my-0 py-0">
+                  Log In
+                </Modal.Title>
+                <Button
+                  className="text-decoration-none my-0 py-0"
+                  variant="link"
+                  onClick={() => toggleRegister()}
+                >
+                  or sign up
+                </Button>
+              </div>
             ) : (
-              <Form onSubmit={(e) => this.register(e)}>
-                <Modal.Body>
-                  <Form.Label
-                    htmlFor="SignUp"
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      marginTop: '10px',
-                    }}
-                  >
-                    <span className="mb-3"> Enter email and password.</span>
-                  </Form.Label>
-                  <FloatingLabel controlId="floatingUsername" label="Email">
-                    <Form.Control
-                      type="email"
-                      placeholder="Email"
-                      name="username"
-                      value={newUser.username}
-                      onChange={this.onChangeRegister}
-                    />
-                    <br />
-                  </FloatingLabel>
-                  <FloatingLabel controlId="floatingPassword" label="Password">
-                    <Form.Control
-                      type="password"
-                      placeholder="Password"
-                      name="password"
-                      value={newUser.password}
-                      onChange={this.onChangeRegister}
-                      className="mb-3"
-                    />
-                  </FloatingLabel>
-                </Modal.Body>
-                <Modal.Footer>
+              <div className="flex-column">
+                <Modal.Title className="text-center my-0 py-0">
+                  Sign Up
+                </Modal.Title>
+                <span>
                   <Button
-                    onClick={() => this.props.router.navigate(-1)}
-                    title="Go Back"
+                    className="text-decoration-none my-0 py-0"
+                    variant="link"
+                    onClick={() => toggleLogin()}
                   >
-                    <i className="bi bi-arrow-left h4"></i>
+                    or log in
                   </Button>
-                  <Button
-                    onClick={(e) => this.register(e)}
-                    type="submit"
-                    title="Sign Up"
-                    className="h4"
-                  >
-                    Sign Up
-                  </Button>
-                </Modal.Footer>
-              </Form>
+                </span>
+              </div>
             )}
-          </Modal>
-        )}
-      </Container>
-    );
-  }
-}
+          </Modal.Header>
+
+          {login ? (
+            <Formik
+              validationSchema={loginSchema}
+              onSubmit={loginSubmitHandler}
+              initialValues={{ username: '', password: '' }}
+            >
+              {({ handleSubmit, handleChange, values, touched, errors }) => (
+                <Form noValidate onSubmit={handleSubmit}>
+                  <Modal.Body>
+                    <Form.Group controlId="username" className="mb-4">
+                      <Form.Label>Email</Form.Label>
+                      <Form.Control
+                        type="text"
+                        name="username"
+                        placeholder="Enter your email"
+                        value={values.username}
+                        onChange={handleChange}
+                        isValid={touched.username && !errors.username}
+                        isInvalid={touched.username && !!errors.username}
+                      />
+                      <Form.Control.Feedback type="invalid">
+                        {errors.username}
+                      </Form.Control.Feedback>
+                    </Form.Group>
+
+                    <Form.Group controlId="password" className="mb-3">
+                      <Form.Label>Password</Form.Label>
+                      <Form.Control
+                        type="password"
+                        name="password"
+                        placeholder="Enter your password"
+                        value={values.password}
+                        onChange={handleChange}
+                        isValid={touched.password && !errors.password}
+                        isInvalid={touched.password && !!errors.password}
+                      />
+                      <Form.Control.Feedback type="invalid">
+                        {errors.password}
+                      </Form.Control.Feedback>
+                    </Form.Group>
+                    {error && (
+                      <Alert
+                        variant={'danger'}
+                        onClose={() => setError('')}
+                        dismissible
+                      >
+                        {error}
+                      </Alert>
+                    )}
+                  </Modal.Body>
+                  <Modal.Footer className="d-flex">
+                    <Button onClick={() => navigate(-1)} title="Go Back">
+                      <i className="bi bi-arrow-left h4"></i>
+                    </Button>
+                    <Button type="submit" title="Log In" className="h4">
+                      Log In
+                    </Button>
+                  </Modal.Footer>
+                </Form>
+              )}
+            </Formik>
+          ) : (
+            <Formik
+              validationSchema={registerSchema}
+              onSubmit={registerSubmitHandler}
+              initialValues={{ username: '', password: '' }}
+            >
+              {({
+                handleSubmit,
+                handleChange,
+                handleBlur,
+                values,
+                touched,
+                isValid,
+                errors,
+              }) => (
+                <Form noValidate onSubmit={handleSubmit}>
+                  <Modal.Body>
+                    <Form.Group controlId="username" className="mb-4">
+                      <Form.Label>Email</Form.Label>
+                      <Form.Control
+                        type="text"
+                        name="username"
+                        placeholder="Enter your email"
+                        value={values.username}
+                        onChange={handleChange}
+                        isValid={touched.username && !errors.username}
+                        isInvalid={touched.username && !!errors.username}
+                      />
+                      <Form.Control.Feedback type="invalid">
+                        {errors.username}
+                      </Form.Control.Feedback>
+                    </Form.Group>
+                    <Form.Group controlId="password" className="mb-3">
+                      <Form.Label>Password</Form.Label>
+                      <Form.Control
+                        type="password"
+                        name="password"
+                        placeholder="Enter your password"
+                        value={values.password}
+                        onChange={handleChange}
+                        isValid={touched.password && !errors.password}
+                        isInvalid={touched.password && !!errors.password}
+                      />
+                      <Form.Control.Feedback type="invalid">
+                        {errors.password}
+                      </Form.Control.Feedback>
+                    </Form.Group>
+                    {error && (
+                      <Alert
+                        variant={'danger'}
+                        onClose={() => setError('')}
+                        dismissible
+                      >
+                        {error}
+                      </Alert>
+                    )}
+                  </Modal.Body>
+                  <Modal.Footer>
+                    <Button onClick={() => navigate(-1)} title="Go Back">
+                      <i className="bi bi-arrow-left h4"></i>
+                    </Button>
+                    <Button type="submit" title="Sign Up" className="h4">
+                      Sign Up
+                    </Button>
+                  </Modal.Footer>
+                </Form>
+              )}
+            </Formik>
+          )}
+        </Modal>
+      )}
+    </Container>
+  );
+};
 
 const mapStateToProps = (state) => {
   return { auth: state.auth };
@@ -244,4 +266,6 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Login));
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(LoginPage)
+);
