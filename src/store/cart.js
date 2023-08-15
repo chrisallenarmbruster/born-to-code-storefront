@@ -125,15 +125,27 @@ const cartReducer = (state = initialState, action) => {
           ? { ...item, quantity: action.quantity }
           : item
       );
-      return { ...state, lineItems: updatedItems };
+      return { ...state, lineItems: updatedItems.filter((item) => item.quantity > 0) };
     case 'ADD_TO_CART':
-      return {
-        ...state,
-        lineItems: [
-          ...state.lineItems,
-          { product: action.product, quantity: action.quantity },
-        ],
-      };
+      const existingItem = state.lineItems.find(
+        (item) => item.product.id === action.product.id
+      );
+      if (existingItem) {
+        const updatedItems = state.lineItems.map((item) =>
+          item.product.id === action.product.id
+            ? { ...item, quantity: item.quantity + action.quantity }
+            : item
+        );
+        return { ...state, lineItems: updatedItems };
+      } else {
+        return {
+          ...state,
+          lineItems: [
+            ...state.lineItems,
+            { product: action.product, quantity: action.quantity },
+          ],
+        };
+      }
     case 'ADD_ORDER':
       return initialState;
     default:

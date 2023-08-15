@@ -26,7 +26,16 @@ const Cart = (props) => {
 
   async function handleRemove(cart, product, quantity) {
     await props.updateQuantity({ cart, product, quantity });
-    await props.fetchCart();
+    if (props.auth.id === undefined) {
+      const updatedItemList = cart.lineItems.filter(
+        (item) => item.product.id !== product.id
+      );
+      const updatedCart = { ...cart, lineItems: updatedItemList };
+      props.setState({ cart: updatedCart });
+      console.log('updatedItemList', updatedItemList);
+    } else {
+      await props.fetchCart();
+    }
   }
 
   const handleQuantityChange = async (event, cart, product, oldQuantity) => {
