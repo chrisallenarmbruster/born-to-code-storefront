@@ -1,74 +1,70 @@
-import React, { useState, Fragment } from 'react';
+import React, { useState } from 'react';
 import { attemptLogin, logout, attemptRegistration } from '../store';
 import { connect } from 'react-redux';
 import Button from 'react-bootstrap/Button';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
+import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
-import Nav from 'react-bootstrap/Nav';
-import Container from 'react-bootstrap/Container';
 import { withRouter } from '../utils/withRouter';
 import * as formik from 'formik';
 import * as yup from 'yup';
+import { useNavigate } from 'react-router-dom';
+import Alert from 'react-bootstrap/Alert';
 
 const LoginPage = ({ auth, attemptLogin, logout, attemptRegistration }) => {
-  // const [credentials, setCredentials] = useState({
-  //   username: '',
-  //   password: '',
-  // })
-  // const [newUser, setNewUser] = useState({
-  //   username: '',
-  //   password: '',
-  // })
   const [login, setLogin] = useState(true);
   const [show, setShow] = useState(true);
+  const [error, setError] = useState('');
 
-  // onChange(ev) {
-  //   this.setState({
-  //     credentials: {
-  //       ...this.state.credentials,
-  //       [ev.target.name]: ev.target.value,
-  //     },
-  //   });
-  // }
-
-  // const onChangeRegister = (ev) => {
-  //   setNewUser({
-  //       ...newUser,
-  //       [ev.target.name]: ev.target.value,
-  //   });
-  // }
+  const navigate = useNavigate();
 
   const toggleLogin = () => {
     setLogin(true);
+    setError('');
   };
 
   const toggleRegister = () => {
     setLogin(false);
+    setError('');
   };
 
-  const loginSubmitHandler = (values) => {
-    attemptLogin(values);
+  const loginSubmitHandler = async (values) => {
+    await attemptLogin(values);
+    if (!auth.id) {
+      setError('Email or password is incorrect.');
+    }
   };
 
-  const registerSubmitHandler = (values) => {
+  const registerSubmitHandler = async (values) => {
     attemptRegistration(values);
+    if (!auth.id) {
+      setError(
+        'Unable to register with provided email, account may already exist.'
+      );
+    }
   };
 
   const { Formik } = formik;
 
   const loginSchema = yup.object().shape({
-    username: yup.string().required(),
-    password: yup.string().required('Required'),
+    username: yup.string().required('email is a required field'),
+    password: yup.string().required(),
   });
 
   const registerSchema = yup.object().shape({
-    username: yup.string().email('Invalid email').required('Required'),
+    username: yup
+      .string()
+      .matches(
+        /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+        'must be valid email format'
+      )
+      .required('email is a required field'),
     password: yup
       .string()
-      .min(6, 'Password must be at least 6 characters')
-      .max(24, 'Password can be maximum 24 characters')
-      .required('Required'),
+      .min(6, 'password must be at least 6 characters')
+      .max(24, 'password can be maximum 24 characters')
+      .required(),
   });
 
   return (
@@ -83,9 +79,11 @@ const LoginPage = ({ auth, attemptLogin, logout, attemptRegistration }) => {
           <Modal.Header className="d-flex justify-content-center">
             {login ? (
               <div className="flex-column">
-                <Modal.Title className="text-center">Log In</Modal.Title>
+                <Modal.Title className="text-center my-0 py-0">
+                  Log In
+                </Modal.Title>
                 <Button
-                  className="text-decoration-none"
+                  className="text-decoration-none my-0 py-0"
                   variant="link"
                   onClick={() => toggleRegister()}
                 >
@@ -93,11 +91,13 @@ const LoginPage = ({ auth, attemptLogin, logout, attemptRegistration }) => {
                 </Button>
               </div>
             ) : (
-              <div className="flex-column justify-content-center">
-                <Modal.Title className="text-center">Sign Up</Modal.Title>
+              <div className="flex-column">
+                <Modal.Title className="text-center my-0 py-0">
+                  Sign Up
+                </Modal.Title>
                 <span>
                   <Button
-                    className="text-decoration-none"
+                    className="text-decoration-none my-0 py-0"
                     variant="link"
                     onClick={() => toggleLogin()}
                   >
@@ -117,64 +117,52 @@ const LoginPage = ({ auth, attemptLogin, logout, attemptRegistration }) => {
               {({ handleSubmit, handleChange, values, touched, errors }) => (
                 <Form noValidate onSubmit={handleSubmit}>
                   <Modal.Body>
-                    <Form.Label
-                      htmlFor="SignIn"
-                      style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        marginTop: '10px',
-                      }}
-                    >
-                      <span className="mb-3"> Enter email and password.</span>
-                    </Form.Label>
-
-                    <Form.Group controlId="username" className="mb-3">
-                      <FloatingLabel controlId="floatingUsername" label="Email">
-                        <Form.Control
-                          type="text"
-                          name="username"
-                          placeholder="Enter your email"
-                          value={values.username}
-                          onChange={handleChange}
-                          isValid={touched.username && !errors.username}
-                          isInvalid={touched.username && !!errors.username}
-                        />
-                        <Form.Control.Feedback type="invalid">
-                          {errors.username}
-                        </Form.Control.Feedback>
-                        <br />
-                      </FloatingLabel>
+                    <Form.Group controlId="username" className="mb-4">
+                      <Form.Label>Email</Form.Label>
+                      <Form.Control
+                        type="text"
+                        name="username"
+                        placeholder="Enter your email"
+                        value={values.username}
+                        onChange={handleChange}
+                        isValid={touched.username && !errors.username}
+                        isInvalid={touched.username && !!errors.username}
+                      />
+                      <Form.Control.Feedback type="invalid">
+                        {errors.username}
+                      </Form.Control.Feedback>
                     </Form.Group>
 
                     <Form.Group controlId="password" className="mb-3">
-                      <FloatingLabel
-                        controlId="floatingPassword"
-                        label="Password"
-                      >
-                        <Form.Control
-                          type="password"
-                          name="password"
-                          placeholder="Password"
-                          value={values.password}
-                          onChange={handleChange}
-                          isValid={touched.password && !errors.password}
-                          isInvalid={touched.password && !!errors.password}
-                        />
-                        <Form.Control.Feedback type="invalid">
-                          {errors.password}
-                        </Form.Control.Feedback>
-                      </FloatingLabel>
+                      <Form.Label>Password</Form.Label>
+                      <Form.Control
+                        type="password"
+                        name="password"
+                        placeholder="Enter your password"
+                        value={values.password}
+                        onChange={handleChange}
+                        isValid={touched.password && !errors.password}
+                        isInvalid={touched.password && !!errors.password}
+                      />
+                      <Form.Control.Feedback type="invalid">
+                        {errors.password}
+                      </Form.Control.Feedback>
                     </Form.Group>
+                    {error && (
+                      <Alert
+                        variant={'danger'}
+                        onClose={() => setError('')}
+                        dismissible
+                      >
+                        {error}
+                      </Alert>
+                    )}
                   </Modal.Body>
                   <Modal.Footer className="d-flex">
-                    <Button
-                      onClick={() => this.props.router.navigate(-1)}
-                      title="Go Back"
-                    >
+                    <Button onClick={() => navigate(-1)} title="Go Back">
                       <i className="bi bi-arrow-left h4"></i>
                     </Button>
-                    <Button type="submit" title="Sign Up" className="h4">
+                    <Button type="submit" title="Log In" className="h4">
                       Log In
                     </Button>
                   </Modal.Footer>
@@ -198,20 +186,8 @@ const LoginPage = ({ auth, attemptLogin, logout, attemptRegistration }) => {
               }) => (
                 <Form noValidate onSubmit={handleSubmit}>
                   <Modal.Body>
-                    <Form.Label
-                      htmlFor="SignUp"
-                      style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        marginTop: '10px',
-                      }}
-                    >
-                      <span className="mb-3"> Enter email and password.</span>
-                    </Form.Label>
-
-                    <FloatingLabel controlId="floatingUsername">
-                      <Form.Label>Username</Form.Label>
+                    <Form.Group controlId="username" className="mb-4">
+                      <Form.Label>Email</Form.Label>
                       <Form.Control
                         type="text"
                         name="username"
@@ -224,18 +200,13 @@ const LoginPage = ({ auth, attemptLogin, logout, attemptRegistration }) => {
                       <Form.Control.Feedback type="invalid">
                         {errors.username}
                       </Form.Control.Feedback>
-                      <br />
-                    </FloatingLabel>
-
-                    <FloatingLabel
-                      controlId="floatingPassword"
-                      className="mb-3"
-                    >
+                    </Form.Group>
+                    <Form.Group controlId="password" className="mb-3">
                       <Form.Label>Password</Form.Label>
                       <Form.Control
                         type="password"
                         name="password"
-                        placeholder="Password"
+                        placeholder="Enter your password"
                         value={values.password}
                         onChange={handleChange}
                         isValid={touched.password && !errors.password}
@@ -244,13 +215,19 @@ const LoginPage = ({ auth, attemptLogin, logout, attemptRegistration }) => {
                       <Form.Control.Feedback type="invalid">
                         {errors.password}
                       </Form.Control.Feedback>
-                    </FloatingLabel>
+                    </Form.Group>
+                    {error && (
+                      <Alert
+                        variant={'danger'}
+                        onClose={() => setError('')}
+                        dismissible
+                      >
+                        {error}
+                      </Alert>
+                    )}
                   </Modal.Body>
                   <Modal.Footer>
-                    <Button
-                      onClick={() => this.props.router.navigate(-1)}
-                      title="Go Back"
-                    >
+                    <Button onClick={() => navigate(-1)} title="Go Back">
                       <i className="bi bi-arrow-left h4"></i>
                     </Button>
                     <Button type="submit" title="Sign Up" className="h4">
