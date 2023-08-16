@@ -21,12 +21,14 @@ export class OrderHistory extends Component {
               <span className="visually-hidden">Loading...</span>
             </Spinner>
           </div>
-        ) : (
+        ) : this.props.orders.length ? (
           <Fragment>
             {this.props.orders.map((order) => (
               <OrderSingle key={order.id} order={order} />
             ))}
           </Fragment>
+        ) : (
+          <h3>No orders on record yet!</h3>
         )}
       </Container>
     );
