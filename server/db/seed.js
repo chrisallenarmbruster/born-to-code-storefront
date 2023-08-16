@@ -401,6 +401,7 @@ const syncAndSeed = async () => {
       email: 'chris@armbrustermail.com',
       firstName: 'Chris',
       lastName: 'Armbruster',
+      phone: '2244302046',
       address: '1029 Hemlock Dr.',
       city: 'Spring Hill',
       state: 'TN',
