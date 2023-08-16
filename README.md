@@ -29,8 +29,8 @@ Not sure how many we'd want to do. In the past, I've done Home Page, and then a 
 **Joel Janov**
 
 - Github https://github.com/jejanov
-- Email mrmchughes27@gmail.com
-- Linkedin (https://www.linkedin.com/in/joeljanov/)
+- Email jejanov@mac.com
+- Linkedin https://www.linkedin.com/in/joeljanov/
 
 Contributions, issues, and feature requests are welcome!
 
