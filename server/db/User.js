@@ -72,11 +72,14 @@ const User = conn.define('user', {
   },
 });
 
-User.prototype.createOrder = async function () {
+User.prototype.createOrder = async function (amount = null) {
   const cart = await this.getCart();
   cart.isCart = false;
   cart.orderDate = new Date();
   cart.status = 'fulfilled';
+  if (amount) {
+    cart.amount = parseInt(amount);
+  }
   await cart.save();
   return cart;
 };

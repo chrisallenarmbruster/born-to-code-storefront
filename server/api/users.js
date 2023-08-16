@@ -56,6 +56,7 @@ app.get('/:id/orders', async (req, res, next) => {
         await Order.findAll({
           where: { userId: req.params.id, isCart: false },
           include: [{ model: LineItem, include: [{ model: Product }] }],
+          order: [['orderDate', 'DESC']],
         })
       );
     }
@@ -73,9 +74,9 @@ app.put('/:id', async (req, res, next) => {
       error.status = 401;
       throw error;
     }
-    console.log("req body: ", req.body);
+    console.log('req body: ', req.body);
     const updatedUser = await user.update(req.body);
-    console.log("updated user: ", updatedUser);
+    console.log('updated user: ', updatedUser);
     res.send(updatedUser);
   } catch (ex) {
     next(ex);

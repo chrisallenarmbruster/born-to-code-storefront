@@ -443,7 +443,7 @@ const syncAndSeed = async () => {
     quantity: Math.floor(Math.random() * 10) + 1,
   });
 
-  let order = await chris.createOrder();
+  let order = await chris.createOrder(Math.floor(Math.random() * 10000) + 1);
 
   cart = await chris.getCart();
   await chris.addToCart({
@@ -467,7 +467,7 @@ const syncAndSeed = async () => {
     quantity: Math.floor(Math.random() * 10) + 1,
   });
 
-  order = await chris.createOrder();
+  order = await chris.createOrder(Math.floor(Math.random() * 10000) + 1);
 
   cart = await chris.getCart();
   await chris.addToCart({
@@ -491,7 +491,7 @@ const syncAndSeed = async () => {
     quantity: Math.floor(Math.random() * 10) + 1,
   });
 
-  order = await chris.createOrder();
+  order = await chris.createOrder(Math.floor(Math.random() * 10000) + 1);
 
   cart = await chris.getCart();
   await chris.addToCart({
@@ -515,7 +515,7 @@ const syncAndSeed = async () => {
     quantity: Math.floor(Math.random() * 10) + 1,
   });
 
-  order = await chris.createOrder();
+  order = await chris.createOrder(Math.floor(Math.random() * 10000) + 1);
 
   cart = await chris.getCart();
   await chris.addToCart({
@@ -527,7 +527,7 @@ const syncAndSeed = async () => {
     quantity: Math.floor(Math.random() * 10) + 1,
   });
 
-  order = await chris.createOrder();
+  order = await chris.createOrder(Math.floor(Math.random() * 10000) + 1);
 
   cart = await chris.getCart();
   await chris.addToCart({
@@ -535,7 +535,7 @@ const syncAndSeed = async () => {
     quantity: Math.floor(Math.random() * 10) + 1,
   });
 
-  order = await chris.createOrder();
+  order = await chris.createOrder(Math.floor(Math.random() * 10000) + 1);
 
   cart = await chris.getCart();
   await chris.addToCart({
