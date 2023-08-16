@@ -10,7 +10,6 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import AddToCart from './AddToCart';
 import Button from 'react-bootstrap/Button';
 import ProductReviewStars from './ProductReviewStars';
-import ProductReviewCreate from './ProductReviewCreate';
 
 export class ProductSingle extends Component {
   constructor() {
@@ -35,7 +34,7 @@ export class ProductSingle extends Component {
   render() {
     const hasData = this.props.product && this.props.product.id;
     return (
-      <Container className="mt-5">
+      <Container className="my-5">
         {this.props.isLoading ? (
           <div className="d-flex justify-content-center mt-5">
             <Spinner animation="grow" role="status">

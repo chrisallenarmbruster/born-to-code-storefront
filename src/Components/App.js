@@ -9,7 +9,7 @@ import AdminDashboard from './AdminDashboard';
 import OrderHistory from './OrderHistory';
 import User from './User';
 import { loginWithToken, fetchCart } from '../store';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { connect } from 'react-redux';
 import ThankYou from './ThankYou';
 
@@ -38,6 +38,7 @@ class App extends Component {
             <Route path="/users/:id/orders" element={<OrderHistory />} />
             <Route path="/admin" element={<AdminDashboard />} />
             <Route path="/thankyou" element={<ThankYou />} />
+            <Route path="*" element={<Navigate to="/" />} />
           </Routes>
         </Fragment>
       </Fragment>

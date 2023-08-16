@@ -41,7 +41,7 @@ export class ProductLanding extends Component {
             </Row>
           </Container>
         </Container>
-        <Container fluid className="my-5 py-5 text-light bg-primary">
+        <Container fluid className="mt-5 mb-0 py-5 text-light bg-primary">
           <Container>
             <Row xs={1} md={2} className="g-5">
               <Col className="g-5  d-flex flex-column  px-5 display-5">

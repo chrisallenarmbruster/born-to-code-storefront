@@ -8,7 +8,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use('/dist', express.static(path.join(__dirname, '../dist')));
-// app.use('/static', express.static(path.join(__dirname, '../static')));
 app.use(express.static(path.join(__dirname, '../static')));
 
 app.get('/', (req, res) =>
@@ -22,6 +21,10 @@ app.use('/api/users', require('./api/users'));
 app.use('/api/reviews', require('./api/reviews'));
 app.use('/api/pay', require('./api/pay'));
 app.use('/api/email', require('./api/email'));
+
+app.get('*', (req, res) => {
+  res.redirect('/');
+});
 
 app.use((err, req, res, next) => {
   console.error(err.stack);

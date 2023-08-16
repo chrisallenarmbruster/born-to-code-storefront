@@ -40,6 +40,16 @@ const Order = conn.define('order', {
     required: false,
     unique: false,
   },
+  shipToFirstName: {
+    type: STRING,
+    required: false,
+    unique: false,
+  },
+  shipToLastName: {
+    type: STRING,
+    required: false,
+    unique: false,
+  },
   shipToAddress: {
     type: STRING,
     required: false,
