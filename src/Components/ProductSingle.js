@@ -10,7 +10,6 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import AddToCart from './AddToCart';
 import Button from 'react-bootstrap/Button';
 import ProductReviewStars from './ProductReviewStars';
-import ProductReviewCreate from './ProductReviewCreate';
 
 export class ProductSingle extends Component {
   constructor() {
