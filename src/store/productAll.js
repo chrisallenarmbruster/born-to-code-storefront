@@ -29,7 +29,6 @@ export const setProducts = () => {
       dispatch(_setProductsLoading());
       const data = (await axios.get('/api/products')).data;
       dispatch(_setProducts(data));
-      // await sleep(3000);
       dispatch(_clearProductsLoading());
     } catch (error) {
       console.log(error);
@@ -69,13 +68,6 @@ export const addProduct = (product, navigate) => {
     }
   };
 };
-
-//utility function to test loading state spinner animation
-function sleep(ms) {
-  return new Promise((resolve) => {
-    setTimeout(resolve, ms);
-  });
-}
 
 const initialState = {
   data: [],
