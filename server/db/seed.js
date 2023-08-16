@@ -422,130 +422,182 @@ const syncAndSeed = async () => {
 
   //create cart for chris
   cart = await chris.getCart();
+  let amount = 0;
+  let rndProduct = products.random();
+  let itemQty = Math.floor(Math.random() * 10) + 1;
   await chris.addToCart({
-    product: products.random(),
-    quantity: Math.floor(Math.random() * 10) + 1,
+    product: rndProduct,
+    quantity: itemQty,
   });
+  amount += rndProduct.price * itemQty;
+  rndProduct = products.random();
+  itemQty = Math.floor(Math.random() * 10) + 1;
   await chris.addToCart({
-    product: products.random(),
-    quantity: Math.floor(Math.random() * 10) + 1,
+    product: rndProduct,
+    quantity: itemQty,
   });
+  amount += rndProduct.price * itemQty;
+  rndProduct = products.random();
+  itemQty = Math.floor(Math.random() * 10) + 1;
   await chris.addToCart({
-    product: products.random(),
-    quantity: Math.floor(Math.random() * 10) + 1,
+    product: rndProduct,
+    quantity: itemQty,
   });
+  amount += rndProduct.price * itemQty;
+  rndProduct = products.random();
+  itemQty = Math.floor(Math.random() * 10) + 1;
   await chris.addToCart({
-    product: products.random(),
-    quantity: Math.floor(Math.random() * 10) + 1,
+    product: rndProduct,
+    quantity: itemQty,
   });
+  amount += rndProduct.price * itemQty;
+  rndProduct = products.random();
+  itemQty = Math.floor(Math.random() * 10) + 1;
   await chris.addToCart({
-    product: products.random(),
-    quantity: Math.floor(Math.random() * 10) + 1,
+    product: rndProduct,
+    quantity: itemQty,
   });
-
-  let order = await chris.createOrder(Math.floor(Math.random() * 10000) + 1);
-
-  cart = await chris.getCart();
-  await chris.addToCart({
-    product: products.random(),
-    quantity: Math.floor(Math.random() * 10) + 1,
-  });
-  await chris.addToCart({
-    product: products.random(),
-    quantity: Math.floor(Math.random() * 10) + 1,
-  });
-  await chris.addToCart({
-    product: products.random(),
-    quantity: Math.floor(Math.random() * 10) + 1,
-  });
-  await chris.addToCart({
-    product: products.random(),
-    quantity: Math.floor(Math.random() * 10) + 1,
-  });
-  await chris.addToCart({
-    product: products.random(),
-    quantity: Math.floor(Math.random() * 10) + 1,
-  });
-
-  order = await chris.createOrder(Math.floor(Math.random() * 10000) + 1);
+  amount += rndProduct.price * itemQty;
+  cart.amount = amount * 100;
+  await cart.save();
+  let order = await chris.createOrder();
 
   cart = await chris.getCart();
+  amount = 0;
+  rndProduct = products.random();
+  itemQty = Math.floor(Math.random() * 10) + 1;
   await chris.addToCart({
-    product: products.random(),
-    quantity: Math.floor(Math.random() * 10) + 1,
+    product: rndProduct,
+    quantity: itemQty,
   });
+  amount += rndProduct.price * itemQty;
+  rndProduct = products.random();
+  itemQty = Math.floor(Math.random() * 10) + 1;
   await chris.addToCart({
-    product: products.random(),
-    quantity: Math.floor(Math.random() * 10) + 1,
+    product: rndProduct,
+    quantity: itemQty,
   });
+  amount += rndProduct.price * itemQty;
+  rndProduct = products.random();
+  itemQty = Math.floor(Math.random() * 10) + 1;
   await chris.addToCart({
-    product: products.random(),
-    quantity: Math.floor(Math.random() * 10) + 1,
+    product: rndProduct,
+    quantity: itemQty,
   });
+  amount += rndProduct.price * itemQty;
+  rndProduct = products.random();
+  itemQty = Math.floor(Math.random() * 10) + 1;
   await chris.addToCart({
-    product: products.random(),
-    quantity: Math.floor(Math.random() * 10) + 1,
+    product: rndProduct,
+    quantity: itemQty,
   });
+  amount += rndProduct.price * itemQty;
+  rndProduct = products.random();
+  itemQty = Math.floor(Math.random() * 10) + 1;
   await chris.addToCart({
-    product: products.random(),
-    quantity: Math.floor(Math.random() * 10) + 1,
+    product: rndProduct,
+    quantity: itemQty,
   });
-
-  order = await chris.createOrder(Math.floor(Math.random() * 10000) + 1);
-
-  cart = await chris.getCart();
-  await chris.addToCart({
-    product: products.random(),
-    quantity: Math.floor(Math.random() * 10) + 1,
-  });
-  await chris.addToCart({
-    product: products.random(),
-    quantity: Math.floor(Math.random() * 10) + 1,
-  });
-  await chris.addToCart({
-    product: products.random(),
-    quantity: Math.floor(Math.random() * 10) + 1,
-  });
-  await chris.addToCart({
-    product: products.random(),
-    quantity: Math.floor(Math.random() * 10) + 1,
-  });
-  await chris.addToCart({
-    product: products.random(),
-    quantity: Math.floor(Math.random() * 10) + 1,
-  });
-
-  order = await chris.createOrder(Math.floor(Math.random() * 10000) + 1);
+  amount += rndProduct.price * itemQty;
+  cart.amount = amount * 100;
+  await cart.save();
+  order = await chris.createOrder();
 
   cart = await chris.getCart();
+  amount = 0;
+  rndProduct = products.random();
+  itemQty = Math.floor(Math.random() * 10) + 1;
   await chris.addToCart({
-    product: products.random(),
-    quantity: Math.floor(Math.random() * 10) + 1,
+    product: rndProduct,
+    quantity: itemQty,
   });
+  amount += rndProduct.price * itemQty;
+  rndProduct = products.random();
+  itemQty = Math.floor(Math.random() * 10) + 1;
   await chris.addToCart({
-    product: products.random(),
-    quantity: Math.floor(Math.random() * 10) + 1,
+    product: rndProduct,
+    quantity: itemQty,
   });
-
-  order = await chris.createOrder(Math.floor(Math.random() * 10000) + 1);
+  amount += rndProduct.price * itemQty;
+  rndProduct = products.random();
+  itemQty = Math.floor(Math.random() * 10) + 1;
+  await chris.addToCart({
+    product: rndProduct,
+    quantity: itemQty,
+  });
+  amount += rndProduct.price * itemQty;
+  cart.amount = amount * 100;
+  await cart.save();
+  order = await chris.createOrder();
 
   cart = await chris.getCart();
+  amount = 0;
+  rndProduct = products.random();
+  itemQty = Math.floor(Math.random() * 10) + 1;
   await chris.addToCart({
-    product: products.random(),
-    quantity: Math.floor(Math.random() * 10) + 1,
+    product: rndProduct,
+    quantity: itemQty,
   });
-
-  order = await chris.createOrder(Math.floor(Math.random() * 10000) + 1);
+  amount += rndProduct.price * itemQty;
+  rndProduct = products.random();
+  itemQty = Math.floor(Math.random() * 10) + 1;
+  await chris.addToCart({
+    product: rndProduct,
+    quantity: itemQty,
+  });
+  amount += rndProduct.price * itemQty;
+  rndProduct = products.random();
+  itemQty = Math.floor(Math.random() * 10) + 1;
+  await chris.addToCart({
+    product: rndProduct,
+    quantity: itemQty,
+  });
+  amount += rndProduct.price * itemQty;
+  rndProduct = products.random();
+  itemQty = Math.floor(Math.random() * 10) + 1;
+  await chris.addToCart({
+    product: rndProduct,
+    quantity: itemQty,
+  });
+  amount += rndProduct.price * itemQty;
+  rndProduct = products.random();
+  itemQty = Math.floor(Math.random() * 10) + 1;
+  await chris.addToCart({
+    product: rndProduct,
+    quantity: itemQty,
+  });
+  amount += rndProduct.price * itemQty;
+  cart.amount = amount * 100;
+  await cart.save();
+  order = await chris.createOrder();
 
   cart = await chris.getCart();
+  amount = 0;
+  rndProduct = products.random();
+  itemQty = Math.floor(Math.random() * 10) + 1;
   await chris.addToCart({
-    product: products.random(),
-    quantity: Math.floor(Math.random() * 10) + 1,
+    product: rndProduct,
+    quantity: itemQty,
   });
+  amount += rndProduct.price * itemQty;
+  cart.amount = amount * 100;
+  await cart.save();
+  order = await chris.createOrder();
+
+  cart = await chris.getCart();
+  rndProduct = products.random();
+  itemQty = Math.floor(Math.random() * 10) + 1;
   await chris.addToCart({
-    product: products.random(),
-    quantity: Math.floor(Math.random() * 10) + 1,
+    product: rndProduct,
+    quantity: itemQty,
   });
+  rndProduct = products.random();
+  itemQty = Math.floor(Math.random() * 10) + 1;
+  await chris.addToCart({
+    product: rndProduct,
+    quantity: itemQty,
+  });
+  await cart.save();
 };
 
 module.exports = syncAndSeed;
