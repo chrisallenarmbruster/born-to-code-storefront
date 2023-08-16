@@ -3,7 +3,7 @@ import axios from 'axios';
 const UPDATE_USER_PROFILE = 'UPDATE_USER_PROFILE';
 
 const updateUserProfile = (user) => {
-  return { type: UPDATE_USER_PROFILE, user}
+  return { type: UPDATE_USER_PROFILE, user };
 };
 
 export const logout = () => {
@@ -11,7 +11,7 @@ export const logout = () => {
   return { type: 'SET_AUTH', auth: {} };
 };
 
-export const loginWithToken = () => {
+export const loginWithToken = (navigate, register = false) => {
   return async (dispatch) => {
     const token = window.localStorage.getItem('token');
     try {
@@ -22,6 +22,11 @@ export const loginWithToken = () => {
           },
         });
         dispatch({ type: 'SET_AUTH', auth: response.data });
+        if (register) {
+          navigate(`/users/${response.data.id}?setup=true`);
+        } else {
+          navigate(-1);
+        }
       }
     } catch (error) {
       console.log(error);
@@ -29,24 +34,26 @@ export const loginWithToken = () => {
   };
 };
 
-export const attemptLogin = (credentials) => {
+export const attemptLogin = (credentials, navigate) => {
+  console.log('attempting login', navigate, typeof navigate);
   return async (dispatch) => {
     try {
       const response = await axios.post('/api/auth', credentials);
       window.localStorage.setItem('token', response.data);
-      dispatch(loginWithToken());
+      dispatch(loginWithToken(navigate));
     } catch (error) {
       console.log(error);
     }
   };
 };
 
-export const attemptRegistration = (user) => {
+export const attemptRegistration = (user, navigate) => {
   return async (dispatch) => {
     try {
       const response = await axios.post('/api/auth/signup', user);
       window.localStorage.setItem('token', response.data);
-      dispatch(loginWithToken())
+      const register = true;
+      dispatch(loginWithToken(navigate, register));
     } catch (error) {
       console.log(error);
     }
@@ -58,13 +65,17 @@ export const adjustUserDetails = (userId, userData) => {
     try {
       const token = window.localStorage.getItem('token');
       if (token) {
-        const updatedUser = (await axios.put(`/api/users/${userId}`, userData, { headers: { authorization: token } })).data;
-        dispatch(updateUserProfile(updatedUser))
-      }  
+        const updatedUser = (
+          await axios.put(`/api/users/${userId}`, userData, {
+            headers: { authorization: token },
+          })
+        ).data;
+        dispatch(updateUserProfile(updatedUser));
+      }
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 };
 
 const initialState = {};

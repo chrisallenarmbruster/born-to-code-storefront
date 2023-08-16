@@ -2,11 +2,9 @@ import React, { useState } from 'react';
 import { attemptLogin, logout, attemptRegistration } from '../store';
 import { connect } from 'react-redux';
 import Button from 'react-bootstrap/Button';
-import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
-import { withRouter } from '../utils/withRouter';
 import * as formik from 'formik';
 import * as yup from 'yup';
 import { useNavigate } from 'react-router-dom';
@@ -30,7 +28,7 @@ const LoginPage = ({ auth, attemptLogin, logout, attemptRegistration }) => {
   };
 
   const loginSubmitHandler = async (values) => {
-    await attemptLogin(values);
+    await attemptLogin(values, navigate);
     if (!auth.id) {
       setError('Email or password is incorrect.');
     } else {
@@ -39,7 +37,7 @@ const LoginPage = ({ auth, attemptLogin, logout, attemptRegistration }) => {
   };
 
   const registerSubmitHandler = async (values) => {
-    attemptRegistration(values);
+    attemptRegistration(values, navigate);
     if (!auth.id) {
       setError(
         'Unable to register with provided email, account may already exist.'
@@ -260,12 +258,12 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    attemptLogin: (credentials) => dispatch(attemptLogin(credentials)),
+    attemptLogin: (credentials, navigate) =>
+      dispatch(attemptLogin(credentials, navigate)),
     logout: () => dispatch(logout()),
-    attemptRegistration: (user) => dispatch(attemptRegistration(user)),
+    attemptRegistration: (user, navigate) =>
+      dispatch(attemptRegistration(user, navigate)),
   };
 };
 
-export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(LoginPage)
-);
+export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);

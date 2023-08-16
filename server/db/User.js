@@ -30,6 +30,14 @@ const User = conn.define('user', {
     type: STRING,
     allowNull: true,
   },
+  firstName: {
+    type: STRING,
+    allowNull: true,
+  },
+  lastName: {
+    type: STRING,
+    allowNull: true,
+  },
   email: {
     type: STRING,
     allowNull: true,
