@@ -256,7 +256,7 @@ export class CheckOut extends Component {
                               <CloseButton
                                 aria-label="Remove"
                                 onClick={() =>
-                                  handleRemove(
+                                  this.handleRemove(
                                     cart,
                                     item.product,
                                     -item.quantity
