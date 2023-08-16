@@ -205,10 +205,6 @@ const User = (props) => {
                   </Modal.Footer>
                 </Form>
               </Modal>
-
-              <Card.Link onClick={() => navigate(`/users/${auth.id}/orders`)}>
-                See Order History
-              </Card.Link>
             </Card.Body>
           </Card>
         </div>
