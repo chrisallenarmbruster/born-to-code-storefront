@@ -38,11 +38,10 @@ export class ProductReviewCreate extends Component {
         )
       ).data;
       if (!review) {
-        this.state.rating = 0;
+        this.setState({ rating: 0 });
       } else {
-        this.state.rating = review.rating;
+        this.setState({ rating: review.rating });
       }
-      this.forceUpdate();
     } catch (error) {
       console.log(error);
     }
@@ -62,9 +61,8 @@ export class ProductReviewCreate extends Component {
           },
         })
       ).data;
-      this.state.rating = newProductReview.rating;
+      this.setState({ rating: newProductReview.rating });
       await this.props.resetUserOrders(this.props.auth.id);
-      this.forceUpdate();
       this.props.resetSetSingleProduct();
       this.props.resetProducts();
     } catch (error) {
