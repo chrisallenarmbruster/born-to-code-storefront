@@ -30,7 +30,6 @@ export const setSingleProduct = (id) => {
       dispatch(_setSingleProductLoading());
       const data = (await axios.get(`/api/products/${id}`)).data;
       dispatch(_setSingleProduct(data));
-      // await sleep(3000);
       lastId = id;
       dispatch(_clearSingleProductLoading());
     } catch (error) {
@@ -48,20 +47,12 @@ export const resetSetSingleProduct = () => {
       if (!lastId) return;
       const data = (await axios.get(`/api/products/${lastId}`)).data;
       dispatch(_setSingleProduct(data));
-      // await sleep(3000);
     } catch (error) {
       console.log(error);
       lastId = null;
     }
   };
 };
-
-//utility function to test loading state spinner animation
-function sleep(ms) {
-  return new Promise((resolve) => {
-    setTimeout(resolve, ms);
-  });
-}
 
 const initialState = {
   data: {},
