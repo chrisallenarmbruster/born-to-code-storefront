@@ -46,6 +46,26 @@ export class CheckOut extends Component {
     this.handleCompleteTransaction = this.handleCompleteTransaction.bind(this);
   }
 
+  componentDidMount() {
+    if (this.props.auth.id) {
+      let authObject = this.props.auth;
+      Object.keys(authObject).forEach((key) => {
+        if (authObject[key] === null) authObject[key] = '';
+      });
+
+      this.setState({
+        first: authObject.firstName,
+        last: authObject.lastName,
+        address: authObject.address,
+        city: authObject.city,
+        state: authObject.state,
+        zip: authObject.zip,
+        email: authObject.email,
+        phone: authObject.phone,
+      });
+    }
+  }
+
   validateField(name, value) {
     let error;
     switch (name) {
@@ -480,6 +500,7 @@ export class CheckOut extends Component {
 const mapStateToProps = (state) => {
   return {
     cart: state.cart,
+    auth: state.auth,
   };
 };
 

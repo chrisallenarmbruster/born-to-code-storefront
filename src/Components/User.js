@@ -15,6 +15,7 @@ const User = (props) => {
     firstName: '',
     lastName: '',
     email: '',
+    phone: '',
     address: '',
     city: '',
     state: '',
@@ -35,6 +36,7 @@ const User = (props) => {
       firstName: auth.firstName,
       lastName: auth.lastName,
       email: auth.email,
+      phone: auth.phone,
       address: auth.address,
       city: auth.city,
       state: auth.state,
@@ -81,6 +83,7 @@ const User = (props) => {
               <Card.Text>First Name: {auth.firstName}</Card.Text>
               <Card.Text>Last Name: {auth.lastName}</Card.Text>
               <Card.Text>Email: {auth.email}</Card.Text>
+              <Card.Text>Phone: {auth.phone}</Card.Text>
               <Card.Text>Address: {auth.address}</Card.Text>
               <Card.Text>City: {auth.city}</Card.Text>
               <Card.Text>State: {auth.state}</Card.Text>
@@ -123,6 +126,16 @@ const User = (props) => {
                         placeholder="Enter email"
                         value={userDetails.email}
                         name="email"
+                        onChange={handleChange}
+                      />
+                    </Form.Group>
+                    <Form.Group className="mb-3">
+                      <Form.Label>Phone</Form.Label>
+                      <Form.Control
+                        type="phone"
+                        placeholder="Enter phone number"
+                        value={userDetails.phone}
+                        name="phone"
                         onChange={handleChange}
                       />
                     </Form.Group>

@@ -11,7 +11,7 @@ export const logout = () => {
   return { type: 'SET_AUTH', auth: {} };
 };
 
-export const loginWithToken = (navigate, register = false) => {
+export const loginWithToken = (navigate = () => {}, register = false) => {
   return async (dispatch) => {
     const token = window.localStorage.getItem('token');
     try {

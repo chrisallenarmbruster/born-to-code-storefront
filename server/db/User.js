@@ -49,6 +49,10 @@ const User = conn.define('user', {
     type: STRING,
     allowNull: true,
   },
+  phone: {
+    type: STRING,
+    allowNull: true,
+  },
   city: {
     type: STRING,
     allowNull: true,
