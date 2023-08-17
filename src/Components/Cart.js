@@ -63,7 +63,7 @@ const Cart = (props) => {
         </div>
         {lineItems.map((item, index) => {
           return (
-            <Container  key={index}>
+            <Container key={index}>
               <Card
                 style={{ minHeight: '10rem', border: 0 }}
                 key={item.product.id}
@@ -145,12 +145,12 @@ const Cart = (props) => {
                 <Col lg={1}></Col>
                 <Col lg={2}>Free</Col>
               </Row>
-              <Row>
+              {/* <Row>
                 <Col lg={2}></Col>
                 <Col lg={7}>Estimated tax for: 80439</Col>
                 <Col lg={1}></Col>
                 <Col lg={2}>$1.00</Col>
-              </Row>
+              </Row> */}
             </Card.Body>
           </Card>
           <Row>
@@ -167,7 +167,8 @@ const Cart = (props) => {
                           <h2>Total</h2>
                         </Col>
                         <Col>
-                          <h2>${(subtotal + 1).toFixed(2)}</h2>
+                          {/* <h2>${(subtotal + 1).toFixed(2)}</h2> */}
+                          <h2>${subtotal.toFixed(2)}</h2>
                         </Col>
                       </Row>
                     </Col>

@@ -24,6 +24,12 @@ const _addOrder = (order) => {
   };
 };
 
+export const emptyReduxCart = () => {
+  return {
+    type: 'EMPTY_REDUX_CART',
+  };
+};
+
 export const fetchCart = () => {
   return async (dispatch) => {
     const token = window.localStorage.getItem('token');
@@ -125,7 +131,10 @@ const cartReducer = (state = initialState, action) => {
           ? { ...item, quantity: action.quantity }
           : item
       );
-      return { ...state, lineItems: updatedItems.filter((item) => item.quantity > 0) };
+      return {
+        ...state,
+        lineItems: updatedItems.filter((item) => item.quantity > 0),
+      };
     case 'ADD_TO_CART':
       const existingItem = state.lineItems.find(
         (item) => item.product.id === action.product.id
@@ -147,6 +156,8 @@ const cartReducer = (state = initialState, action) => {
         };
       }
     case 'ADD_ORDER':
+      return initialState;
+    case 'EMPTY_REDUX_CART':
       return initialState;
     default:
       return state;

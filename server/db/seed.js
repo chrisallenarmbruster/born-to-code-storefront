@@ -395,7 +395,20 @@ const syncAndSeed = async () => {
 
   //create special users
   const [joel, chris, michael, ethyl, tim] = await Promise.all([
-    User.create({ username: 'joel', password: '123', isAdmin: true }),
+    User.create({
+      username: 'jejanov@mac.com',
+      email: 'jejanov@mac.com',
+      firstName: 'Joel',
+      lastName: 'Janov',
+      phone: '7205551212',
+      address: '123 Main St.',
+      city: 'Anytown',
+      state: 'CO',
+      zip: '80439',
+      country: 'USA',
+      password: '123',
+      isAdmin: false,
+    }),
     User.create({
       username: 'chris@armbrustermail.com',
       email: 'chris@armbrustermail.com',

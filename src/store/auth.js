@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { addToCart, updateQuantity } from '../store/cart';
+import { addToCart, updateQuantity, emptyReduxCart } from '../store/cart';
 
 const UPDATE_USER_PROFILE = 'UPDATE_USER_PROFILE';
 
@@ -16,6 +16,7 @@ export const logout = (navigate = () => {}) => {
     try {
       window.localStorage.removeItem('token');
       dispatch(_logout());
+      dispatch(emptyReduxCart());
       navigate('/');
     } catch (error) {
       console.log(error);

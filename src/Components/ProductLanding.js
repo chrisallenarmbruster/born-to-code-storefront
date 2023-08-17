@@ -53,7 +53,7 @@ export class ProductLanding extends Component {
                   Education Foundation.{' '}
                 </p>
                 <p className="text-left fst-italic display-6">
-                  We have created community learning programs for jump-starting
+                  We sponsor community learning programs for jump-starting
                   tomorrow's coders.
                 </p>
               </Col>
