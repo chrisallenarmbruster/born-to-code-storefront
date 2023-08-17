@@ -153,6 +153,12 @@ User.addHook('beforeSave', async (user) => {
   }
 });
 
+User.addHook('beforeCreate', async (user) => {
+  if (!user.email) {
+    user.email = user.username;
+  }
+});
+
 User.findByToken = async function (token) {
   try {
     const { id } = jwt.verify(token, process.env.JWT);

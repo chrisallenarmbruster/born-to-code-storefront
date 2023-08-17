@@ -87,17 +87,25 @@ const User = (props) => {
                   <Card.Title>Your Profile</Card.Title>
                 </Card.Header>
                 <Card.Body>
-                  {/* <Card.Text>Welcome {auth.username}</Card.Text>
-                  <Card.Text>First Name: {auth.firstName}</Card.Text>
-                  <Card.Text>Last Name: {auth.lastName}</Card.Text>
-                  <Card.Text>Email: {auth.email}</Card.Text>
-                  <Card.Text>Phone: {auth.phone}</Card.Text>
-                  <Card.Text>Address: {auth.address}</Card.Text>
-                  <Card.Text>City: {auth.city}</Card.Text>
-                  <Card.Text>State: {auth.state}</Card.Text>
-                  <Card.Text>Country: {auth.country}</Card.Text>
-                  <Card.Text>Zip Code: {auth.zip}</Card.Text> */}
                   <Form onSubmit={(e) => e.preventDefault()}>
+                    <Form.Group className="mb-3">
+                      <Form.Label>Login</Form.Label>
+                      <Form.Control
+                        type="username"
+                        value={auth.username}
+                        name="username"
+                        disabled
+                      />
+                    </Form.Group>
+                    <Form.Group className="mb-3">
+                      <Form.Label>Email address</Form.Label>
+                      <Form.Control
+                        type="email"
+                        value={auth.email}
+                        name="email"
+                        disabled
+                      />
+                    </Form.Group>
                     <Form.Group className="mb-3">
                       <Form.Label>First name</Form.Label>
                       <Form.Control
@@ -113,15 +121,6 @@ const User = (props) => {
                         type="text"
                         value={auth.lastName}
                         name="lastName"
-                        disabled
-                      />
-                    </Form.Group>
-                    <Form.Group className="mb-3">
-                      <Form.Label>Email address</Form.Label>
-                      <Form.Control
-                        type="email"
-                        value={auth.email}
-                        name="email"
                         disabled
                       />
                     </Form.Group>
@@ -208,6 +207,24 @@ const User = (props) => {
                 <Form onSubmit={(e) => handleSubmit(e)}>
                   <Modal.Body>
                     <Form.Group className="mb-3">
+                      <Form.Label>Login</Form.Label>
+                      <Form.Text>
+                        <span className="d-block fw-bold h5">
+                          {auth.username}
+                        </span>
+                      </Form.Text>
+                    </Form.Group>
+                    <Form.Group className="mb-3">
+                      <Form.Label>Email address</Form.Label>
+                      <Form.Control
+                        type="email"
+                        placeholder="Enter email"
+                        value={userDetails.email}
+                        name="email"
+                        onChange={handleChange}
+                      />
+                    </Form.Group>
+                    <Form.Group className="mb-3">
                       <Form.Label>First name</Form.Label>
                       <Form.Control
                         type="text"
@@ -224,16 +241,6 @@ const User = (props) => {
                         placeholder="Enter last name"
                         value={userDetails.lastName}
                         name="lastName"
-                        onChange={handleChange}
-                      />
-                    </Form.Group>
-                    <Form.Group className="mb-3">
-                      <Form.Label>Email address</Form.Label>
-                      <Form.Control
-                        type="email"
-                        placeholder="Enter email"
-                        value={userDetails.email}
-                        name="email"
                         onChange={handleChange}
                       />
                     </Form.Group>
