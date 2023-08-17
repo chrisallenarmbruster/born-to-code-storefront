@@ -9,11 +9,13 @@ import * as formik from 'formik';
 import * as yup from 'yup';
 import { useNavigate } from 'react-router-dom';
 import Alert from 'react-bootstrap/Alert';
+import { useSelector } from 'react-redux';
 
 const LoginPage = ({ auth, attemptLogin, logout, attemptRegistration }) => {
   const [login, setLogin] = useState(true);
   const [show, setShow] = useState(true);
   const [error, setError] = useState('');
+  const cart = useSelector((state) => state.cart);
 
   const navigate = useNavigate();
 
@@ -28,7 +30,7 @@ const LoginPage = ({ auth, attemptLogin, logout, attemptRegistration }) => {
   };
 
   const loginSubmitHandler = async (values) => {
-    await attemptLogin(values, navigate);
+    await attemptLogin(values, navigate, cart);
     if (!auth.id) {
       setError('Email or password is incorrect.');
     } else {
@@ -253,7 +255,7 @@ const LoginPage = ({ auth, attemptLogin, logout, attemptRegistration }) => {
 };
 
 const mapStateToProps = (state) => {
-  return { auth: state.auth };
+  return { auth: state.auth, cart: state.cart };
 };
 
 const mapDispatchToProps = (dispatch) => {
