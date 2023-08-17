@@ -437,8 +437,16 @@ const syncAndSeed = async () => {
       password: '123',
       isAdmin: false,
     }),
-    User.create({ username: 'ethyl', password: '123' }),
-    User.create({ username: 'tim', password: '123' }),
+    User.create({
+      username: 'ethyl@gmail.com',
+      email: 'ethyl@gmail.com',
+      password: '123',
+    }),
+    User.create({
+      username: 'tim@gmail.com',
+      email: 'tim@gmail.com',
+      password: '123',
+    }),
   ]);
 
   //create cart for ethyl
