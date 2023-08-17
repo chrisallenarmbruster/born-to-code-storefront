@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { addToCart, updateQuantity } from '../store/cart';
 
 const UPDATE_USER_PROFILE = 'UPDATE_USER_PROFILE';
 
@@ -22,7 +23,11 @@ export const logout = (navigate = () => {}) => {
   };
 };
 
-export const loginWithToken = (navigate = () => {}, register = false) => {
+async function handleAddToCart(product, quantity) {
+  let temp = addToCart({ product, quantity });
+}
+
+export const loginWithToken = (cart, navigate = () => {}, register = false) => {
   return async (dispatch) => {
     const token = window.localStorage.getItem('token');
     try {
@@ -33,6 +38,37 @@ export const loginWithToken = (navigate = () => {}, register = false) => {
           },
         });
         dispatch({ type: 'SET_AUTH', auth: response.data });
+
+        const { data: existingCart } = await axios.get('/api/orders/cart', {
+          headers: {
+            authorization: token,
+          },
+        });
+
+        if (cart.lineItems && cart.lineItems.length > 0) {
+          for (let item of cart.lineItems) {
+            const existingItem = existingCart.lineItems.find(
+              (exItem) => exItem.product.id === item.product.id
+            );
+            if (existingItem) {
+              const totalQuantity = existingItem.quantity + item.quantity;
+              dispatch(
+                updateQuantity({
+                  cart: existingCart,
+                  product: item.product,
+                  quantity: totalQuantity,
+                })
+              );
+            } else {
+              dispatch(
+                addToCart({ product: item.product, quantity: item.quantity })
+              );
+            }
+          }
+        } else {
+          dispatch({ type: 'SET_CART', cart: existingCart });
+        }
+
         if (register) {
           navigate(`/users/${response.data.id}?setup=true`);
         } else {
@@ -47,11 +83,12 @@ export const loginWithToken = (navigate = () => {}, register = false) => {
 
 export const attemptLogin = (credentials, navigate) => {
   console.log('attempting login', navigate, typeof navigate);
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
     try {
+      const cart = getState().cart;
       const response = await axios.post('/api/auth', credentials);
       window.localStorage.setItem('token', response.data);
-      dispatch(loginWithToken(navigate));
+      dispatch(loginWithToken(cart, navigate));
     } catch (error) {
       console.log(error);
     }
@@ -59,12 +96,13 @@ export const attemptLogin = (credentials, navigate) => {
 };
 
 export const attemptRegistration = (user, navigate) => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
     try {
+      const cart = getState().cart;
       const response = await axios.post('/api/auth/signup', user);
       window.localStorage.setItem('token', response.data);
       const register = true;
-      dispatch(loginWithToken(navigate, register));
+      dispatch(loginWithToken(cart, navigate, register));
     } catch (error) {
       console.log(error);
     }
@@ -101,5 +139,9 @@ const authReducer = (state = initialState, action) => {
       return state;
   }
 };
+
+const mapDispatchToProps = (dispatch) => ({
+  addToCart: (product) => dispatch(addToCart(product)),
+});
 
 export default authReducer;

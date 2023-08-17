@@ -15,6 +15,7 @@ export class AddToCart extends Component {
     evt.preventDefault();
     let temp = await this.props.addToCart({ product, quantity });
   }
+  
   render(props) {
     const { handleAddToCart } = this;
     const { product } = this.props;
