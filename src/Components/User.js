@@ -7,6 +7,9 @@ import { connect } from 'react-redux';
 import Form from 'react-bootstrap/Form';
 import { adjustUserDetails } from '../store/auth';
 import { useNavigate, useLocation } from 'react-router-dom';
+import Container from 'react-bootstrap/Container';
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
 
 const User = (props) => {
   const [show, setShow] = useState(false);
@@ -73,27 +76,132 @@ const User = (props) => {
   };
 
   return (
-    <div>
+    <Container className="mt-5">
       {auth.id ? (
-        <div>
-          <Card className="text-center">
-            <Card.Header>User Profile</Card.Header>
-            <Card.Body>
-              <Card.Title>Welcome {auth.username}</Card.Title>
-              <Card.Text>First Name: {auth.firstName}</Card.Text>
-              <Card.Text>Last Name: {auth.lastName}</Card.Text>
-              <Card.Text>Email: {auth.email}</Card.Text>
-              <Card.Text>Phone: {auth.phone}</Card.Text>
-              <Card.Text>Address: {auth.address}</Card.Text>
-              <Card.Text>City: {auth.city}</Card.Text>
-              <Card.Text>State: {auth.state}</Card.Text>
-              <Card.Text>Country: {auth.country}</Card.Text>
-              <Card.Text>Zip Code: {auth.zip}</Card.Text>
-            </Card.Body>
-            <Card.Body>
-              <Card.Link onClick={handleShow}>Edit User Info</Card.Link>
+        <>
+          <Row className="g-5">
+            <Col sm={12} md={3}></Col>
+            <Col sm={12} md={6}>
+              <Card>
+                <Card.Header>
+                  <Card.Title>Your Profile</Card.Title>
+                </Card.Header>
+                <Card.Body>
+                  {/* <Card.Text>Welcome {auth.username}</Card.Text>
+                  <Card.Text>First Name: {auth.firstName}</Card.Text>
+                  <Card.Text>Last Name: {auth.lastName}</Card.Text>
+                  <Card.Text>Email: {auth.email}</Card.Text>
+                  <Card.Text>Phone: {auth.phone}</Card.Text>
+                  <Card.Text>Address: {auth.address}</Card.Text>
+                  <Card.Text>City: {auth.city}</Card.Text>
+                  <Card.Text>State: {auth.state}</Card.Text>
+                  <Card.Text>Country: {auth.country}</Card.Text>
+                  <Card.Text>Zip Code: {auth.zip}</Card.Text> */}
+                  <Form onSubmit={(e) => e.preventDefault()}>
+                    <Form.Group className="mb-3">
+                      <Form.Label>First name</Form.Label>
+                      <Form.Control
+                        type="text"
+                        disabled
+                        value={auth.firstName}
+                        name="firstName"
+                      />
+                    </Form.Group>
+                    <Form.Group className="mb-3">
+                      <Form.Label>Last name</Form.Label>
+                      <Form.Control
+                        type="text"
+                        value={auth.lastName}
+                        name="lastName"
+                        disabled
+                      />
+                    </Form.Group>
+                    <Form.Group className="mb-3">
+                      <Form.Label>Email address</Form.Label>
+                      <Form.Control
+                        type="email"
+                        value={auth.email}
+                        name="email"
+                        disabled
+                      />
+                    </Form.Group>
+                    <Form.Group className="mb-3">
+                      <Form.Label>Phone</Form.Label>
+                      <Form.Control
+                        type="phone"
+                        value={auth.phone}
+                        name="phone"
+                        disabled
+                      />
+                    </Form.Group>
 
-              <Modal show={show} onHide={handleClose}>
+                    <Form.Group className="mb-3">
+                      <Form.Label>Address</Form.Label>
+                      <Form.Control
+                        type="text"
+                        value={auth.address}
+                        name="address"
+                        disabled
+                      />
+                    </Form.Group>
+
+                    <Form.Group className="mb-3">
+                      <Form.Label>City</Form.Label>
+                      <Form.Control
+                        type="text"
+                        value={auth.city}
+                        name="city"
+                        disabled
+                      />
+                    </Form.Group>
+
+                    <Form.Group className="mb-3">
+                      <Form.Label>State</Form.Label>
+                      <Form.Control
+                        type="text"
+                        value={auth.state}
+                        name="state"
+                        disabled
+                      />
+                    </Form.Group>
+
+                    <Form.Group className="mb-3">
+                      <Form.Label>Country</Form.Label>
+                      <Form.Control
+                        type="text"
+                        value={auth.country}
+                        name="country"
+                        disabled
+                      />
+                    </Form.Group>
+
+                    <Form.Group className="mb-3">
+                      <Form.Label>Zip Code</Form.Label>
+                      <Form.Control
+                        type="text"
+                        value={auth.zip}
+                        name="zip"
+                        disabled
+                      />
+                    </Form.Group>
+                  </Form>
+                </Card.Body>
+                <Card.Footer>
+                  <Card.Link
+                    className="d-flex justify-content-end"
+                    onClick={handleShow}
+                  >
+                    <Button>Edit User Info</Button>
+                  </Card.Link>
+                </Card.Footer>
+              </Card>
+            </Col>
+            <Col sm={12} md={3}></Col>
+          </Row>
+
+          <Modal show={show} onHide={handleClose}>
+            <Card>
+              <Card.Body>
                 <Modal.Header closeButton>
                   <Modal.Title>Edit {auth.username} Info</Modal.Title>
                 </Modal.Header>
@@ -195,30 +303,34 @@ const User = (props) => {
                       />
                     </Form.Group>
                   </Modal.Body>
-                  <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
+                  <Modal.Footer className="pb-0">
+                    <Button
+                      className="mb-0"
+                      variant="secondary"
+                      onClick={handleClose}
+                    >
                       Close
                     </Button>
-                    <Button variant="primary" type="submit">
+                    <Button className="mb-0" variant="primary" type="submit">
                       Save Changes
                     </Button>
                   </Modal.Footer>
                 </Form>
-              </Modal>
-            </Card.Body>
-          </Card>
-        </div>
+              </Card.Body>
+            </Card>
+          </Modal>
+        </>
       ) : (
-        <div>
+        <>
           <Card className="text-center">
             <Card.Header>User Profile</Card.Header>
             <Card.Body>
               <Card.Title>You must be logged in to see User Info</Card.Title>
             </Card.Body>
           </Card>
-        </div>
+        </>
       )}
-    </div>
+    </Container>
   );
 };
 
