@@ -12,6 +12,9 @@ Cart ![image](https://github.com/Rev4Labs/storefront/assets/10659805/706365f8-68
 
 Products Page ![image](https://github.com/Rev4Labs/storefront/assets/10659805/69a33177-4788-4c41-b860-7293556d12a5)
 
+Checkout ![image](https://github.com/Rev4Labs/storefront/assets/10659805/3b4a2ee5-ba86-4cb8-8a61-49a8557e0f85)
+
+Email Reciept ![Email Confirmation User Info Redacted](https://github.com/Rev4Labs/storefront/assets/10659805/59a6eefc-fcde-4ed4-892e-b37316c56229)
 
 ## Built With
 <img src="https://github.com/devicons/devicon/blob/master/icons/react/react-original-wordmark.svg"  title="React" alt="React" width="40" height="40"/>&nbsp;
