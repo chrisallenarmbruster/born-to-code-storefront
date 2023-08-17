@@ -1,19 +1,16 @@
 import React, { Component } from 'react';
 import {
-  ButtonGroup,
   Card,
   Container,
   Modal,
   Button,
   Row,
   Col,
-  Image,
-  ButtonToolbar,
   Form,
   CloseButton,
 } from 'react-bootstrap';
 import MyPaymentForm from './Payment';
-import { Link } from 'react-router-dom';
+
 import { connect } from 'react-redux';
 import { updateQuantity, fetchCart } from '../store/cart';
 import { useNavigate } from 'react-router-dom';
@@ -35,7 +32,6 @@ export class CheckOut extends Component {
       validationErrors: {},
       transactionComplete: false,
     };
-    console.log('props ', props);
 
     this.handleChange = this.handleChange.bind(this);
     this.handleRemove = this.handleRemove.bind(this);
@@ -116,7 +112,6 @@ export class CheckOut extends Component {
     );
   };
 
-  //NOTE: How do I get this to route back to the products page after the transaction is complete?
   handleCompleteTransaction = (lineItems, paymentId) => {
     this.setState({ transactionComplete: true });
     emailClient(this.state.email, paymentId, lineItems);
@@ -138,12 +133,9 @@ export class CheckOut extends Component {
   subTotal(lineItems) {
     let subtotal = 0;
     lineItems.forEach((element) => {
-      console.log(element);
-      console.log(subtotal);
       subtotal =
         subtotal + Number(element.quantity) * Number(element.product.price);
     });
-    console.log('subtotal ', subtotal);
     return subtotal;
   }
 
@@ -192,7 +184,6 @@ export class CheckOut extends Component {
     const amount = this.subTotal(lineItems).toFixed(2);
     let tax = 8;
     const total = (amount * 1.08).toFixed(2);
-    console.log('amount ', amount);
     const zip = this.state.zip;
     return (
       <>
@@ -467,7 +458,6 @@ export class CheckOut extends Component {
                         </Col>
                       </Row>
                       <Row>
-                        {console.log(history)}
                         {this.shouldShowPaymentForm() ? (
                           <MyPaymentForm
                             amount={amount * 100}

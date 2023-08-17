@@ -24,9 +24,6 @@ export const logout = (navigate = () => {}) => {
   };
 };
 
-async function handleAddToCart(product, quantity) {
-  let temp = addToCart({ product, quantity });
-}
 
 export const loginWithToken = (cart, navigate = () => {}, register = false) => {
   return async (dispatch) => {
@@ -140,9 +137,5 @@ const authReducer = (state = initialState, action) => {
       return state;
   }
 };
-
-const mapDispatchToProps = (dispatch) => ({
-  addToCart: (product) => dispatch(addToCart(product)),
-});
 
 export default authReducer;
