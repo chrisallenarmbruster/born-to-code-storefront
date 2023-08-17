@@ -203,7 +203,7 @@ const User = (props) => {
             <Card>
               <Card.Body>
                 <Modal.Header closeButton>
-                  <Modal.Title>Edit {auth.username} Info</Modal.Title>
+                  <Modal.Title>Edit Profile</Modal.Title>
                 </Modal.Header>
                 <Form onSubmit={(e) => handleSubmit(e)}>
                   <Modal.Body>

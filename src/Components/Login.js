@@ -30,6 +30,9 @@ const LoginPage = ({ auth, attemptLogin, logout, attemptRegistration }) => {
   const loginSubmitHandler = async (values) => {
     await attemptLogin(values, navigate);
     if (!auth.id) {
+      await new Promise((resolve) => {
+        setTimeout(resolve, 100);
+      });
       setError('Email or password is incorrect.');
     } else {
       setError('');
@@ -39,6 +42,9 @@ const LoginPage = ({ auth, attemptLogin, logout, attemptRegistration }) => {
   const registerSubmitHandler = async (values) => {
     attemptRegistration(values, navigate);
     if (!auth.id) {
+      await new Promise((resolve) => {
+        setTimeout(resolve, 100);
+      });
       setError(
         'Unable to register with provided email, account may already exist.'
       );

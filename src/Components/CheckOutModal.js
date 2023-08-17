@@ -283,17 +283,17 @@ export class CheckOut extends Component {
                         <Col lg={1}></Col>
                         <Col lg={2}>Free</Col>
                       </Row>
-                      <Row>
+                      {/* <Row>
                         <Col lg={2}></Col>
                         <Col lg={7}>Estimated tax for: {zip}</Col>
                         <Col lg={1}></Col>
                         <Col lg={2}>{tax}%</Col>
-                      </Row>
+                      </Row> */}
                       <Row>
                         <Col lg={2}></Col>
                         <Col lg={7}>Total</Col>
                         <Col lg={1}></Col>
-                        <Col lg={2}>${total}</Col>
+                        <Col lg={2}>${amount}</Col>
                       </Row>
                     </Card.Body>
                   </Card>
