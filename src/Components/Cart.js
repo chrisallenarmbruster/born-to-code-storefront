@@ -1,6 +1,4 @@
 import React from 'react';
-import { logout } from '../store';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import {
   ButtonGroup,
@@ -13,7 +11,7 @@ import {
   ButtonToolbar,
   Form,
 } from 'react-bootstrap';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { updateQuantity, fetchCart } from '../store/cart';
 
@@ -32,14 +30,12 @@ const Cart = (props) => {
       );
       const updatedCart = { ...cart, lineItems: updatedItemList };
       props.setState({ cart: updatedCart });
-      console.log('updatedItemList', updatedItemList);
     } else {
       await props.fetchCart();
     }
   }
 
   const handleQuantityChange = async (event, cart, product, oldQuantity) => {
-    // console.log('inside handleQuantityChange', event, oldQuantity);
     const newQuantity = Number(event.target.value);
     await props.updateQuantity({
       cart,
@@ -145,12 +141,6 @@ const Cart = (props) => {
                 <Col lg={1}></Col>
                 <Col lg={2}>Free</Col>
               </Row>
-              {/* <Row>
-                <Col lg={2}></Col>
-                <Col lg={7}>Estimated tax for: 80439</Col>
-                <Col lg={1}></Col>
-                <Col lg={2}>$1.00</Col>
-              </Row> */}
             </Card.Body>
           </Card>
           <Row>
@@ -180,7 +170,11 @@ const Cart = (props) => {
                     <Col lg={4}>
                       <div className="d-grid gap-2">
                         {props.auth.id ? (
-                          <CheckOut amount={(subtotal + 1).toFixed(2)} />
+                          lineItems.length > 0 ? (
+                            <CheckOut amount={(subtotal + 1).toFixed(2)} />
+                          ) : (
+                            <button disabled>No Items</button>
+                          )
                         ) : (
                           <button onClick={() => navigate('/login')}>
                             Login to Checkout
