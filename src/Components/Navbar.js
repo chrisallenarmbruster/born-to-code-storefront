@@ -9,8 +9,10 @@ import Search from './Search';
 import { connect } from 'react-redux';
 import { logout } from '../store';
 import CartIndicator from './CartIndicator';
+import { useNavigate } from 'react-router-dom';
 
 const NavBar = (props) => {
+  const navigate = useNavigate();
   const { auth } = props;
   const { logout } = props;
 
@@ -40,16 +42,32 @@ const NavBar = (props) => {
               </NavDropdown>
 
               {auth.id ? (
-                <Nav.Link href="#" onClick={logout}>
-                  Logout
-                </Nav.Link>
+                <>
+                  <NavDropdown title="Account" id="basic-nav-dropdown">
+                    <NavDropdown.Item href="#/users/:id">
+                      Profile
+                    </NavDropdown.Item>
+                    <NavDropdown.Item href="#/cart">Cart</NavDropdown.Item>
+                    <NavDropdown.Item href={`#/users/${auth.id}/orders`}>
+                      Orders
+                    </NavDropdown.Item>
+                    {auth.isAdmin ? (
+                      <>
+                        <NavDropdown.Divider />
+                        <NavDropdown.Item href="#/admin">
+                          Admin Tools
+                        </NavDropdown.Item>
+                      </>
+                    ) : null}
+                    <NavDropdown.Divider />
+                    <NavDropdown.Item onClick={() => logout(navigate)}>
+                      Log Out
+                    </NavDropdown.Item>
+                  </NavDropdown>
+                </>
               ) : (
                 <Nav.Link href="#/login">Login</Nav.Link>
               )}
-
-              {auth.id && <Nav.Link href="#/users/:id">Profile</Nav.Link>}
-
-              {auth.isAdmin && <Nav.Link href="#/admin">Admin</Nav.Link>}
             </Nav>
             <Search />
           </Navbar.Collapse>
@@ -67,7 +85,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    logout: () => dispatch(logout()),
+    logout: (navigate) => dispatch(logout(navigate)),
   };
 };
 

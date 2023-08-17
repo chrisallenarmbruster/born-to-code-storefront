@@ -4,7 +4,14 @@ We developed this responsive E-Commerce site to sell coding themed merchandise.
 It was a fantastic experience working together, and we acquired valuable experience working as a team on a software project from the ground up.
 
 ## Screenshots
-Not sure how many we'd want to do. In the past, I've done Home Page, and then a screenshot of each of the important pages.
+Main Page with Nav Bar Dropdown ![image](https://github.com/Rev4Labs/storefront/assets/10659805/10aa6c23-df13-4264-bac7-42880088a00b)
+
+Order History Page ![image](https://github.com/Rev4Labs/storefront/assets/10659805/647376ee-62d2-4d3f-a57b-b6c2d86803cf)
+
+Cart ![image](https://github.com/Rev4Labs/storefront/assets/10659805/706365f8-6898-4448-b2bc-fd31296ec713)
+
+Products Page ![image](https://github.com/Rev4Labs/storefront/assets/10659805/69a33177-4788-4c41-b860-7293556d12a5)
+
 
 ## Built With
 <img src="https://github.com/devicons/devicon/blob/master/icons/react/react-original-wordmark.svg"  title="React" alt="React" width="40" height="40"/>&nbsp;
@@ -29,8 +36,8 @@ Not sure how many we'd want to do. In the past, I've done Home Page, and then a 
 **Joel Janov**
 
 - Github https://github.com/jejanov
-- Email mrmchughes27@gmail.com
-- Linkedin (https://www.linkedin.com/in/joeljanov/)
+- Email jejanov@mac.com
+- Linkedin https://www.linkedin.com/in/joeljanov/
 
 Contributions, issues, and feature requests are welcome!
 
@@ -38,6 +45,6 @@ Give a ⭐️ if you like this project!
 
 # License
 
-Copyright © 2022 [Michael Hughes](https://github.com/mrmchughes).
+Copyright (c) 2023 Rev4Labs
 
 This project is MIT licensed.

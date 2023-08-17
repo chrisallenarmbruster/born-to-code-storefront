@@ -3,13 +3,24 @@ import { addToCart, updateQuantity } from '../store/cart';
 
 const UPDATE_USER_PROFILE = 'UPDATE_USER_PROFILE';
 
+const _logout = () => {
+  return { type: 'SET_AUTH', auth: {} };
+};
+
 const updateUserProfile = (user) => {
   return { type: UPDATE_USER_PROFILE, user };
 };
 
-export const logout = () => {
-  window.localStorage.removeItem('token');
-  return { type: 'SET_AUTH', auth: {} };
+export const logout = (navigate = () => {}) => {
+  return async (dispatch) => {
+    try {
+      window.localStorage.removeItem('token');
+      dispatch(_logout());
+      navigate('/');
+    } catch (error) {
+      console.log(error);
+    }
+  };
 };
 
 async function handleAddToCart(product, quantity) {

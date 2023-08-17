@@ -82,7 +82,6 @@ const LoginPage = ({ auth, attemptLogin, logout, attemptRegistration }) => {
       {auth.id ? (
         <Container className="mt-5">
           <h2 className="mb-3">Welcome {auth.username}!</h2>
-          <Button onClick={logoutHandler}>Logout</Button>
         </Container>
       ) : (
         <Modal show={show}>
