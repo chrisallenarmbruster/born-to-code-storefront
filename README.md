@@ -3,6 +3,8 @@
 We developed this responsive E-Commerce site to sell coding themed merchandise.
 It was a fantastic experience working together, and we acquired valuable experience working as a team on a software project from the ground up.
 
+Visit the store here [https://borntocode.rev4labs.com](https://borntocode.rev4labs.com)
+
 ## Screenshots
 Main Page with Nav Bar Dropdown ![image](https://github.com/Rev4Labs/storefront/assets/10659805/10aa6c23-df13-4264-bac7-42880088a00b)
 
