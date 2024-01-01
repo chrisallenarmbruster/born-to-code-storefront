@@ -4,6 +4,8 @@
 
 Born to Code is a classic e-commerce catalog, shopping cart, and payment app offering coding-themed merchandise. I developed this collaboratively with two other engineers.
 
+<br>
+
 [![Born to Code Composite](https://portfolio.rev4labs.com/images/born-to-code-composite.png)](https://borntocode.rev4labs.com)
 
 <br>
