@@ -37,25 +37,15 @@ Born to Code is a classic e-commerce catalog, shopping cart, and payment app off
 
 <br>
 
-## Tech Stack
-
-- JavaScript
-- Node.js
-- Express.js
-- PostgreSQL
-- React
-- Redux
-- Square Payments API
-- JWT
-- Bootstrap
-
-<br>
-
 ## Screenshots
 
 ### Landing Page
 
 ![image](https://github.com/Rev4Labs/storefront/assets/10659805/10aa6c23-df13-4264-bac7-42880088a00b)
+
+<br>
+
+<hr>
 
 <br>
 
@@ -65,9 +55,17 @@ Born to Code is a classic e-commerce catalog, shopping cart, and payment app off
 
 <br>
 
+<hr>
+
+<br>
+
 ### Shopping Cart
 
 ![image](https://github.com/Rev4Labs/storefront/assets/10659805/706365f8-6898-4448-b2bc-fd31296ec713)
+
+<br>
+
+<hr>
 
 <br>
 
@@ -77,15 +75,27 @@ Born to Code is a classic e-commerce catalog, shopping cart, and payment app off
 
 <br>
 
+<hr>
+
+<br>
+
 ### Order History & ⭐ Reviews
 
 ![image](https://github.com/Rev4Labs/storefront/assets/10659805/647376ee-62d2-4d3f-a57b-b6c2d86803cf)
 
 <br>
 
+<hr>
+
+<br>
+
 ### Email Confirmation
 
 ![Email Confirmation User Info Redacted](https://github.com/Rev4Labs/storefront/assets/10659805/59a6eefc-fcde-4ed4-892e-b37316c56229)
+
+<br>
+
+<hr>
 
 <br>
 
