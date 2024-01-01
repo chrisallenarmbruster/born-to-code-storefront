@@ -1,50 +1,103 @@
 # Born to Code
 
-We developed this responsive E-Commerce site to sell coding themed merchandise.
-It was a fantastic experience working together, and we acquired valuable experience working as a team on a software project from the ground up.
+## Overview
 
-Visit the store here [https://borntocode.rev4labs.com](https://borntocode.rev4labs.com)
+Born to Code is a classic e-commerce catalog, shopping cart, and payment app offering coding-themed merchandise. I developed this collaboratively with two other engineers.
+
+[![Born to Code Composite](https://portfolio.rev4labs.com/images/born-to-code-composite.png)](https://borntocode.rev4labs.com)
+
+<br>
+
+### [👆 Click to Visit Born to Code](https://borntocode.rev4labs.com)
+
+<br>
+
+## Features
+
+- Coding-themed online store featuring a diverse catalog of merchandise.
+- Responsive design for mobile and desktop.
+- Catalog browsing by category, with the ability to filter and search.
+- Shopping cart functionality allowing users to add and manage items.
+- Secure checkout and payment processing using the Square API.
+- Pagination for browsing through the catalog efficiently.
+- Star-based product ratings.
+- User account creation and management.
+- Admin tools for managing products and orders.
+
+<br>
+
+## Architecture
+
+- Frontend: Mobile-first React/Redux/Bootstrap single-page application.
+- Backend: Node.js/Express.js server with PostgreSQL for data storage.
+- Implementation of RESTful API routes for integration.
+- JWT-based authentication for secure user sessions.
+- Integration with the Square Payments API for handling payments.
+- Utilization of React-Bootstrap for responsive and user-friendly design.
+
+<br>
+
+## Tech Stack
+
+- JavaScript
+- Node.js
+- Express.js
+- PostgreSQL
+- React
+- Redux
+- Square Payments API
+- JWT
+- Bootstrap
+
+<br>
 
 ## Screenshots
-Main Page with Nav Bar Dropdown ![image](https://github.com/Rev4Labs/storefront/assets/10659805/10aa6c23-df13-4264-bac7-42880088a00b)
 
-Order History Page ![image](https://github.com/Rev4Labs/storefront/assets/10659805/647376ee-62d2-4d3f-a57b-b6c2d86803cf)
+### Landing Page
 
-Cart ![image](https://github.com/Rev4Labs/storefront/assets/10659805/706365f8-6898-4448-b2bc-fd31296ec713)
+![image](https://github.com/Rev4Labs/storefront/assets/10659805/10aa6c23-df13-4264-bac7-42880088a00b)
 
-Products Page ![image](https://github.com/Rev4Labs/storefront/assets/10659805/69a33177-4788-4c41-b860-7293556d12a5)
+<br>
 
-Checkout ![image](https://github.com/Rev4Labs/storefront/assets/10659805/3b4a2ee5-ba86-4cb8-8a61-49a8557e0f85)
+### Catalog
 
-Email Reciept ![Email Confirmation User Info Redacted](https://github.com/Rev4Labs/storefront/assets/10659805/59a6eefc-fcde-4ed4-892e-b37316c56229)
+![image](https://github.com/Rev4Labs/storefront/assets/10659805/69a33177-4788-4c41-b860-7293556d12a5)
 
-## Built With
-<img src="https://github.com/devicons/devicon/blob/master/icons/react/react-original-wordmark.svg"  title="React" alt="React" width="40" height="40"/>&nbsp;
-<img src="https://github.com/devicons/devicon/blob/master/icons/nodejs/nodejs-original-wordmark.svg" title="Node.js" alt="Node.js" width="40" height="40"/>&nbsp;
-<img src="https://user-images.githubusercontent.com/10659805/183220572-4ac21d4f-5550-4989-8bbd-f2c1c10c7ae6.png" title="Express" alt="Express" width="40" height="40"/>&nbsp;
-<img src="https://github.com/devicons/devicon/blob/master/icons/bootstrap/bootstrap-plain.svg" title="Bootstrap" alt="Bootstrap" width="40" height="40"/>&nbsp;
+<br>
 
-## Contributors 
+### Shopping Cart
 
-**Michael Hughes**
+![image](https://github.com/Rev4Labs/storefront/assets/10659805/706365f8-6898-4448-b2bc-fd31296ec713)
 
-- Github https://github.com/mrmchughes
-- Email mrmchughes27@gmail.com
-- Linkedin https://www.linkedin.com/in/michaelhughes27/
+<br>
 
-**Chris Armbruster**
+### Checkout
 
-- Github https://github.com/chrisallenarmbruster
-- Email chris@armbrustermail.com
-- Linkedin https://www.linkedin.com/in/chrisallenarmbruster/
+![image](https://github.com/Rev4Labs/storefront/assets/10659805/3b4a2ee5-ba86-4cb8-8a61-49a8557e0f85)
 
-**Joel Janov**
+<br>
 
-- Github https://github.com/jejanov
-- Email jejanov@mac.com
-- Linkedin https://www.linkedin.com/in/joeljanov/
+### Order History & ⭐ Reviews
 
-Contributions, issues, and feature requests are welcome!
+![image](https://github.com/Rev4Labs/storefront/assets/10659805/647376ee-62d2-4d3f-a57b-b6c2d86803cf)
+
+<br>
+
+### Email Confirmation
+
+![Email Confirmation User Info Redacted](https://github.com/Rev4Labs/storefront/assets/10659805/59a6eefc-fcde-4ed4-892e-b37316c56229)
+
+<br>
+
+## Contributors
+
+### [🧑 Chris Armbruster](https://github.com/chrisallenarmbruster)
+
+### [🧑 Michael Hughes](https://github.com/mrmchughes)
+
+### [🧑 Joel Janov](https://github.com/jejanov)
+
+<br>
 
 Give a ⭐️ if you like this project!
 
