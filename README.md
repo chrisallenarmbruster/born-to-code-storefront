@@ -101,7 +101,7 @@ Born to Code is a classic e-commerce catalog, shopping cart, and payment app off
 
 <br>
 
-## Contributors
+## Engineers
 
 ### [🧑 Chris Armbruster](https://github.com/chrisallenarmbruster)
 
