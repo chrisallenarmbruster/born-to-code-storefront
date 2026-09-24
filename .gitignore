@@ -3,3 +3,10 @@ dist
 .env
 docker-compose.yml
 package-lock.json
+.env.*
+*.env
+!.env.example
+*.private.yaml
+*.swp
+*.swo
+*~

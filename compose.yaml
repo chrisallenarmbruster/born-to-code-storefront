@@ -1,0 +1,44 @@
+# Born to Code demo storefront and PostgreSQL database.
+name: btc
+services:
+  db:
+    image: postgres:15.4-bookworm
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:?Set POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER:?Set POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD}
+    volumes:
+      - type: bind
+        source: /srv/app-data/btc/postgres
+        target: /var/lib/postgresql/data
+        bind:
+          create_host_path: false
+    networks:
+      - private
+    healthcheck:
+      test: [CMD-SHELL, 'pg_isready -U "$${POSTGRES_USER}" -d "$${POSTGRES_DB}"']
+      interval: 10s
+      timeout: 5s
+      retries: 10
+  btc:
+    image: registry.rev4labs.com/btc:${APP_VERSION:?Set tested APP_VERSION}
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      PORT: ${PORT:-3000}
+      QUIET: ${QUIET:-true}
+      DATABASE_URL: ${DATABASE_URL:?Set DATABASE_URL}
+      SQUARE_ACCESS_TOKEN: ${SQUARE_ACCESS_TOKEN:?Set SQUARE_ACCESS_TOKEN}
+      POSTMARK_API_KEY: ${POSTMARK_API_KEY:?Set POSTMARK_API_KEY}
+    networks:
+      private:
+      proxy:
+        aliases:
+          - btc-web
+networks:
+  private:
+  proxy:
+    external: true
